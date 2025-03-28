@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OtransBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class ConfigurePagoUsuarioRelationship : Migration
+    public partial class NewMigrationName : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Estados",
+                name: "Estado",
                 columns: table => new
                 {
                     IdEstado = table.Column<int>(type: "int", nullable: false)
@@ -21,11 +21,11 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Estados", x => x.IdEstado);
+                    table.PrimaryKey("PK_Estado", x => x.IdEstado);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Rol",
                 columns: table => new
                 {
                     IdRol = table.Column<int>(type: "int", nullable: false)
@@ -35,11 +35,11 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.IdRol);
+                    table.PrimaryKey("PK_Rol", x => x.IdRol);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cargas",
+                name: "Carga",
                 columns: table => new
                 {
                     IdCarga = table.Column<int>(type: "int", nullable: false)
@@ -51,17 +51,17 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cargas", x => x.IdCarga);
+                    table.PrimaryKey("PK_Carga", x => x.IdCarga);
                     table.ForeignKey(
-                        name: "FK_Cargas_Estados_IdEstado",
+                        name: "FK_Carga_Estado_IdEstado",
                         column: x => x.IdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "Usuario",
                 columns: table => new
                 {
                     IdUsuario = table.Column<int>(type: "int", nullable: false)
@@ -69,8 +69,8 @@ namespace OtransBackend.Migrations
                     NumIdentificacion = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefono = table.Column<int>(type: "int", nullable: true),
-                    TelefonoSos = table.Column<int>(type: "int", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TelefonoSos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NombreEmpresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -84,22 +84,22 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
+                    table.PrimaryKey("PK_Usuario", x => x.IdUsuario);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Estados_IdEstadoNavigationIdEstado",
+                        name: "FK_Usuario_Estado_IdEstadoNavigationIdEstado",
                         column: x => x.IdEstadoNavigationIdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado");
                     table.ForeignKey(
-                        name: "FK_Usuarios_Roles_IdRol",
+                        name: "FK_Usuario_Rol_IdRol",
                         column: x => x.IdRol,
-                        principalTable: "Roles",
+                        principalTable: "Rol",
                         principalColumn: "IdRol",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Auditorias",
+                name: "Auditoria",
                 columns: table => new
                 {
                     IdAuditoria = table.Column<int>(type: "int", nullable: false)
@@ -111,17 +111,17 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Auditorias", x => x.IdAuditoria);
+                    table.PrimaryKey("PK_Auditoria", x => x.IdAuditoria);
                     table.ForeignKey(
-                        name: "FK_Auditorias_Usuarios_IdUsuario",
+                        name: "FK_Auditoria_Usuario_IdUsuario",
                         column: x => x.IdUsuario,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Calificaciones",
+                name: "Calificacion",
                 columns: table => new
                 {
                     IdCalificacion = table.Column<int>(type: "int", nullable: false)
@@ -133,23 +133,23 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Calificaciones", x => x.IdCalificacion);
+                    table.PrimaryKey("PK_Calificacion", x => x.IdCalificacion);
                     table.ForeignKey(
-                        name: "FK_Calificaciones_Estados_IdEstado",
+                        name: "FK_Calificacion_Estado_IdEstado",
                         column: x => x.IdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Calificaciones_Usuarios_IdUsuario",
+                        name: "FK_Calificacion_Usuario_IdUsuario",
                         column: x => x.IdUsuario,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notificaciones",
+                name: "Notificacion",
                 columns: table => new
                 {
                     IdNotificacion = table.Column<int>(type: "int", nullable: false)
@@ -160,23 +160,23 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notificaciones", x => x.IdNotificacion);
+                    table.PrimaryKey("PK_Notificacion", x => x.IdNotificacion);
                     table.ForeignKey(
-                        name: "FK_Notificaciones_Estados_IdEstado",
+                        name: "FK_Notificacion_Estado_IdEstado",
                         column: x => x.IdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Notificaciones_Usuarios_IdUsuario",
+                        name: "FK_Notificacion_Usuario_IdUsuario",
                         column: x => x.IdUsuario,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pagos",
+                name: "Pago",
                 columns: table => new
                 {
                     IdPago = table.Column<int>(type: "int", nullable: false)
@@ -191,29 +191,29 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pagos", x => x.IdPago);
+                    table.PrimaryKey("PK_Pago", x => x.IdPago);
                     table.ForeignKey(
-                        name: "FK_Pagos_Estados_IdEstado",
+                        name: "FK_Pago_Estado_IdEstado",
                         column: x => x.IdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pagos_Usuarios_IdEmpresa",
+                        name: "FK_Pago_Usuario_IdEmpresa",
                         column: x => x.IdEmpresa,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pagos_Usuarios_IdTransportista",
+                        name: "FK_Pago_Usuario_IdTransportista",
                         column: x => x.IdTransportista,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehiculos",
+                name: "Vehiculo",
                 columns: table => new
                 {
                     IdVehiculo = table.Column<int>(type: "int", nullable: false)
@@ -233,22 +233,22 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehiculos", x => x.IdVehiculo);
+                    table.PrimaryKey("PK_Vehiculo", x => x.IdVehiculo);
                     table.ForeignKey(
-                        name: "FK_Vehiculos_Estados_IdEstadoNavigationIdEstado",
+                        name: "FK_Vehiculo_Estado_IdEstadoNavigationIdEstado",
                         column: x => x.IdEstadoNavigationIdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado");
                     table.ForeignKey(
-                        name: "FK_Vehiculos_Usuarios_IdTransportista",
+                        name: "FK_Vehiculo_Usuario_IdTransportista",
                         column: x => x.IdTransportista,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Viajes",
+                name: "Viaje",
                 columns: table => new
                 {
                     IdViaje = table.Column<int>(type: "int", nullable: false)
@@ -265,115 +265,115 @@ namespace OtransBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Viajes", x => x.IdViaje);
+                    table.PrimaryKey("PK_Viaje", x => x.IdViaje);
                     table.ForeignKey(
-                        name: "FK_Viajes_Cargas_IdCargaNavigationIdCarga",
+                        name: "FK_Viaje_Carga_IdCargaNavigationIdCarga",
                         column: x => x.IdCargaNavigationIdCarga,
-                        principalTable: "Cargas",
+                        principalTable: "Carga",
                         principalColumn: "IdCarga");
                     table.ForeignKey(
-                        name: "FK_Viajes_Estados_IdEstado",
+                        name: "FK_Viaje_Estado_IdEstado",
                         column: x => x.IdEstado,
-                        principalTable: "Estados",
+                        principalTable: "Estado",
                         principalColumn: "IdEstado",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Viajes_Usuarios_IdEmpresa",
+                        name: "FK_Viaje_Usuario_IdEmpresa",
                         column: x => x.IdEmpresa,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Viajes_Usuarios_IdTransportista",
+                        name: "FK_Viaje_Usuario_IdTransportista",
                         column: x => x.IdTransportista,
-                        principalTable: "Usuarios",
+                        principalTable: "Usuario",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Auditorias_IdUsuario",
-                table: "Auditorias",
+                name: "IX_Auditoria_IdUsuario",
+                table: "Auditoria",
                 column: "IdUsuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calificaciones_IdEstado",
-                table: "Calificaciones",
+                name: "IX_Calificacion_IdEstado",
+                table: "Calificacion",
                 column: "IdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calificaciones_IdUsuario",
-                table: "Calificaciones",
+                name: "IX_Calificacion_IdUsuario",
+                table: "Calificacion",
                 column: "IdUsuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cargas_IdEstado",
-                table: "Cargas",
+                name: "IX_Carga_IdEstado",
+                table: "Carga",
                 column: "IdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notificaciones_IdEstado",
-                table: "Notificaciones",
+                name: "IX_Notificacion_IdEstado",
+                table: "Notificacion",
                 column: "IdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notificaciones_IdUsuario",
-                table: "Notificaciones",
+                name: "IX_Notificacion_IdUsuario",
+                table: "Notificacion",
                 column: "IdUsuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_IdEmpresa",
-                table: "Pagos",
+                name: "IX_Pago_IdEmpresa",
+                table: "Pago",
                 column: "IdEmpresa");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_IdEstado",
-                table: "Pagos",
+                name: "IX_Pago_IdEstado",
+                table: "Pago",
                 column: "IdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_IdTransportista",
-                table: "Pagos",
+                name: "IX_Pago_IdTransportista",
+                table: "Pago",
                 column: "IdTransportista");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_IdEstadoNavigationIdEstado",
-                table: "Usuarios",
+                name: "IX_Usuario_IdEstadoNavigationIdEstado",
+                table: "Usuario",
                 column: "IdEstadoNavigationIdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_IdRol",
-                table: "Usuarios",
+                name: "IX_Usuario_IdRol",
+                table: "Usuario",
                 column: "IdRol");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehiculos_IdEstadoNavigationIdEstado",
-                table: "Vehiculos",
+                name: "IX_Vehiculo_IdEstadoNavigationIdEstado",
+                table: "Vehiculo",
                 column: "IdEstadoNavigationIdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehiculos_IdTransportista",
-                table: "Vehiculos",
+                name: "IX_Vehiculo_IdTransportista",
+                table: "Vehiculo",
                 column: "IdTransportista");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Viajes_IdCargaNavigationIdCarga",
-                table: "Viajes",
+                name: "IX_Viaje_IdCargaNavigationIdCarga",
+                table: "Viaje",
                 column: "IdCargaNavigationIdCarga");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Viajes_IdEmpresa",
-                table: "Viajes",
+                name: "IX_Viaje_IdEmpresa",
+                table: "Viaje",
                 column: "IdEmpresa");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Viajes_IdEstado",
-                table: "Viajes",
+                name: "IX_Viaje_IdEstado",
+                table: "Viaje",
                 column: "IdEstado");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Viajes_IdTransportista",
-                table: "Viajes",
+                name: "IX_Viaje_IdTransportista",
+                table: "Viaje",
                 column: "IdTransportista");
         }
 
@@ -381,34 +381,34 @@ namespace OtransBackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Auditorias");
+                name: "Auditoria");
 
             migrationBuilder.DropTable(
-                name: "Calificaciones");
+                name: "Calificacion");
 
             migrationBuilder.DropTable(
-                name: "Notificaciones");
+                name: "Notificacion");
 
             migrationBuilder.DropTable(
-                name: "Pagos");
+                name: "Pago");
 
             migrationBuilder.DropTable(
-                name: "Vehiculos");
+                name: "Vehiculo");
 
             migrationBuilder.DropTable(
-                name: "Viajes");
+                name: "Viaje");
 
             migrationBuilder.DropTable(
-                name: "Cargas");
+                name: "Carga");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Usuario");
 
             migrationBuilder.DropTable(
-                name: "Estados");
+                name: "Estado");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Rol");
         }
     }
 }

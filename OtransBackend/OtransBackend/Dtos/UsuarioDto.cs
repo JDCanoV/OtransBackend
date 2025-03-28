@@ -10,7 +10,7 @@
 
         public string Apellido { get; set; } = string.Empty;
 
-        public int? Telefono { get; set; }
+        public string Telefono { get; set; }
 
         public int? TelefonoSos { get; set; }
 

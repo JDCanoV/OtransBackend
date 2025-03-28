@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using OtransBackend.Dtos;
 
 namespace OtransBackend.Models;
 
@@ -44,7 +43,7 @@ public partial class OtransContext : DbContext
     {
         modelBuilder.Entity<Auditoria>(entity =>
         {
-            entity.HasKey(e => e.IdAuditoria).HasName("PK__Auditori__E9F1DAD414B2375C");
+            entity.HasKey(e => e.IdAuditoria).HasName("PK__Auditori__E9F1DAD49839A0EB");
 
             entity.Property(e => e.IdAuditoria)
                 .ValueGeneratedNever()
@@ -64,7 +63,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Calificacion>(entity =>
         {
-            entity.HasKey(e => e.IdCalificacion).HasName("PK__Califica__6F6E6A405EEE93A3");
+            entity.HasKey(e => e.IdCalificacion).HasName("PK__Califica__6F6E6A4050C6DBFA");
 
             entity.ToTable("Calificacion");
 
@@ -88,7 +87,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Carga>(entity =>
         {
-            entity.HasKey(e => e.IdCarga).HasName("PK__Carga__4054BDA3B57DB563");
+            entity.HasKey(e => e.IdCarga).HasName("PK__Carga__4054BDA3155D6E24");
 
             entity.ToTable("Carga");
 
@@ -107,7 +106,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Estado>(entity =>
         {
-            entity.HasKey(e => e.IdEstado).HasName("PK__Estado__AB2EB6F818B371C9");
+            entity.HasKey(e => e.IdEstado).HasName("PK__Estado__AB2EB6F8AD60F539");
 
             entity.ToTable("Estado");
 
@@ -121,7 +120,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Notificacion>(entity =>
         {
-            entity.HasKey(e => e.IdNotificacion).HasName("PK__Notifica__33C2FF16FEF82758");
+            entity.HasKey(e => e.IdNotificacion).HasName("PK__Notifica__33C2FF16D4269690");
 
             entity.ToTable("Notificacion");
 
@@ -145,7 +144,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Pago>(entity =>
         {
-            entity.HasKey(e => e.IdPago).HasName("PK__Pago__3E79AD9A66BA2E28");
+            entity.HasKey(e => e.IdPago).HasName("PK__Pago__3E79AD9A2EF2A8AE");
 
             entity.ToTable("Pago");
 
@@ -174,7 +173,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Rol>(entity =>
         {
-            entity.HasKey(e => e.IdRol).HasName("PK__Rol__55932E8651FD5CBC");
+            entity.HasKey(e => e.IdRol).HasName("PK__Rol__55932E862D24065C");
 
             entity.ToTable("Rol");
 
@@ -191,11 +190,11 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__63C76BE29933B4F3");
+            entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__63C76BE2D44231CE");
 
             entity.ToTable("Usuario");
 
-            entity.HasIndex(e => e.Correo, "UQ__Usuario__60695A196101FBB9").IsUnique();
+            entity.HasIndex(e => e.Correo, "UQ__Usuario__60695A196776D8CA").IsUnique();
 
             entity.Property(e => e.IdUsuario)
                 .ValueGeneratedNever()
@@ -234,11 +233,11 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Vehiculo>(entity =>
         {
-            entity.HasKey(e => e.IdVehiculo).HasName("PK__Vehiculo__46DBF4B41EC1FAD8");
+            entity.HasKey(e => e.IdVehiculo).HasName("PK__Vehiculo__46DBF4B446AD184E");
 
             entity.ToTable("Vehiculo");
 
-            entity.HasIndex(e => e.Placa, "UQ__Vehiculo__8310F99DB4A98B1B").IsUnique();
+            entity.HasIndex(e => e.Placa, "UQ__Vehiculo__8310F99DC164B123").IsUnique();
 
             entity.Property(e => e.IdVehiculo)
                 .ValueGeneratedNever()
@@ -270,7 +269,7 @@ public partial class OtransContext : DbContext
 
         modelBuilder.Entity<Viaje>(entity =>
         {
-            entity.HasKey(e => e.IdViaje).HasName("PK__Viaje__9BC209F7FFB45073");
+            entity.HasKey(e => e.IdViaje).HasName("PK__Viaje__9BC209F7C9FBA5A8");
 
             entity.ToTable("Viaje");
 

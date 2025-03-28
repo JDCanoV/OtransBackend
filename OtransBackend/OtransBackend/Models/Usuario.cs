@@ -1,5 +1,4 @@
-﻿using OtransBackend.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace OtransBackend.Models;
@@ -14,9 +13,9 @@ public partial class Usuario
 
     public string Apellido { get; set; } = null!;
 
-    public int? Telefono { get; set; }
+    public string? Telefono { get; set; }
 
-    public int? TelefonoSos { get; set; }
+    public string? TelefonoSos { get; set; }
 
     public string Correo { get; set; } = null!;
 

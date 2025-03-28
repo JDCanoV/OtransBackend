@@ -12,8 +12,8 @@ using OtransBackend.Utilities;
 namespace OtransBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250321052022_ConfigureTablesSingular")]
-    partial class ConfigureTablesSingular
+    [Migration("20250327191449_NewMigrationName")]
+    partial class NewMigrationName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Auditorias");
+                    b.ToTable("Auditoria", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Calificacion", b =>
@@ -80,7 +80,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Calificaciones");
+                    b.ToTable("Calificacion", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Carga", b =>
@@ -108,7 +108,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdEstado");
 
-                    b.ToTable("Cargas");
+                    b.ToTable("Carga", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Estado", b =>
@@ -125,7 +125,7 @@ namespace OtransBackend.Migrations
 
                     b.HasKey("IdEstado");
 
-                    b.ToTable("Estados");
+                    b.ToTable("Estado", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Notificacion", b =>
@@ -152,7 +152,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Notificaciones");
+                    b.ToTable("Notificacion", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Pago", b =>
@@ -193,7 +193,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdTransportista");
 
-                    b.ToTable("Pagos");
+                    b.ToTable("Pago", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Rol", b =>
@@ -213,7 +213,7 @@ namespace OtransBackend.Migrations
 
                     b.HasKey("IdRol");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Rol", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Usuario", b =>
@@ -267,11 +267,11 @@ namespace OtransBackend.Migrations
                     b.Property<int>("NumIdentificacion")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Telefono")
-                        .HasColumnType("int");
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TelefonoSos")
-                        .HasColumnType("int");
+                    b.Property<string>("TelefonoSos")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdUsuario");
 
@@ -279,7 +279,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdRol");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuario", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Vehiculo", b =>
@@ -336,7 +336,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdTransportista");
 
-                    b.ToTable("Vehiculos");
+                    b.ToTable("Vehiculo", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Viaje", b =>
@@ -386,7 +386,7 @@ namespace OtransBackend.Migrations
 
                     b.HasIndex("IdTransportista");
 
-                    b.ToTable("Viajes");
+                    b.ToTable("Viaje", (string)null);
                 });
 
             modelBuilder.Entity("OtransBackend.Models.Auditoria", b =>

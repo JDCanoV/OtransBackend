@@ -6,63 +6,48 @@ namespace OtransBackend.Utilities
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        
+        
+            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Estado> Estados { get; set; }
-        public DbSet<Rol> Roles { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Vehiculo> Vehiculos { get; set; }
-        public DbSet<Carga> Cargas { get; set; }
-        public DbSet<Viaje> Viajes { get; set; }
-        public DbSet<Auditoria> Auditorias { get; set; }
-        public DbSet<Notificacion> Notificaciones { get; set; }
-        public DbSet<Pago> Pagos { get; set; }
-        public DbSet<Calificacion> Calificaciones { get; set; }
+            public DbSet<Estado> Estado { get; set; }
+            public DbSet<Rol> Rol { get; set; }
+            public DbSet<Usuario> Usuario { get; set; }
+            public DbSet<Vehiculo> Vehiculo { get; set; }
+            public DbSet<Carga> Carga { get; set; }
+            public DbSet<Viaje> Viaje { get; set; }
+            public DbSet<Auditoria> Auditoria { get; set; }
+            public DbSet<Notificacion> Notificacion { get; set; }
+            public DbSet<Pago> Pago { get; set; }
+            public DbSet<Calificacion> Calificacion { get; set; }
 
-        // Configuración de relaciones
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            // Configurar la clave primaria para Auditoria
-            // Configurar la clave primaria para Auditoria
-            modelBuilder.Entity<Auditoria>()
-                .HasKey(a => a.IdAuditoria);
+            // Configuración de relaciones
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                base.OnModelCreating(modelBuilder);
 
-            // Configurar la clave primaria para Calificacion
-            modelBuilder.Entity<Calificacion>()
-                .HasKey(c => c.IdCalificacion);
-
-            // Configurar la clave primaria para Carga
-            modelBuilder.Entity<Carga>()
-                .HasKey(c => c.IdCarga);
-
-            // Configurar la clave primaria para Estado
-            modelBuilder.Entity<Estado>()
-                .HasKey(e => e.IdEstado);
-
-            // Configurar la clave primaria para Rol
-            modelBuilder.Entity<Rol>()
-                .HasKey(r => r.IdRol);
-
-            // Configurar la clave primaria para Usuario
-            modelBuilder.Entity<Usuario>()
-                .HasKey(u => u.IdUsuario);
-
-            // Configurar la clave primaria para Vehiculo
-            modelBuilder.Entity<Vehiculo>()
-                .HasKey(v => v.IdVehiculo);
-
-            // Configurar la clave primaria para Viaje
-            modelBuilder.Entity<Viaje>()
-                .HasKey(v => v.IdViaje);
-
-            // Configurar la clave primaria para Notificacion
-            modelBuilder.Entity<Notificacion>()
-                .HasKey(n => n.IdNotificacion);
-
-            // Configurar la clave primaria para Pago
-            modelBuilder.Entity<Pago>()
-                .HasKey(p => p.IdPago);
+                // Cambiar la configuración para cada entidad, mapeando las tablas en singular
+                modelBuilder.Entity<Auditoria>().ToTable("Auditoria");
+                modelBuilder.Entity<Calificacion>().ToTable("Calificacion");
+                modelBuilder.Entity<Carga>().ToTable("Carga");
+                modelBuilder.Entity<Estado>().ToTable("Estado");
+                modelBuilder.Entity<Rol>().ToTable("Rol");
+                modelBuilder.Entity<Usuario>().ToTable("Usuario");
+                modelBuilder.Entity<Vehiculo>().ToTable("Vehiculo");
+                modelBuilder.Entity<Viaje>().ToTable("Viaje");
+                modelBuilder.Entity<Notificacion>().ToTable("Notificacion");
+                modelBuilder.Entity<Pago>().ToTable("Pago");
+            // Configurar las claves primarias para cada entidad
+            modelBuilder.Entity<Auditoria>().HasKey(a => a.IdAuditoria);
+            modelBuilder.Entity<Calificacion>().HasKey(c => c.IdCalificacion);
+            modelBuilder.Entity<Carga>().HasKey(c => c.IdCarga);
+            modelBuilder.Entity<Estado>().HasKey(e => e.IdEstado);
+            modelBuilder.Entity<Rol>().HasKey(r => r.IdRol);
+            modelBuilder.Entity<Usuario>().HasKey(u => u.IdUsuario);
+            modelBuilder.Entity<Vehiculo>().HasKey(v => v.IdVehiculo);
+            modelBuilder.Entity<Viaje>().HasKey(v => v.IdViaje);
+            modelBuilder.Entity<Notificacion>().HasKey(n => n.IdNotificacion);
+            modelBuilder.Entity<Pago>().HasKey(p => p.IdPago);
 
             // Relación Usuario → Vehiculo (como transportista)
             modelBuilder.Entity<Vehiculo>()
@@ -162,5 +147,6 @@ namespace OtransBackend.Utilities
                 .HasForeignKey(u => u.IdRol)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
-}
+    }
