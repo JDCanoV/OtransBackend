@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OtransBackend.Dtos;
 using OtransBackend.Services;
-using Swashbuckle.AspNetCore.Annotations; // Importante para usar SwaggerOperation
+using Swashbuckle.AspNetCore.Annotations;
 using System.Linq;
 
 namespace OtransBackend.Controllers
@@ -53,8 +53,8 @@ namespace OtransBackend.Controllers
 
             try
             {
-                var user = await _userService.RegisterTransportistaAsync(dto); // Solo pasamos el DTO completo
-                return Ok(user);
+                var responseDto = await _userService.RegisterTransportistaAsync(dto);
+                return Ok(responseDto);
             }
             catch (Exception ex)
             {
@@ -101,8 +101,8 @@ namespace OtransBackend.Controllers
 
             try
             {
-                var user = await _userService.RegisterEmpresaAsync(dto); // Solo pasamos el DTO completo
-                return Ok(user);
+                var responseDto = await _userService.RegisterEmpresaAsync(dto);
+                return Ok(responseDto);
             }
             catch (Exception ex)
             {

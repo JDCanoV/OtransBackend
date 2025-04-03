@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OtransBackend.Models;
+namespace OtransBackend.Repositories.Models;
 
 public partial class Rol
 {

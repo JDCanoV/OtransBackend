@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OtransBackend.Dtos;
-using OtransBackend.Models;
+using OtransBackend.Repositories.Models;
 
 namespace OtransBackend.Utilities
 {
-    public class ApplicationDbContext : DbContext
+    public class Otrans : DbContext
     {
         
         
-            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+            public Otrans(DbContextOptions<Otrans> options) : base(options) { }
 
             public DbSet<Estado> Estado { get; set; }
             public DbSet<Rol> Rol { get; set; }
@@ -26,17 +26,6 @@ namespace OtransBackend.Utilities
             {
                 base.OnModelCreating(modelBuilder);
 
-                // Cambiar la configuración para cada entidad, mapeando las tablas en singular
-                modelBuilder.Entity<Auditoria>().ToTable("Auditoria");
-                modelBuilder.Entity<Calificacion>().ToTable("Calificacion");
-                modelBuilder.Entity<Carga>().ToTable("Carga");
-                modelBuilder.Entity<Estado>().ToTable("Estado");
-                modelBuilder.Entity<Rol>().ToTable("Rol");
-                modelBuilder.Entity<Usuario>().ToTable("Usuario");
-                modelBuilder.Entity<Vehiculo>().ToTable("Vehiculo");
-                modelBuilder.Entity<Viaje>().ToTable("Viaje");
-                modelBuilder.Entity<Notificacion>().ToTable("Notificacion");
-                modelBuilder.Entity<Pago>().ToTable("Pago");
             // Configurar las claves primarias para cada entidad
             modelBuilder.Entity<Auditoria>().HasKey(a => a.IdAuditoria);
             modelBuilder.Entity<Calificacion>().HasKey(c => c.IdCalificacion);
@@ -146,6 +135,12 @@ namespace OtransBackend.Utilities
                 .WithMany(r => r.Usuarios)
                 .HasForeignKey(u => u.IdRol)
                 .OnDelete(DeleteBehavior.Restrict);
+            // Relación Usuario → Estado
+            modelBuilder.Entity<Usuario>()
+               .HasOne(u => u.IdEstadoNavigation)
+               .WithMany(r => r.Usuarios)
+               .HasForeignKey(u => u.IdEstado)
+               .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

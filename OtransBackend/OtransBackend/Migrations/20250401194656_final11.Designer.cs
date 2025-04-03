@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OtransBackend.Utilities;
+using OtransBackend.Repositories.Models;
 
 #nullable disable
 
 namespace OtransBackend.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(OtransContext))]
+    [Migration("20250401194656_final11")]
+    partial class final11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,21 +25,22 @@ namespace OtransBackend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("OtransBackend.Models.Auditoria", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Auditoria", b =>
                 {
                     b.Property<int>("IdAuditoria")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAuditoria"));
 
                     b.Property<string>("Accion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<string>("Consulta")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<DateOnly>("Fecha")
                         .HasColumnType("date");
@@ -44,23 +48,23 @@ namespace OtransBackend.Migrations
                     b.Property<int?>("IdUsuario")
                         .HasColumnType("int");
 
-                    b.HasKey("IdAuditoria");
+                    b.HasKey("IdAuditoria")
+                        .HasName("PK__Auditori__7FD13FA0F93BAB2A");
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Auditoria", (string)null);
+                    b.ToTable("Auditoria");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Calificacion", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Calificacion", b =>
                 {
                     b.Property<int>("IdCalificacion")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCalificacion"));
-
                     b.Property<string>("Comentario")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int?>("IdEstado")
                         .HasColumnType("int");
@@ -71,7 +75,8 @@ namespace OtransBackend.Migrations
                     b.Property<int>("Puntuaje")
                         .HasColumnType("int");
 
-                    b.HasKey("IdCalificacion");
+                    b.HasKey("IdCalificacion")
+                        .HasName("PK__Califica__40E4A7516CF403F6");
 
                     b.HasIndex("IdEstado");
 
@@ -80,13 +85,10 @@ namespace OtransBackend.Migrations
                     b.ToTable("Calificacion", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Carga", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Carga", b =>
                 {
                     b.Property<int>("IdCarga")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCarga"));
 
                     b.Property<int?>("IdEstado")
                         .HasColumnType("int");
@@ -99,39 +101,39 @@ namespace OtransBackend.Migrations
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
-                    b.HasKey("IdCarga");
+                    b.HasKey("IdCarga")
+                        .HasName("PK__Carga__6C9856177E87A551");
 
                     b.HasIndex("IdEstado");
 
                     b.ToTable("Carga", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Estado", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Estado", b =>
                 {
                     b.Property<int>("IdEstado")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstado"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
-                    b.HasKey("IdEstado");
+                    b.HasKey("IdEstado")
+                        .HasName("PK__Estado__FBB0EDC17C858234");
 
                     b.ToTable("Estado", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Notificacion", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Notificacion", b =>
                 {
                     b.Property<int>("IdNotificacion")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdNotificacion"));
 
                     b.Property<int?>("IdEstado")
                         .HasColumnType("int");
@@ -141,9 +143,12 @@ namespace OtransBackend.Migrations
 
                     b.Property<string>("Mensaje")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
-                    b.HasKey("IdNotificacion");
+                    b.HasKey("IdNotificacion")
+                        .HasName("PK__Notifica__F6CA0A85B4D735BE");
 
                     b.HasIndex("IdEstado");
 
@@ -152,13 +157,10 @@ namespace OtransBackend.Migrations
                     b.ToTable("Notificacion", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Pago", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Pago", b =>
                 {
                     b.Property<int>("IdPago")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPago"));
 
                     b.Property<DateOnly>("Fecha")
                         .HasColumnType("date");
@@ -174,7 +176,9 @@ namespace OtransBackend.Migrations
 
                     b.Property<string>("MetodoPago")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<double?>("Propina")
                         .HasColumnType("float");
@@ -182,7 +186,8 @@ namespace OtransBackend.Migrations
                     b.Property<double>("Valor")
                         .HasColumnType("float");
 
-                    b.HasKey("IdPago");
+                    b.HasKey("IdPago")
+                        .HasName("PK__Pago__FC851A3AAF9094F3");
 
                     b.HasIndex("IdEmpresa");
 
@@ -193,70 +198,81 @@ namespace OtransBackend.Migrations
                     b.ToTable("Pago", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Rol", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Rol", b =>
                 {
                     b.Property<int>("IdRol")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRol"));
-
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
-                    b.HasKey("IdRol");
+                    b.HasKey("IdRol")
+                        .HasName("PK__Rol__2A49584C97631D7D");
 
                     b.ToTable("Rol", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Usuario", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<string>("Contrasena")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Correo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int?>("IdEstado")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdEstadoNavigationIdEstado")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdEstado");
 
                     b.Property<int?>("IdRol")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdRol");
 
                     b.Property<byte[]>("Licencia")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Nit")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("NIT");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<string>("NombreEmpresa")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<int?>("NumCuenta")
                         .HasColumnType("int");
@@ -265,40 +281,48 @@ namespace OtransBackend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<string>("TelefonoSos")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
-                    b.HasKey("IdUsuario");
+                    b.HasKey("IdUsuario")
+                        .HasName("PK__Usuario__5B65BF970F68F829");
 
-                    b.HasIndex("IdEstadoNavigationIdEstado");
+                    b.HasIndex("IdEstado");
 
                     b.HasIndex("IdRol");
+
+                    b.HasIndex(new[] { "Correo" }, "UQ__Usuario__60695A191D2A9EE5")
+                        .IsUnique();
 
                     b.ToTable("Usuario", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Vehiculo", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Vehiculo", b =>
                 {
                     b.Property<int>("IdVehiculo")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVehiculo"));
 
                     b.Property<string>("CapacidadCarga")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<string>("Carroceria")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<int?>("IdEstado")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdEstadoNavigationIdEstado")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdTransportista")
@@ -309,17 +333,22 @@ namespace OtransBackend.Migrations
 
                     b.Property<string>("NombreDueño")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.Property<int?>("NumIdentDueño")
                         .HasColumnType("int");
 
                     b.Property<string>("Placa")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<byte[]>("Soat")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("SOAT");
 
                     b.Property<byte[]>("Tecnicomecanica")
                         .HasColumnType("varbinary(max)");
@@ -327,26 +356,29 @@ namespace OtransBackend.Migrations
                     b.Property<int?>("TelDueño")
                         .HasColumnType("int");
 
-                    b.HasKey("IdVehiculo");
+                    b.HasKey("IdVehiculo")
+                        .HasName("PK__Vehiculo__7086121535148C26");
 
-                    b.HasIndex("IdEstadoNavigationIdEstado");
+                    b.HasIndex("IdEstado");
 
                     b.HasIndex("IdTransportista");
+
+                    b.HasIndex(new[] { "Placa" }, "UQ__Vehiculo__8310F99DE7F01474")
+                        .IsUnique();
 
                     b.ToTable("Vehiculo", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Viaje", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Viaje", b =>
                 {
                     b.Property<int>("IdViaje")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdViaje"));
 
                     b.Property<string>("Destino")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<double>("Distancia")
                         .HasColumnType("float");
@@ -355,9 +387,6 @@ namespace OtransBackend.Migrations
                         .HasColumnType("date");
 
                     b.Property<int?>("IdCarga")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdCargaNavigationIdCarga")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdEmpresa")
@@ -371,11 +400,14 @@ namespace OtransBackend.Migrations
 
                     b.Property<string>("Origen")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
-                    b.HasKey("IdViaje");
+                    b.HasKey("IdViaje")
+                        .HasName("PK__Viaje__580AB6B9ED732581");
 
-                    b.HasIndex("IdCargaNavigationIdCarga");
+                    b.HasIndex("IdCarga");
 
                     b.HasIndex("IdEmpresa");
 
@@ -386,76 +418,76 @@ namespace OtransBackend.Migrations
                     b.ToTable("Viaje", (string)null);
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Auditoria", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Auditoria", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Usuario", "IdUsuarioNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdUsuarioNavigation")
                         .WithMany("Auditoria")
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Auditoria__IdUsu__3A81B327");
 
                     b.Navigation("IdUsuarioNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Calificacion", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Calificacion", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Calificacions")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Calificac__IdEst__45F365D3");
 
-                    b.HasOne("OtransBackend.Models.Usuario", "IdUsuarioNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdUsuarioNavigation")
                         .WithMany("Calificacions")
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Calificac__IdUsu__46E78A0C");
 
                     b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdUsuarioNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Carga", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Carga", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Cargas")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Carga__IdEstado__31EC6D26");
 
                     b.Navigation("IdEstadoNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Notificacion", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Notificacion", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Notificacions")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Notificac__IdEst__3E52440B");
 
-                    b.HasOne("OtransBackend.Models.Usuario", "IdUsuarioNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdUsuarioNavigation")
                         .WithMany("Notificacions")
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Notificac__IdUsu__3D5E1FD2");
 
                     b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdUsuarioNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Pago", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Pago", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Usuario", "IdEmpresaNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdEmpresaNavigation")
                         .WithMany("PagoIdEmpresaNavigations")
                         .HasForeignKey("IdEmpresa")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Pago__IdEmpresa__4222D4EF");
 
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Pagos")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Pago__IdEstado__4316F928");
 
-                    b.HasOne("OtransBackend.Models.Usuario", "IdTransportistaNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdTransportistaNavigation")
                         .WithMany("PagoIdTransportistaNavigations")
                         .HasForeignKey("IdTransportista")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Pago__IdTranspor__412EB0B6");
 
                     b.Navigation("IdEmpresaNavigation");
 
@@ -464,58 +496,61 @@ namespace OtransBackend.Migrations
                     b.Navigation("IdTransportistaNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Usuario", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Usuario", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Usuarios")
-                        .HasForeignKey("IdEstadoNavigationIdEstado");
+                        .HasForeignKey("IdEstado")
+                        .HasConstraintName("FK__Usuario__IdEstad__2A4B4B5E");
 
-                    b.HasOne("OtransBackend.Models.Rol", "IdRolNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Rol", "IdRolNavigation")
                         .WithMany("Usuarios")
                         .HasForeignKey("IdRol")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Usuario__IdRol__29572725");
 
                     b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdRolNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Vehiculo", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Vehiculo", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Vehiculos")
-                        .HasForeignKey("IdEstadoNavigationIdEstado");
+                        .HasForeignKey("IdEstado")
+                        .HasConstraintName("FK__Vehiculo__IdEsta__2F10007B");
 
-                    b.HasOne("OtransBackend.Models.Usuario", "IdTransportistaNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdTransportistaNavigation")
                         .WithMany("Vehiculos")
                         .HasForeignKey("IdTransportista")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Vehiculo__IdTran__2E1BDC42");
 
                     b.Navigation("IdEstadoNavigation");
 
                     b.Navigation("IdTransportistaNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Viaje", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Viaje", b =>
                 {
-                    b.HasOne("OtransBackend.Models.Carga", "IdCargaNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Carga", "IdCargaNavigation")
                         .WithMany("Viajes")
-                        .HasForeignKey("IdCargaNavigationIdCarga");
+                        .HasForeignKey("IdCarga")
+                        .HasConstraintName("FK__Viaje__IdCarga__35BCFE0A");
 
-                    b.HasOne("OtransBackend.Models.Usuario", "IdEmpresaNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdEmpresaNavigation")
                         .WithMany("ViajeIdEmpresaNavigations")
                         .HasForeignKey("IdEmpresa")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Viaje__IdEmpresa__37A5467C");
 
-                    b.HasOne("OtransBackend.Models.Estado", "IdEstadoNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Estado", "IdEstadoNavigation")
                         .WithMany("Viajes")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Viaje__IdEstado__34C8D9D1");
 
-                    b.HasOne("OtransBackend.Models.Usuario", "IdTransportistaNavigation")
+                    b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdTransportistaNavigation")
                         .WithMany("ViajeIdTransportistaNavigations")
                         .HasForeignKey("IdTransportista")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Viaje__IdTranspo__36B12243");
 
                     b.Navigation("IdCargaNavigation");
 
@@ -526,12 +561,12 @@ namespace OtransBackend.Migrations
                     b.Navigation("IdTransportistaNavigation");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Carga", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Carga", b =>
                 {
                     b.Navigation("Viajes");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Estado", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Estado", b =>
                 {
                     b.Navigation("Calificacions");
 
@@ -548,12 +583,12 @@ namespace OtransBackend.Migrations
                     b.Navigation("Viajes");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Rol", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Rol", b =>
                 {
                     b.Navigation("Usuarios");
                 });
 
-            modelBuilder.Entity("OtransBackend.Models.Usuario", b =>
+            modelBuilder.Entity("OtransBackend.Repositories.Models.Usuario", b =>
                 {
                     b.Navigation("Auditoria");
 

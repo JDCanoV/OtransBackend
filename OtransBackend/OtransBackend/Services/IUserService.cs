@@ -1,10 +1,10 @@
 ﻿using OtransBackend.Dtos;
-using OtransBackend.Models;
-using OtransBackend.Repositories;
+using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
+using OtransBackend.Repositories;
 
 namespace OtransBackend.Services
 {
@@ -89,8 +89,8 @@ namespace OtransBackend.Services
                 NumCuenta = dto.NumCuenta,
                 Direccion = dto.Direccion,
                 Nit = null,  // Inicializamos como null
-                IdRol = dto.IdRol ?? 2,  // Rol predeterminado para empresa
-                IdEstado = dto.IdEstado ?? 1  // Estado predeterminado
+                IdRol = dto.IdRol ?? 2, 
+                IdEstado = dto.IdEstado ?? 1  
             };
 
             // Si se ha enviado el NIT, lo convertimos y lo asignamos al usuario

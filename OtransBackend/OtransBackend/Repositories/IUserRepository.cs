@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OtransBackend.Models;
-using OtransBackend.Repositories;
+using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using System.IO;
 
@@ -15,9 +14,9 @@ namespace OtransBackend.Repositories
 
     public class UserRepository : IUserRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Otrans _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(Otrans context)
         {
             _context = context;
         }

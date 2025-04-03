@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OtransBackend.Models;
+using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using System.Threading.Tasks;
 
@@ -12,9 +12,9 @@ namespace OtransBackend.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Otrans _context;
 
-        public TestController(ApplicationDbContext context)
+        public TestController(Otrans context)
         {
             _context = context;
         }
