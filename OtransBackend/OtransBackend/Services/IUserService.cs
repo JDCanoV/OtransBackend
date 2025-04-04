@@ -12,17 +12,23 @@ namespace OtransBackend.Services
     {
         Task<Usuario> RegisterTransportistaAsync(TransportistaDto dto); // El archivo está en el DTO
         Task<Usuario> RegisterEmpresaAsync(empresaDto dto); // El archivo está en el DTO
+        Task<ResponseLoginDto> Login(LoginDto loginDto); 
+        Task<string> recuperarContra(string correo); 
     }
 
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly JwtSettingsDto _jwtSettings;
+        private readonly EmailUtility _emailUtility;
 
-        public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+        public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _jwtSettings = jwtSettings;
+            _emailUtility = emailUtility;
         }
 
         // Registro de transportistas
@@ -111,6 +117,45 @@ namespace OtransBackend.Services
             {
                 file.CopyTo(memoryStream);
                 return memoryStream.ToArray();
+            }
+        }
+        public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
+        {
+            ResponseLoginDto responseLoginDto = new();
+            var userResult = await _userRepository.Login(loginDTO);
+
+            if (userResult.IdUsuario != 0)
+            {
+                responseLoginDto = JWTUtility.GenTokenkey(responseLoginDto, _jwtSettings);
+                responseLoginDto.Respuesta = 1;
+                responseLoginDto.Mensaje = "Exitoso";
+            }
+            else
+            {
+                responseLoginDto.Respuesta = 0;
+                responseLoginDto.Mensaje = "Fallido";
+            }
+            return responseLoginDto;
+        }
+        public async Task<string> recuperarContra(string correo)
+        {
+            var user = await _userRepository.recuperarContra(correo);
+            if (user == null)
+            {
+                return "Correo no encontrado";
+            }
+
+            string subject = "Rcuperacion de Contraseña";
+            string body = $"Hola {user.Nombre},<br/>Tu contraseña es: <strong>{user.Contrasena}</strong>";
+
+            try
+            {
+                await _emailUtility.SendEmailAsync(user.Correo, subject, body);
+                return "Correo enviado";
+            }
+            catch (Exception ex)
+            {
+                return "Error";
             }
         }
     }
