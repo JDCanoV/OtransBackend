@@ -122,10 +122,29 @@ namespace OtransBackend.Services
         public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
         {
             ResponseLoginDto responseLoginDto = new();
-            var userResult = await _userRepository.Login(loginDTO);
+            UsuarioDto usuario = new();
 
-            if (userResult.IdUsuario != 0)
+            var user = await _userRepository.Login(loginDTO);
+
+            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena)
+)
             {
+                usuario.IdUsuario = user.IdUsuario;
+                usuario.NumIdentificacion = user.NumIdentificacion;
+                usuario.Nombre = user.Nombre;
+                usuario.Apellido = user.Apellido;
+                usuario.Telefono = user.Telefono;
+                // usuario.TelefonoSos = user.TelefonoSos;
+                usuario.Correo = user.Correo;
+                
+                usuario.NombreEmpresa = user.NombreEmpresa;
+                usuario.NumCuenta = user.NumCuenta; 
+                usuario.Direccion = user.Direccion;
+                usuario.Licencia = user.Licencia;
+                usuario.Nit = user.Nit;
+                usuario.IdRol = user.IdRol;
+                usuario.IdEstado = user.IdEstado;
+
                 responseLoginDto = JWTUtility.GenTokenkey(responseLoginDto, _jwtSettings);
                 responseLoginDto.Respuesta = 1;
                 responseLoginDto.Mensaje = "Exitoso";
@@ -133,8 +152,9 @@ namespace OtransBackend.Services
             else
             {
                 responseLoginDto.Respuesta = 0;
-                responseLoginDto.Mensaje = "Fallido";
+                responseLoginDto.Mensaje = "Correo o contraseña incorrecta";
             }
+
             return responseLoginDto;
         }
         public async Task<string> recuperarContra(string correo)

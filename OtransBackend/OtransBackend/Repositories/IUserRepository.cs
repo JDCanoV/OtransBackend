@@ -12,7 +12,7 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddEmpresaAsync(Usuario user, IFormFile nitFile); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
         Task<Usuario> recuperarContra(string email);
-        Task<UsuarioDto> Login(LoginDto request);
+        Task<Usuario> Login(LoginDto request);
     }
 
     public class UserRepository : IUserRepository
@@ -70,29 +70,9 @@ namespace OtransBackend.Repositories
         {
             return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo == email);
         }
-        public async Task<UsuarioDto> Login(LoginDto request)
+        public async Task<Usuario> Login(LoginDto request)
         {
-            UsuarioDto usuario = new();
-            Usuario user = await _context.Usuario.FirstOrDefaultAsync(u => u.Correo.Equals(request.Correo) && u.Contrasena.Equals(request.Contrasena));
-            if (user != null)
-            {
-                usuario.IdUsuario = user.IdUsuario;
-                usuario.NumIdentificacion = user.NumIdentificacion;
-                usuario.Nombre = user.Nombre;
-                usuario.Apellido = user.Apellido;
-                usuario.Telefono = user.Telefono;
-               // usuario.TelefonoSos = user.TelefonoSos;
-                usuario.Correo = user.Correo;
-                usuario.Contrasena = user.Contrasena;
-                usuario.NombreEmpresa = user.NombreEmpresa;
-                usuario.NumCuenta = user.NumCuenta;
-                usuario.Direccion = user.Direccion;
-                usuario.Licencia = user.Licencia;
-                usuario.Nit = user.Nit;
-                usuario.IdRol = user.IdRol;
-                usuario.IdEstado = user.IdEstado;
-            }
-            return usuario;
+            return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo.Equals(request.Correo));
         }
         public async Task<Usuario> recuperarContra(string correo)
         {

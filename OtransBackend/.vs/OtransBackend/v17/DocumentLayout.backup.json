@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\utilities\\ipasswordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\utilities\\ipasswordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\utilities\\emailutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\utilities\\emailutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\jhoel\\documents\\otransbackend\\otransbackend\\otransbackend\\otransbackend\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,6 +83,45 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Repositories\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\IUserRepository.cs",
+              "RelativeToolTip": "OtransBackend\\Repositories\\IUserRepository.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAowEgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T02:52:06.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Services\\IUserService.cs",
+              "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
+              "RelativeToolTip": "OtransBackend\\Services\\IUserService.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAAwIoAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T02:51:51.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IPasswordHasher.cs",
+              "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Utilities\\IPasswordHasher.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Utilities\\IPasswordHasher.cs",
+              "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Utilities\\IPasswordHasher.cs",
+              "RelativeToolTip": "OtransBackend\\Utilities\\IPasswordHasher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T19:48:57.064Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "LoginDto.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Dtos\\LoginDto.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Dtos\\LoginDto.cs",
@@ -82,38 +129,24 @@
               "RelativeToolTip": "OtransBackend\\Dtos\\LoginDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T02:52:55.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Repositories\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\IUserRepository.cs",
-              "RelativeToolTip": "OtransBackend\\Repositories\\IUserRepository.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAUwE4AAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T02:52:06.635Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Services\\IUserService.cs",
-              "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
-              "RelativeToolTip": "OtransBackend\\Services\\IUserService.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T02:51:51.894Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T02:52:55.511Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "EmailUtility.cs",
+              "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Utilities\\EmailUtility.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Utilities\\EmailUtility.cs",
+              "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Utilities\\EmailUtility.cs",
+              "RelativeToolTip": "OtransBackend\\Utilities\\EmailUtility.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T01:21:38.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Program.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Program.cs",
@@ -121,12 +154,11 @@
               "RelativeToolTip": "OtransBackend\\Program.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAYwB0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T02:40:41.937Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T02:40:41.937Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Controllers\\WeatherForecastController.cs",
@@ -134,12 +166,11 @@
               "RelativeToolTip": "OtransBackend\\Controllers\\WeatherForecastController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T02:39:38.398Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T02:39:38.398Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "JWTUtility.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Utilities\\JWTUtility.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Utilities\\JWTUtility.cs",
@@ -147,8 +178,7 @@
               "RelativeToolTip": "OtransBackend\\Utilities\\JWTUtility.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T02:38:46.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T02:38:46.868Z"
             },
             {
               "$type": "Document",
@@ -158,14 +188,14 @@
               "RelativeDocumentMoniker": "OtransBackend\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\UserController.cs",
               "RelativeToolTip": "OtransBackend\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAwBUAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAowBYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-04T02:37:47.097Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "OtransBackend.http",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend.http",
               "RelativeDocumentMoniker": "OtransBackend\\OtransBackend.http",
@@ -173,12 +203,11 @@
               "RelativeToolTip": "OtransBackend\\OtransBackend.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-03T01:07:26.327Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T01:07:26.327Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Calificacion.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\Calificacion.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Repositories\\Models\\Calificacion.cs",
@@ -186,12 +215,11 @@
               "RelativeToolTip": "OtransBackend\\Repositories\\Models\\Calificacion.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T23:33:55.789Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T23:33:55.789Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "OtransContext.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\OtransContext.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Repositories\\Models\\OtransContext.cs",
@@ -199,12 +227,11 @@
               "RelativeToolTip": "OtransBackend\\Repositories\\Models\\OtransContext.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAwwCUAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T17:21:20.388Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T17:21:20.388Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "20250401191357_final1.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Migrations\\20250401191357_final1.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Migrations\\20250401191357_final1.cs",
@@ -212,12 +239,11 @@
               "RelativeToolTip": "OtransBackend\\Migrations\\20250401191357_final1.cs",
               "ViewState": "AgIAAAMBAAAAAAAAAIBJwOcAAAB3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T23:13:40.786Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T23:13:40.786Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Repositories\\Models\\Usuario.cs",
@@ -225,12 +251,11 @@
               "RelativeToolTip": "OtransBackend\\Repositories\\Models\\Usuario.cs",
               "ViewState": "AgIAABYAAAAAAAAAAIBQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T18:45:20.473Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T18:45:20.473Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "UsuarioLite.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\UsuarioLite.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Repositories\\Models\\UsuarioLite.cs",
@@ -238,12 +263,11 @@
               "RelativeToolTip": "OtransBackend\\Repositories\\Models\\UsuarioLite.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAEBUwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T19:37:41.547Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T19:37:41.547Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\Utilities\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "OtransBackend\\Utilities\\ApplicationDbContext.cs",
@@ -251,8 +275,7 @@
               "RelativeToolTip": "OtransBackend\\Utilities\\ApplicationDbContext.cs",
               "ViewState": "AgIAAHYAAAAAAAAAAAAgwIMAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T17:30:29.212Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T17:30:29.212Z"
             }
           ]
         }
