@@ -113,5 +113,85 @@ namespace OtransBackend.Controllers
                 });
             }
         }
+
+        [HttpPost("registerVehiculo")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> AddVehiculoAsync([FromForm] VehiculoDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    message = "Datos inválidos",
+                    errors = ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                        .ToList()
+                });
+            }
+
+            if (dto.Soat == null || dto.Soat.Length == 0)
+            {
+                return BadRequest(new { message = "El Soat es requerido" });
+            }
+
+            var allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png" };
+            var extension = Path.GetExtension(dto.Soat.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest(new
+                {
+                    message = "Tipo de archivo no permitido",
+                    allowedExtensions
+                });
+            }
+            if (dto.Tecnicomecanica == null || dto.Tecnicomecanica.Length == 0)
+            {
+                return BadRequest(new { message = "El Tecnicomecanica es requerido" });
+            }
+
+             allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png" };
+             extension = Path.GetExtension(dto.Tecnicomecanica.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest(new
+                {
+                    message = "Tipo de archivo no permitido",
+                    allowedExtensions
+                });
+            }
+            if (dto.LicenciaTransito == null || dto.LicenciaTransito.Length == 0)
+            {
+                return BadRequest(new { message = "El LicenciaTransito es requerido" });
+            }
+
+             allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png" };
+             extension = Path.GetExtension(dto.LicenciaTransito.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest(new
+                {
+                    message = "Tipo de archivo no permitido",
+                    allowedExtensions
+                });
+            }
+
+            try
+            {
+                var responseDto = await _userService.AddVehiculoAsync(dto);
+                return Ok(responseDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "Error al registrar vehiculo",
+                    details = ex.Message
+                });
+            }
+        }
     }
 }

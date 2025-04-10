@@ -8,7 +8,7 @@ public partial class Usuario
     public int IdUsuario { get; set; }
 
     public int NumIdentificacion { get; set; }
-
+    public byte[]? ArchiDocu { get; set; }
     public string Nombre { get; set; } = null!;
 
     public string Apellido { get; set; } = null!;

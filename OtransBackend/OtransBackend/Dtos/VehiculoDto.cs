@@ -8,11 +8,11 @@
 
         public string CapacidadCarga { get; set; } = string.Empty;
 
-        public byte[]? Soat { get; set; }
+        public IFormFile Soat { get; set; }
 
-        public byte[]? Tecnicomecanica { get; set; }
+        public IFormFile Tecnicomecanica { get; set; }
 
-        public byte[]? LicenciaTransito { get; set; }
+        public IFormFile LicenciaTransito { get; set; }
 
         public string NombreDueño { get; set; } = string.Empty;
 

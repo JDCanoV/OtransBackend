@@ -26,19 +26,20 @@ namespace OtransBackend.Dtos
     [Range(10000000, 9999999999, ErrorMessage = "Número de identificación inválido")]
     public int NumIdentificacion { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "La contraseña debe tener entre 6 y 100 caracteres")]
-        public string Telefono { get; set; }
+    [Required]
+    [StringLength(100, MinimumLength = 6, ErrorMessage = "La contraseña debe tener entre 6 y 100 caracteres")]
+    public string? Telefono { get; set; }
 
     [Phone(ErrorMessage = "Número de teléfono SOS inválido")]
-    public string TelefonoSos { get; set; }
+    public string? TelefonoSos { get; set; }
 
     [Required(ErrorMessage = "El archivo de licencia es requerido")]
-    public IFormFile Licencia { get; set; }
+    public IFormFile? Licencia { get; set; }
+    public IFormFile? ArchiDocu { get; set; }
 
     [Required(ErrorMessage = "El rol es requerido")]
         
-        public int? IdRol { get; set; }
+    public int? IdRol { get; set; }
 
         public int? IdEstado { get; set; }
     }
