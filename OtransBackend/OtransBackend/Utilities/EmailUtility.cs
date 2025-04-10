@@ -6,8 +6,8 @@ namespace OtransBackend.Utilities
     public class EmailUtility
     {
         private readonly string _smtpServer = "smtp.gmail.com"; // Cambiar por tu servidor SMTP
-        private readonly string _smtpUsername = "otransudec@gmail.com";  // Cambiar por tu correo
-        private readonly string _smtpPassword = "tu_contraseña"; // Cambiar por tu contraseña
+        private readonly string _smtpUsername = "blancasaludeps@gmail.com";  // Cambiar por tu correo
+        private readonly string _smtpPassword = "nrprwwellwbvzmik"; // Cambiar por tu contraseña
         private readonly int _smtpPort = 587; // O el puerto adecuado
 
         public async Task SendEmailAsync(string toEmail, string subject, string body)

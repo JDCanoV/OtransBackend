@@ -159,24 +159,52 @@ namespace OtransBackend.Services
         }
         public async Task<string> recuperarContra(string correo)
         {
-            var user = await _userRepository.recuperarContra(correo);
+            var user = await _userRepository.GetUserByEmailAsync(correo);
+
             if (user == null)
             {
                 return "Correo no encontrado";
             }
 
-            string subject = "Rcuperacion de Contraseña";
-            string body = $"Hola {user.Nombre},<br/>Tu contraseña es: <strong>{user.Contrasena}</strong>";
+            // Generar una nueva contraseña aleatoria
+            string newPassword = GenerateRandomPassword(8);  // Genera una contraseña de 8 caracteres
+
+            // Hashear la nueva contraseña
+            string hashedPassword = _passwordHasher.HashPassword(newPassword);
+
+            // Actualizar la contraseña en la base de datos
+            user.Contrasena = hashedPassword;
+            await _userRepository.UpdateUserPasswordAsync(user);  // Necesitas este método en tu repositorio
+
+            // Enviar el correo con la nueva contraseña
+            string subject = "Recuperación de Contraseña";
+            string body = $"Hola {user.Nombre},<br/>Tu nueva contraseña es: <strong>{newPassword}</strong> cambiala lo antes posible";
 
             try
             {
                 await _emailUtility.SendEmailAsync(user.Correo, subject, body);
-                return "Correo enviado";
+                return "Correo enviado con la nueva contraseña";
             }
             catch (Exception ex)
             {
-                return "Error";
+                return "Error al enviar el correo";
             }
         }
+
+        // Método para generar una contraseña aleatoria
+        private string GenerateRandomPassword(int length)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            Random random = new Random();
+            char[] password = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                password[i] = validChars[random.Next(validChars.Length)];
+            }
+
+            return new string(password);
+        }
+
     }
 }

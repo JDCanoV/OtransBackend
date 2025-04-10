@@ -11,8 +11,8 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddTransportistaAsync(Usuario user, IFormFile licenciaFile); // Método para agregar transportista
         Task<Usuario> AddEmpresaAsync(Usuario user, IFormFile nitFile); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
-        Task<Usuario> recuperarContra(string email);
         Task<Usuario> Login(LoginDto request);
+        Task UpdateUserPasswordAsync(Usuario user);
     }
 
     public class UserRepository : IUserRepository
@@ -74,9 +74,11 @@ namespace OtransBackend.Repositories
         {
             return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo.Equals(request.Correo));
         }
-        public async Task<Usuario> recuperarContra(string correo)
+        public async Task UpdateUserPasswordAsync(Usuario user)
         {
-            return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo == correo);
+            _context.Usuario.Update(user);  // Actualiza el usuario con la nueva contraseña
+            await _context.SaveChangesAsync();  // Guarda los cambios en la base de datos
         }
+
     }
 }
