@@ -45,6 +45,7 @@ namespace OtransBackend.Services
                 Contrasena = hashedPassword,
                 Telefono = dto.Telefono,
                 TelefonoSos = dto.TelefonoSos,
+                NumIdentificacion = dto.NumIdentificacion,
                 IdRol = dto.IdRol ?? 1,  // Rol predeterminado
                 IdEstado = dto.IdEstado ?? 1  // Estado predeterminado
             };
@@ -83,6 +84,7 @@ namespace OtransBackend.Services
                 NombreEmpresa = dto.NombreEmpresa,
                 NumCuenta = dto.NumCuenta,
                 Direccion = dto.Direccion,
+                NumIdentificacion = dto.NumIdentificacion,
                 Nit = null,  // Inicializamos como null
                 ArchiDocu = null,
                 IdRol = dto.IdRol ?? 2,
