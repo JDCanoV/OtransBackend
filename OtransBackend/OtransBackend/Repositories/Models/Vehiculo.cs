@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OtransBackend.Repositories.Models;
 
@@ -29,6 +28,7 @@ public partial class Vehiculo
 
     public int? IdEstado { get; set; }
 
+    [ForeignKey("IdEstado")]
     public virtual Estado? IdEstadoNavigation { get; set; }
 
     public virtual Usuario? IdTransportistaNavigation { get; set; }

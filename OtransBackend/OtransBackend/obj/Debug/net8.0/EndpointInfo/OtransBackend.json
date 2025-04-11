@@ -31,6 +31,10 @@
                   "Licencia": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "ArchiDocu": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -56,6 +60,45 @@
                 "type": "object",
                 "properties": {
                   "NitFile": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ArchiDocu": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/registerVehiculo": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Soat": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Tecnicomecanica": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "LicenciaTransito": {
                     "type": "string",
                     "format": "binary"
                   }

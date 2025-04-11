@@ -18,7 +18,8 @@ namespace OtransBackend.Dtos
         public string? Direccion { get; set; } // Para empresa
         [Required(ErrorMessage = "El archivo de NIT es requerido")]
         public IFormFile? NitFile { get; set; }
-        
+        public IFormFile? ArchiDocu { get; set; }
+
         public int? IdRol { get; set; }
         public int? IdEstado { get; set; }
     }

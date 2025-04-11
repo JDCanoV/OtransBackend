@@ -1,9 +1,6 @@
 ﻿using OtransBackend.Dtos;
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading.Tasks;
 using OtransBackend.Repositories;
 
 namespace OtransBackend.Services
@@ -12,6 +9,7 @@ namespace OtransBackend.Services
     {
         Task<Usuario> RegisterTransportistaAsync(TransportistaDto dto); // El archivo está en el DTO
         Task<Usuario> RegisterEmpresaAsync(empresaDto dto); // El archivo está en el DTO
+        Task<Vehiculo> AddVehiculoAsync(VehiculoDto dto);
     }
 
     public class UserService : IUserService
@@ -38,7 +36,7 @@ namespace OtransBackend.Services
             // Encriptar la contraseña
             var hashedPassword = _passwordHasher.HashPassword(dto.Contrasena);
 
-            // Crear el transportista
+            // Crear el transportista con valores predeterminados si no se proporcionan
             var user = new Usuario
             {
                 Nombre = dto.Nombre,
@@ -47,21 +45,18 @@ namespace OtransBackend.Services
                 Contrasena = hashedPassword,
                 Telefono = dto.Telefono,
                 TelefonoSos = dto.TelefonoSos,
-                Licencia = null,  // Inicializamos como null
                 IdRol = dto.IdRol ?? 1,  // Rol predeterminado
                 IdEstado = dto.IdEstado ?? 1  // Estado predeterminado
             };
 
-            // Si se ha enviado la licencia, la convertimos y la asignamos al usuario
-            if (dto.Licencia != null)
-            {
-                byte[] licenciaFileBytes = ConvertFileToBytes(dto.Licencia);  // Convertimos el archivo a binario
-                user.Licencia = licenciaFileBytes;  // Asignamos el binario
-            }
+            // Asignación de Licencia y ArchiDocu si existen
+            user.Licencia = dto.Licencia != null ? ConvertFileToBytes(dto.Licencia) : null;
+            user.ArchiDocu = dto.ArchiDocu != null ? ConvertFileToBytes(dto.ArchiDocu) : null;
 
             // Guardar el transportista en la base de datos
-            return await _userRepository.AddTransportistaAsync(user, dto.Licencia); // Usamos el método específico para transportista
+            return await _userRepository.AddTransportistaAsync(user, dto.Licencia, dto.ArchiDocu);
         }
+
 
         // Registro de empresas
         public async Task<Usuario> RegisterEmpresaAsync(empresaDto dto)
@@ -89,8 +84,9 @@ namespace OtransBackend.Services
                 NumCuenta = dto.NumCuenta,
                 Direccion = dto.Direccion,
                 Nit = null,  // Inicializamos como null
-                IdRol = dto.IdRol ?? 2, 
-                IdEstado = dto.IdEstado ?? 1  
+                ArchiDocu = null,
+                IdRol = dto.IdRol ?? 2,
+                IdEstado = dto.IdEstado ?? 1
             };
 
             // Si se ha enviado el NIT, lo convertimos y lo asignamos al usuario
@@ -99,9 +95,14 @@ namespace OtransBackend.Services
                 byte[] nitFileBytes = ConvertFileToBytes(dto.NitFile);  // Convertimos el archivo a binario
                 user.Nit = nitFileBytes;  // Asignamos el binario
             }
+            if (dto.ArchiDocu != null)
+            {
+                byte[] ArchiDocuBytes = ConvertFileToBytes(dto.ArchiDocu);  // Convertimos el archivo a binario
+                user.ArchiDocu = ArchiDocuBytes;  // Asignamos el binario
+            }
 
             // Guardar la empresa en la base de datos
-            return await _userRepository.AddEmpresaAsync(user, dto.NitFile); // Usamos el método específico para empresa
+            return await _userRepository.AddEmpresaAsync(user, dto.NitFile,dto.ArchiDocu); // Usamos el método específico para empresa
         }
 
         // Convertir archivo a binario
@@ -112,6 +113,49 @@ namespace OtransBackend.Services
                 file.CopyTo(memoryStream);
                 return memoryStream.ToArray();
             }
+        }
+
+        public async Task<Vehiculo> AddVehiculoAsync(VehiculoDto dto)
+        {
+
+
+            // Crear la vehiculo
+            var vehiculo = new Vehiculo
+            {
+                Placa = dto.Placa,
+                CapacidadCarga = dto.CapacidadCarga,
+                Soat = null,
+                Tecnicomecanica = null,
+                LicenciaTransito = null,
+                NombreDueño = dto.NombreDueño,
+                NumIdentDueño = dto.NumIdentDueño,
+                TelDueño = dto.TelDueño,
+                Carroceria = dto.Carroceria,
+                IdTransportista = dto.IdTransportista,
+                IdEstado = dto.IdEstado ?? 1
+            };
+
+            // Si se ha enviado el SOAT, lo convertimos y lo asignamos al vehiculo
+            if (dto.Soat != null)
+            {
+                byte[] soatFileBytes = ConvertFileToBytes(dto.Soat);  // Convertimos el archivo a binario
+                vehiculo.Soat = soatFileBytes;  // Asignamos el binario
+            }
+            // Si se ha enviado el Tecnicomecanica, lo convertimos y lo asignamos al vehiculo
+            if (dto.Tecnicomecanica != null)
+            {
+                byte[] TecnicomecanicaFileBytes = ConvertFileToBytes(dto.Tecnicomecanica);  // Convertimos el archivo a binario
+                vehiculo.Soat = TecnicomecanicaFileBytes;  // Asignamos el binario
+            }
+            // Si se ha enviado el LicenciaTransito, lo convertimos y lo asignamos al vehiculo
+            if (dto.LicenciaTransito != null)
+            {
+                byte[] LicenciaTransitoFileBytes = ConvertFileToBytes(dto.LicenciaTransito);  // Convertimos el archivo a binario
+                vehiculo.Soat = LicenciaTransitoFileBytes;  // Asignamos el binario
+            }
+
+            // Guardar la empresa en la base de datos
+            return await _userRepository.AddVehiculoAsync(vehiculo, dto.Soat, dto.Tecnicomecanica, dto.LicenciaTransito); // Usamos el método específico para empresa
         }
     }
 }
