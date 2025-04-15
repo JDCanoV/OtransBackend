@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OtransBackend.Dtos;
 using OtransBackend.Services;
@@ -16,6 +17,30 @@ namespace OtransBackend.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+        [HttpPost]
+        [Route("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PostIniciarSesion([FromBody] LoginDto requestInicioSesionDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _userService.Login(requestInicioSesionDto));
+        }
+        [HttpPost]
+        [Route("RecuperarContra")]
+        public async Task<IActionResult> EnviarContra(string correo)
+        {
+            var result = await _userService.recuperarContra(correo);
+            if (result.Contains("Error"))
+            {
+                return BadRequest(new { message = result });
+            }
+
+            return Ok(new { message = result });
         }
 
         [HttpPost("registerTransportista")]
@@ -193,5 +218,6 @@ namespace OtransBackend.Controllers
                 });
             }
         }
+        
     }
 }

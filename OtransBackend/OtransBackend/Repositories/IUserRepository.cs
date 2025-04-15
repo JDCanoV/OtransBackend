@@ -1,5 +1,7 @@
 ﻿using Google.Apis.Drive.v3.Data;
 using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using OtransBackend.Dtos;
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using System.IO;
@@ -12,6 +14,8 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddTransportistaAsync(Usuario user, IFormFile licenciaFile, IFormFile ArchiDocu); // Método para agregar transportista
         Task<Usuario> AddEmpresaAsync(Usuario user, IFormFile nitFile, IFormFile ArchiDocu); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
+        Task<Usuario> Login(LoginDto request);
+        Task UpdateUserPasswordAsync(Usuario user);
     }
 
     public class UserRepository : IUserRepository
@@ -106,5 +110,15 @@ namespace OtransBackend.Repositories
 
             return vehiculo; // Retornamos el vehículo guardado
         }
+        public async Task<Usuario> Login(LoginDto request)
+        {
+            return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo.Equals(request.Correo));
+        }
+        public async Task UpdateUserPasswordAsync(Usuario user)
+        {
+            _context.Usuario.Update(user);  // Actualiza el usuario con la nueva contraseña
+            await _context.SaveChangesAsync();  // Guarda los cambios en la base de datos
+        }
+
     }
 }
