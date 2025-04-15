@@ -363,3 +363,4 @@ C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\ref\OtransBackend.dll
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
