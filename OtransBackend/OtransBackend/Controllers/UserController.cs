@@ -2,17 +2,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OtransBackend.Dtos;
+using OtransBackend.Repositories;
 using OtransBackend.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Linq;
 
 namespace OtransBackend.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
         public UserController(IUserService userService)
         {
@@ -218,6 +221,27 @@ namespace OtransBackend.Controllers
                 });
             }
         }
+
         
+            [HttpGet("pendientes-validacion")]
+            public async Task<ActionResult<IEnumerable<UsuarioRevisionDto>>> GetUsuariosPendientesValidacion()
+            {
+                var usuarios = await _userService.ObtenerUsuariosPendientesValidacionAsync();
+                return Ok(usuarios);
+            }
+
+
+        [HttpGet("detalle/{idUsuario}")]
+        public async Task<IActionResult> ObtenerDetalleUsuario(int idUsuario)
+        {
+            var detalle = await _userService.ObtenerDetalleUsuarioAsync(idUsuario);
+            if (detalle == null)
+                return NotFound("Usuario no encontrado");
+
+            return Ok(detalle);
+        }
+
+
+
     }
 }

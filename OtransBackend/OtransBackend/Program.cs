@@ -75,12 +75,8 @@ builder.Services.AddScoped<EmailUtility>();
 builder.Services.AddScoped<JWTUtility>();
 
 // GoogleDrive
-builder.Services.AddScoped<GoogleDriveService>(provider =>
-{
-    var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "Utilities", "client_secret_741082527421-1e8jasp95vkv6b20sqo8i2pfh7kio26v.apps.googleusercontent.com");
-    return new GoogleDriveService(credentialPath);
-});
-builder.Services.AddScoped<GoogleDriveRepository>();
+builder.Services.AddScoped<GoogleDriveService, GoogleDriveService>();
+
 
 // Swagger mejorado
 builder.Services.AddSwaggerGen(options =>

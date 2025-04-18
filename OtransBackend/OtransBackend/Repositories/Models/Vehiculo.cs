@@ -10,11 +10,11 @@ public partial class Vehiculo
 
     public string CapacidadCarga { get; set; } = null!;
 
-    public byte[]? Soat { get; set; }
+    public string? Soat { get; set; }
 
-    public byte[]? Tecnicomecanica { get; set; }
+    public string? Tecnicomecanica { get; set; }
 
-    public byte[]? LicenciaTransito { get; set; }
+    public string? LicenciaTransito { get; set; }
 
     public string NombreDueño { get; set; } = null!;
 

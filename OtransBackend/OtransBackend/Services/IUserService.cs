@@ -7,11 +7,13 @@ namespace OtransBackend.Services
 {
     public interface IUserService
     {
-        Task<Usuario> RegisterTransportistaAsync(TransportistaDto dto); // El archivo está en el DTO
-        Task<Usuario> RegisterEmpresaAsync(empresaDto dto); // El archivo está en el DTO
+        Task<Usuario> RegisterTransportistaAsync(TransportistaDto dto);
+        Task<Usuario> RegisterEmpresaAsync(empresaDto dto);
         Task<Vehiculo> AddVehiculoAsync(VehiculoDto dto);
-        Task<ResponseLoginDto> Login(LoginDto loginDto); 
-        Task<string> recuperarContra(string correo); 
+        Task<ResponseLoginDto> Login(LoginDto loginDto);
+        Task<string> recuperarContra(string correo);
+        Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
+        Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario);
     }
 
     public class UserService : IUserService
@@ -20,29 +22,27 @@ namespace OtransBackend.Services
         private readonly IPasswordHasher _passwordHasher;
         private readonly JwtSettingsDto _jwtSettings;
         private readonly EmailUtility _emailUtility;
+        private readonly GoogleDriveService _googleDriveService;
 
-        public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility)
+        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _jwtSettings = jwtSettings;
             _emailUtility = emailUtility;
+            _googleDriveService = googleDriveService;
         }
 
-        // Registro de transportistas
+        // ---------------------------- REGISTRO TRANSPORTISTA ----------------------------
         public async Task<Usuario> RegisterTransportistaAsync(TransportistaDto dto)
         {
-            // Verificar si el correo ya existe
             var existingUser = await _userRepository.GetUserByEmailAsync(dto.Correo);
             if (existingUser != null)
-            {
                 throw new Exception("El correo ya está registrado.");
-            }
 
-            // Encriptar la contraseña
             var hashedPassword = _passwordHasher.HashPassword(dto.Contrasena);
-
-            // Crear el transportista con valores predeterminados si no se proporcionan
+            String UrlArchiDocu= await _googleDriveService.UploadFileAsync(dto.ArchiDocu, "CC_" + dto.NumIdentificacion);
+            string urlLicencia = await _googleDriveService.UploadFileAsync(dto.Licencia, "NIT_" + dto.NumIdentificacion);
             var user = new Usuario
             {
                 Nombre = dto.Nombre,
@@ -52,89 +52,59 @@ namespace OtransBackend.Services
                 Telefono = dto.Telefono,
                 TelefonoSos = dto.TelefonoSos,
                 NumIdentificacion = dto.NumIdentificacion,
-                IdRol = dto.IdRol ?? 1,  // Rol predeterminado
-                IdEstado = dto.IdEstado ?? 1  // Estado predeterminado
+                IdRol = dto.IdRol ?? 1,
+                IdEstado = dto.IdEstado ?? 1,
+                Licencia = urlLicencia,
+                ArchiDocu = UrlArchiDocu
             };
 
-            // Asignación de Licencia y ArchiDocu si existen
-            user.Licencia = dto.Licencia != null ? ConvertFileToBytes(dto.Licencia) : null;
-            user.ArchiDocu = dto.ArchiDocu != null ? ConvertFileToBytes(dto.ArchiDocu) : null;
-
-            // Guardar el transportista en la base de datos
-            return await _userRepository.AddTransportistaAsync(user, dto.Licencia, dto.ArchiDocu);
+            return await _userRepository.AddTransportistaAsync(user);
         }
 
-
-        // Registro de empresas
+        // ---------------------------- REGISTRO EMPRESA ----------------------------
         public async Task<Usuario> RegisterEmpresaAsync(empresaDto dto)
         {
-            // Verificar si el correo ya existe
             var existingUser = await _userRepository.GetUserByEmailAsync(dto.Correo);
             if (existingUser != null)
-            {
                 throw new Exception("El correo ya está registrado.");
-            }
 
-            // Encriptar la contraseña
             var hashedPassword = _passwordHasher.HashPassword(dto.Contrasena);
-
-            // Crear la empresa
+            String UrlArchiDocu = await _googleDriveService.UploadFileAsync(dto.ArchiDocu, "CC_" + dto.NumIdentificacion);
+            string urlNit = await _googleDriveService.UploadFileAsync(dto.NitFile, "NIT_" + dto.NumIdentificacion);
             var user = new Usuario
             {
                 Nombre = dto.Nombre,
                 Apellido = dto.Apellido,
                 Correo = dto.Correo,
-                NumIdentificacion=dto.NumIdentificacion,
+                NumIdentificacion = dto.NumIdentificacion,
                 Contrasena = hashedPassword,
                 Telefono = dto.Telefono,
                 TelefonoSos = dto.TelefonoSos,
                 NombreEmpresa = dto.NombreEmpresa,
                 NumCuenta = dto.NumCuenta,
                 Direccion = dto.Direccion,
-                Nit = null,  // Inicializamos como null
-                ArchiDocu = null,
+                Nit = urlNit,
+                ArchiDocu = UrlArchiDocu,
                 IdRol = dto.IdRol ?? 2,
                 IdEstado = dto.IdEstado ?? 1
             };
 
-            // Si se ha enviado el NIT, lo convertimos y lo asignamos al usuario
-            if (dto.NitFile != null)
-            {
-                byte[] nitFileBytes = ConvertFileToBytes(dto.NitFile);  // Convertimos el archivo a binario
-                user.Nit = nitFileBytes;  // Asignamos el binario
-            }
-            if (dto.ArchiDocu != null)
-            {
-                byte[] ArchiDocuBytes = ConvertFileToBytes(dto.ArchiDocu);  // Convertimos el archivo a binario
-                user.ArchiDocu = ArchiDocuBytes;  // Asignamos el binario
-            }
-
-            // Guardar la empresa en la base de datos
-            return await _userRepository.AddEmpresaAsync(user, dto.NitFile,dto.ArchiDocu); // Usamos el método específico para empresa
+            return await _userRepository.AddEmpresaAsync(user);
         }
 
-        // Convertir archivo a binario
-        private byte[] ConvertFileToBytes(IFormFile file)
-        {
-            using (var memoryStream = new System.IO.MemoryStream())
-            {
-                file.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-        }
-
+        // ---------------------------- REGISTRO VEHÍCULO ----------------------------
         public async Task<Vehiculo> AddVehiculoAsync(VehiculoDto dto)
         {
-
-
-            // Crear la vehiculo
+            String UrlSoat = await _googleDriveService.UploadFileAsync(dto.Soat, "SOAT_" + dto.NumIdentDueño);
+            string urlLicenciaTransito = await _googleDriveService.UploadFileAsync(dto.LicenciaTransito, "LICENCIA_" + dto.NumIdentDueño);
+            string urlTecnicomecanica = await _googleDriveService.UploadFileAsync(dto.Tecnicomecanica, "TECNO_" + dto.NumIdentDueño);
             var vehiculo = new Vehiculo
             {
                 Placa = dto.Placa,
                 CapacidadCarga = dto.CapacidadCarga,
-                Soat = null,
-                Tecnicomecanica = null,
-                LicenciaTransito = null,
+                Soat = UrlSoat,
+                Tecnicomecanica = urlLicenciaTransito,
+                LicenciaTransito = urlTecnicomecanica,
                 NombreDueño = dto.NombreDueño,
                 NumIdentDueño = dto.NumIdentDueño,
                 TelDueño = dto.TelDueño,
@@ -143,28 +113,10 @@ namespace OtransBackend.Services
                 IdEstado = dto.IdEstado ?? 1
             };
 
-            // Si se ha enviado el SOAT, lo convertimos y lo asignamos al vehiculo
-            if (dto.Soat != null)
-            {
-                byte[] soatFileBytes = ConvertFileToBytes(dto.Soat);  // Convertimos el archivo a binario
-                vehiculo.Soat = soatFileBytes;  // Asignamos el binario
-            }
-            // Si se ha enviado el Tecnicomecanica, lo convertimos y lo asignamos al vehiculo
-            if (dto.Tecnicomecanica != null)
-            {
-                byte[] TecnicomecanicaFileBytes = ConvertFileToBytes(dto.Tecnicomecanica);  // Convertimos el archivo a binario
-                vehiculo.Soat = TecnicomecanicaFileBytes;  // Asignamos el binario
-            }
-            // Si se ha enviado el LicenciaTransito, lo convertimos y lo asignamos al vehiculo
-            if (dto.LicenciaTransito != null)
-            {
-                byte[] LicenciaTransitoFileBytes = ConvertFileToBytes(dto.LicenciaTransito);  // Convertimos el archivo a binario
-                vehiculo.Soat = LicenciaTransitoFileBytes;  // Asignamos el binario
-            }
-
-            // Guardar la empresa en la base de datos
-            return await _userRepository.AddVehiculoAsync(vehiculo, dto.Soat, dto.Tecnicomecanica, dto.LicenciaTransito); // Usamos el método específico para empresa
+            return await _userRepository.AddVehiculoAsync(vehiculo);
         }
+
+        // ---------------------------- LOGIN ----------------------------
         public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
         {
             ResponseLoginDto responseLoginDto = new();
@@ -172,24 +124,22 @@ namespace OtransBackend.Services
 
             var user = await _userRepository.Login(loginDTO);
 
-            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena)
-)
+            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena))
             {
-                usuario.IdUsuario = user.IdUsuario;
-                usuario.NumIdentificacion = user.NumIdentificacion;
-                usuario.Nombre = user.Nombre;
-                usuario.Apellido = user.Apellido;
-                usuario.Telefono = user.Telefono;
-                // usuario.TelefonoSos = user.TelefonoSos;
-                usuario.Correo = user.Correo;
-                
-                usuario.NombreEmpresa = user.NombreEmpresa;
-                usuario.NumCuenta = user.NumCuenta; 
-                usuario.Direccion = user.Direccion;
-                usuario.Licencia = user.Licencia;
-                usuario.Nit = user.Nit;
-                usuario.IdRol = user.IdRol;
-                usuario.IdEstado = user.IdEstado;
+                usuario = new UsuarioDto
+                {
+                    IdUsuario = user.IdUsuario,
+                    NumIdentificacion = user.NumIdentificacion,
+                    Nombre = user.Nombre,
+                    Apellido = user.Apellido,
+                    Telefono = user.Telefono,
+                    Correo = user.Correo,
+                    NombreEmpresa = user.NombreEmpresa,
+                    NumCuenta = user.NumCuenta,
+                    Direccion = user.Direccion,
+                    IdRol = user.IdRol,
+                    IdEstado = user.IdEstado
+                };
 
                 responseLoginDto = JWTUtility.GenTokenkey(responseLoginDto, _jwtSettings);
                 responseLoginDto.Respuesta = 1;
@@ -203,54 +153,106 @@ namespace OtransBackend.Services
 
             return responseLoginDto;
         }
+
+        // ---------------------------- RECUPERACIÓN DE CONTRASEÑA ----------------------------
         public async Task<string> recuperarContra(string correo)
         {
             var user = await _userRepository.GetUserByEmailAsync(correo);
+            if (user == null) return "Correo no encontrado";
 
-            if (user == null)
-            {
-                return "Correo no encontrado";
-            }
-
-            // Generar una nueva contraseña aleatoria
-            string newPassword = GenerateRandomPassword(8);  // Genera una contraseña de 8 caracteres
-
-            // Hashear la nueva contraseña
+            string newPassword = GenerateRandomPassword(8);
             string hashedPassword = _passwordHasher.HashPassword(newPassword);
 
-            // Actualizar la contraseña en la base de datos
             user.Contrasena = hashedPassword;
-            await _userRepository.UpdateUserPasswordAsync(user);  // Necesitas este método en tu repositorio
+            await _userRepository.UpdateUserPasswordAsync(user);
 
-            // Enviar el correo con la nueva contraseña
             string subject = "Recuperación de Contraseña";
-            string body = $"Hola {user.Nombre},<br/>Tu nueva contraseña es: <strong>{newPassword}</strong> cambiala lo antes posible";
+            string body = $"Hola {user.Nombre},<br/>Tu nueva contraseña es: <strong>{newPassword}</strong>. Cámbiala lo antes posible.";
 
             try
             {
                 await _emailUtility.SendEmailAsync(user.Correo, subject, body);
                 return "Correo enviado con la nueva contraseña";
             }
-            catch (Exception ex)
+            catch
             {
                 return "Error al enviar el correo";
             }
         }
 
-        // Método para generar una contraseña aleatoria
         private string GenerateRandomPassword(int length)
         {
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            Random random = new Random();
-            char[] password = new char[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                password[i] = validChars[random.Next(validChars.Length)];
-            }
-
-            return new string(password);
+            Random random = new();
+            return new string(Enumerable.Repeat(validChars, length).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        // ---------------------------- USUARIOS PENDIENTES ----------------------------
+        public async Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync()
+        {
+            return await _userRepository.ObtenerUsuariosPendientesValidacionAsync();
+        }
+
+        // ---------------------------- UTILIDAD (archivo a bytes) ----------------------------
+        private byte[] ConvertFileToBytes(IFormFile file)
+        {
+            using var memoryStream = new System.IO.MemoryStream();
+            file.CopyTo(memoryStream);
+            return memoryStream.ToArray();
+        }
+         //---------------------------- DETALLES ----------------------------
+        public async Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario)
+        {
+            var usuario = await _userRepository.ObtenerUsuarioConVehiculoPorIdAsync(idUsuario);
+            if (usuario == null) return null;
+
+            var detalle = new UsuarioDetalleDto
+            {
+                IdUsuario = usuario.IdUsuario,
+                NombreCompleto = $"{usuario.Nombre} {usuario.Apellido}",
+                Correo = usuario.Correo,
+                Telefono = usuario.Telefono,
+                TipoUsuario = usuario.NombreEmpresa != null ? "Empresa" : "Transportista",
+                Observaciones = "Pendiente revisión",
+                ArchiDocu = usuario.ArchiDocu
+            };
+
+            if (usuario.NombreEmpresa != null)
+            {
+                detalle.Nit = usuario.Nit;
+                detalle.Documentos.Add(new DocumentoValidacionDto
+                {
+                    NombreDocumento = "NIT",
+                    EsValido = false
+                });
+            }
+            else
+            {
+                detalle.Licencia = usuario.Licencia;
+                detalle.Documentos.Add(new DocumentoValidacionDto
+                {
+                    NombreDocumento = "Licencia Conducción",
+                    EsValido = false
+                });
+
+                if (usuario.Vehiculos.Any())
+                {
+                    var vehiculo = usuario.Vehiculos.First();
+                    detalle.Placa = vehiculo.Placa;
+                    detalle.Soat = vehiculo.Soat;
+                    detalle.Tecnomecanico = vehiculo.Tecnicomecanica;
+                    detalle.LicenciaTransito = vehiculo.LicenciaTransito;
+
+                    detalle.Documentos.AddRange(new List<DocumentoValidacionDto>
+                {
+                    new DocumentoValidacionDto { NombreDocumento = "Soat", EsValido = false },
+                    new DocumentoValidacionDto { NombreDocumento = "Técnico Mecánica", EsValido = false },
+                    new DocumentoValidacionDto { NombreDocumento = "Licencia Tránsito", EsValido = false }
+                });
+                }
+            }
+
+            return detalle;
+        }
     }
 }

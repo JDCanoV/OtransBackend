@@ -1,6 +1,5 @@
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.json
-C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Utilities\client_secret_741082527421-1e8jasp95vkv6b20sqo8i2pfh7kio26v.apps.googleusercontent.com.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\OtransBackend.staticwebassets.endpoints.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\OtransBackend.exe
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\OtransBackend.deps.json
@@ -179,7 +178,6 @@ C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\OtransBackend.pdb
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\OtransBackend.genruntimeconfig.cache
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\ref\OtransBackend.dll
-C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.json
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Utilities\client_secret_741082527421-1e8jasp95vkv6b20sqo8i2pfh7kio26v.apps.googleusercontent.com.json
@@ -364,3 +362,5 @@ C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\GoogleDrive\credentials.json
+C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
