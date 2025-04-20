@@ -2,6 +2,7 @@
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using OtransBackend.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace OtransBackend.Services
 {
@@ -15,6 +16,7 @@ namespace OtransBackend.Services
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario);
         Task ValidateUsuarioAsync(UsuarioValidacionDto dto);
+        Task ReuploadDocumentosAsync(ReuploadDocumentosDto dto);
     }
 
     public class UserService : IUserService
@@ -145,6 +147,7 @@ namespace OtransBackend.Services
                 responseLoginDto = JWTUtility.GenTokenkey(responseLoginDto, _jwtSettings);
                 responseLoginDto.Respuesta = 1;
                 responseLoginDto.Mensaje = "Exitoso";
+                responseLoginDto.Usuario = usuario;   // ← POPULATE
             }
             else
             {
@@ -201,7 +204,7 @@ namespace OtransBackend.Services
             file.CopyTo(memoryStream);
             return memoryStream.ToArray();
         }
-         //---------------------------- DETALLES ----------------------------
+        //---------------------------- DETALLES ----------------------------
         public async Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario)
         {
             var usuario = await _userRepository.ObtenerUsuarioConVehiculoPorIdAsync(idUsuario);
@@ -215,8 +218,16 @@ namespace OtransBackend.Services
                 Telefono = usuario.Telefono,
                 TipoUsuario = usuario.NombreEmpresa != null ? "Empresa" : "Transportista",
                 Observaciones = "Pendiente revisión",
-                ArchiDocu = usuario.ArchiDocu
+               
             };
+
+            // Siempre agregamos ArchiDocu como primer documento
+            detalle.ArchiDocu = usuario.ArchiDocu;
+            detalle.Documentos.Add(new DocumentoValidacionDto
+            {
+                NombreDocumento = "Documento Identidad",
+                EsValido = false
+            });
 
             if (usuario.NombreEmpresa != null)
             {
@@ -245,18 +256,18 @@ namespace OtransBackend.Services
                     detalle.LicenciaTransito = vehiculo.LicenciaTransito;
 
                     detalle.Documentos.AddRange(new List<DocumentoValidacionDto>
-                {
-                    new DocumentoValidacionDto { NombreDocumento = "Soat", EsValido = false },
-                    new DocumentoValidacionDto { NombreDocumento = "Técnico Mecánica", EsValido = false },
-                    new DocumentoValidacionDto { NombreDocumento = "Licencia Tránsito", EsValido = false }
-                });
+     {
+         new DocumentoValidacionDto { NombreDocumento = "Soat",             EsValido = false },
+         new DocumentoValidacionDto { NombreDocumento = "Técnico Mecánica", EsValido = false },
+         new DocumentoValidacionDto { NombreDocumento = "Licencia Tránsito", EsValido = false }
+     });
                 }
             }
 
             return detalle;
         }
 
-        //---------------------------- DETALLES ----------------------------
+        //---------------------------- VALIDAR USUARIO  ----------------------------
 
         public async Task ValidateUsuarioAsync(UsuarioValidacionDto dto)
         {
@@ -277,6 +288,29 @@ namespace OtransBackend.Services
 
             // 4) Envía el correo
             await _emailUtility.SendEmailAsync(usuario.Correo, asunto, cuerpo);
+        }
+
+        public async Task ReuploadDocumentosAsync(ReuploadDocumentosDto dto)
+        {
+            // 1) Sube cada archivo y actualiza la URL guardada en BD
+            foreach (var doc in dto.Documentos)
+            {
+                // Ahora UploadFileAsync devuelve la URL directamente
+                string url = await _googleDriveService.UploadFileAsync(
+                    doc.Archivo,
+                    $"{doc.NombreDocumento}_{dto.IdUsuario}"
+                );
+
+                // Guarda esa URL en la columna correspondiente
+                await _userRepository.ActualizarDocumentoAsync(
+                    dto.IdUsuario,
+                    doc.NombreDocumento,
+                    url
+                );
+            }
+
+            // 2) Cambia de nuevo a PendienteValidacion usando el repo
+            await _userRepository.CambiarEstadoAsync(dto.IdUsuario, "PendienteValidacion");
         }
 
 

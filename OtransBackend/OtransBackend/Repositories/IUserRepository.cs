@@ -19,6 +19,8 @@ namespace OtransBackend.Repositories
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<Usuario?> ObtenerUsuarioConVehiculoPorIdAsync(int idUsuario);
         Task ValidarUsuarioAsync(UsuarioValidacionDto dto);
+        Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url);
+        Task CambiarEstadoAsync(int idUsuario, string nombreEstado);
 
     }
 
@@ -110,6 +112,7 @@ namespace OtransBackend.Repositories
                 .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
         }
 
+        // Implementación ajustada en UserRepository.cs
         public async Task ValidarUsuarioAsync(UsuarioValidacionDto dto)
         {
             // 1) Cargo usuario y sus vehículos
@@ -128,6 +131,10 @@ namespace OtransBackend.Repositories
             {
                 switch (doc.NombreDocumento)
                 {
+                    case "Documento Identidad":
+                        usuario.ArchiDocu = null;
+                        break;
+
                     case "NIT":
                         usuario.Nit = null;
                         break;
@@ -164,6 +171,61 @@ namespace OtransBackend.Repositories
             // 5) Guardo cambios (sin observaciones en BD)
             await _context.SaveChangesAsync();
         }
+
+        public async Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url)
+        {
+            var usuario = await _context.Usuario
+                .Include(u => u.Vehiculos)
+                .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
+            if (usuario == null) throw new KeyNotFoundException();
+
+            switch (nombreDocumento)
+            {
+                case "Documento Identidad":
+                    usuario.ArchiDocu = url;
+                    break;
+                case "NIT":
+                    usuario.Nit = url;
+                    break;
+                case "Licencia Conducción":
+                    usuario.Licencia = url;
+                    break;
+                case "Soat":
+                    {
+                        var veh = usuario.Vehiculos.FirstOrDefault();
+                        if (veh != null) veh.Soat = url;
+                    }
+                    break;
+                case "Técnico Mecánica":
+                    {
+                        var veh = usuario.Vehiculos.FirstOrDefault();
+                        if (veh != null) veh.Tecnicomecanica = url;
+                    }
+                    break;
+                case "Licencia Tránsito":
+                    {
+                        var veh = usuario.Vehiculos.FirstOrDefault();
+                        if (veh != null) veh.LicenciaTransito = url;
+                    }
+                    break;
+                default:
+                    throw new InvalidOperationException("Documento no reconocido");
+            }
+
+            await _context.SaveChangesAsync();
+        }
+        public async Task CambiarEstadoAsync(int idUsuario, string nombreEstado)
+        {
+            var usuario = await _context.Usuario.FindAsync(idUsuario)
+                          ?? throw new KeyNotFoundException();
+            var estado = await _context.Estado
+                          .FirstOrDefaultAsync(e => e.Nombre == nombreEstado)
+                          ?? throw new InvalidOperationException($"Estado '{nombreEstado}' no existe");
+            usuario.IdEstado = estado.IdEstado;
+            await _context.SaveChangesAsync();
+        }
+
+
 
 
     }

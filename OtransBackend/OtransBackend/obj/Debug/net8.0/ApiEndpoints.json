@@ -302,6 +302,27 @@
   },
   {
     "ContainingType": "OtransBackend.Controllers.UserController",
+    "Method": "ReuploadDocumentos",
+    "RelativePath": "api/User/reupload-documentos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IdUsuario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Documentos",
+        "Type": "System.Collections.Generic.List\u00601[[OtransBackend.Dtos.DocumentoReuploadDto, OtransBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.UserController",
     "Method": "ValidarUsuario",
     "RelativePath": "api/User/validar",
     "HttpMethod": "POST",

@@ -258,6 +258,47 @@
         }
       }
     },
+    "/api/User/reupload-documentos": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "IdUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Documentos": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DocumentoReuploadDto"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "IdUsuario": {
+                  "style": "form"
+                },
+                "Documentos": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -300,6 +341,21 @@
   },
   "components": {
     "schemas": {
+      "DocumentoReuploadDto": {
+        "type": "object",
+        "properties": {
+          "nombreDocumento": {
+            "type": "string",
+            "nullable": true
+          },
+          "archivo": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DocumentoValidacionDto": {
         "type": "object",
         "properties": {

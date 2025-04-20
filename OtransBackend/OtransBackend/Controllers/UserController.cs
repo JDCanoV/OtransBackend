@@ -258,7 +258,15 @@ namespace OtransBackend.Controllers
             }
         }
 
+        [HttpPost("reupload-documentos")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> ReuploadDocumentos([FromForm] ReuploadDocumentosDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
+            await _userService.ReuploadDocumentosAsync(dto);
+            return Ok(new { mensaje = "Documentos subidos correctamente" });
+        }
 
     }
 }
