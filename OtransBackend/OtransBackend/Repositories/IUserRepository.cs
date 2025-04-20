@@ -18,6 +18,7 @@ namespace OtransBackend.Repositories
         Task UpdateUserPasswordAsync(Usuario user);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<Usuario?> ObtenerUsuarioConVehiculoPorIdAsync(int idUsuario);
+        Task ValidarUsuarioAsync(UsuarioValidacionDto dto);
 
     }
 
@@ -108,6 +109,63 @@ namespace OtransBackend.Repositories
                 .Include(u => u.Vehiculos)
                 .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
         }
+
+        public async Task ValidarUsuarioAsync(UsuarioValidacionDto dto)
+        {
+            // 1) Cargo usuario y sus vehículos
+            var usuario = await _context.Usuario
+                .Include(u => u.Vehiculos)
+                .FirstOrDefaultAsync(u => u.IdUsuario == dto.IdUsuario);
+
+            if (usuario == null)
+                throw new KeyNotFoundException("Usuario no encontrado");
+
+            // 2) ¿Algún documento inválido?
+            bool tieneInvalido = dto.Documentos.Any(d => !d.EsValido);
+
+            // 3) Por cada doc inválido, elimino la URL en la entidad
+            foreach (var doc in dto.Documentos.Where(d => !d.EsValido))
+            {
+                switch (doc.NombreDocumento)
+                {
+                    case "NIT":
+                        usuario.Nit = null;
+                        break;
+
+                    case "Licencia Conducción":
+                        usuario.Licencia = null;
+                        break;
+
+                    case "Soat":
+                        var vehSoat = usuario.Vehiculos.FirstOrDefault();
+                        if (vehSoat != null) vehSoat.Soat = null;
+                        break;
+
+                    case "Técnico Mecánica":
+                        var vehTecno = usuario.Vehiculos.FirstOrDefault();
+                        if (vehTecno != null) vehTecno.Tecnicomecanica = null;
+                        break;
+
+                    case "Licencia Tránsito":
+                        var vehLicTra = usuario.Vehiculos.FirstOrDefault();
+                        if (vehLicTra != null) vehLicTra.LicenciaTransito = null;
+                        break;
+                }
+            }
+
+            // 4) Actualizo el estado (Validado vs DocumentosRechazados)
+            var estadoNombre = tieneInvalido ? "DocumentosRechazados" : "Validado";
+            var nuevoEstado = await _context.Estado
+                .FirstOrDefaultAsync(e => e.Nombre == estadoNombre)
+                ?? throw new InvalidOperationException($"Estado '{estadoNombre}' no encontrado");
+
+            usuario.IdEstado = nuevoEstado.IdEstado;
+
+            // 5) Guardo cambios (sin observaciones en BD)
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 
 }

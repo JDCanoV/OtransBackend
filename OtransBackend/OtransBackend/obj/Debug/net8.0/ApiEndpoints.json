@@ -301,6 +301,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "OtransBackend.Controllers.UserController",
+    "Method": "ValidarUsuario",
+    "RelativePath": "api/User/validar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "OtransBackend.Dtos.UsuarioValidacionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "OtransBackend.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",

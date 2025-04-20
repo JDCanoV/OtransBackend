@@ -227,6 +227,37 @@
         }
       }
     },
+    "/api/User/validar": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -269,6 +300,19 @@
   },
   "components": {
     "schemas": {
+      "DocumentoValidacionDto": {
+        "type": "object",
+        "properties": {
+          "nombreDocumento": {
+            "type": "string",
+            "nullable": true
+          },
+          "esValido": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "LoginDto": {
         "type": "object",
         "properties": {
@@ -323,6 +367,27 @@
             "format": "date-time"
           },
           "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UsuarioValidacionDto": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentoValidacionDto"
+            },
+            "nullable": true
+          },
+          "observaciones": {
             "type": "string",
             "nullable": true
           }

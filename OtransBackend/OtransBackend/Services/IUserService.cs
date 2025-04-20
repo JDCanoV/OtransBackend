@@ -14,6 +14,7 @@ namespace OtransBackend.Services
         Task<string> recuperarContra(string correo);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario);
+        Task ValidateUsuarioAsync(UsuarioValidacionDto dto);
     }
 
     public class UserService : IUserService
@@ -254,5 +255,30 @@ namespace OtransBackend.Services
 
             return detalle;
         }
+
+        //---------------------------- DETALLES ----------------------------
+
+        public async Task ValidateUsuarioAsync(UsuarioValidacionDto dto)
+        {
+            // 1) Limpia BD y estado
+            await _userRepository.ValidarUsuarioAsync(dto);
+
+            // 2) Prepara asunto y cuerpo
+            bool fueRechazado = dto.Documentos.Any(d => !d.EsValido);
+            string asunto = fueRechazado ? "Documentos Rechazados" : "Cuenta Validada";
+            string cuerpo = fueRechazado
+                ? $"Hola,<br/>Tus documentos fueron rechazados:<br/>{dto.Observaciones}"
+                : "¡Tu cuenta ha sido validada correctamente!";
+
+            // 3) Obtén el usuario completo por Id para leer el correo
+            var usuario = await _userRepository.ObtenerUsuarioConVehiculoPorIdAsync(dto.IdUsuario);
+            if (usuario == null)
+                throw new KeyNotFoundException($"Usuario con Id {dto.IdUsuario} no encontrado");
+
+            // 4) Envía el correo
+            await _emailUtility.SendEmailAsync(usuario.Correo, asunto, cuerpo);
+        }
+
+
     }
 }

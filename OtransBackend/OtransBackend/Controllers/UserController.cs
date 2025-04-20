@@ -241,6 +241,23 @@ namespace OtransBackend.Controllers
             return Ok(detalle);
         }
 
+        [HttpPost("validar")]
+        public async Task<IActionResult> ValidarUsuario([FromBody] UsuarioValidacionDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await _userService.ValidateUsuarioAsync(dto);
+                return Ok(new { mensaje = "Validación procesada" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
 
 
     }
