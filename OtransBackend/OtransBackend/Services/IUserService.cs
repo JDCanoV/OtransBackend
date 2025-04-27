@@ -3,6 +3,8 @@ using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using OtransBackend.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace OtransBackend.Services
 {
@@ -122,13 +124,32 @@ namespace OtransBackend.Services
         // ---------------------------- LOGIN ----------------------------
         public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
         {
+            // ← Desofuscar la contraseña enviada (reverso + Base64)
+            string pwdPlain;
+            try
+            {
+                pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
+            }
+            catch
+            {
+                // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
+                return new ResponseLoginDto
+                {
+                    Respuesta = 0,
+                    Mensaje = "Formato de contraseña inválido"
+                };
+            }
+
             ResponseLoginDto responseLoginDto = new();
             UsuarioDto usuario = new();
 
+            // ← Recuperar usuario por correo (password se valida después)
             var user = await _userRepository.Login(loginDTO);
 
-            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena))
+            // ← Verificar hash de bcrypt con la contraseña desofuscada
+            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, pwdPlain))
             {
+                // ← Mapear datos de usuario a DTO
                 usuario = new UsuarioDto
                 {
                     IdUsuario = user.IdUsuario,
@@ -144,6 +165,7 @@ namespace OtransBackend.Services
                     IdEstado = user.IdEstado
                 };
 
+                // ← Generar token JWT
                 responseLoginDto = JWTUtility.GenTokenkey(responseLoginDto, _jwtSettings);
                 responseLoginDto.Respuesta = 1;
                 responseLoginDto.Mensaje = "Exitoso";
@@ -151,6 +173,7 @@ namespace OtransBackend.Services
             }
             else
             {
+                // ← Credenciales inválidas
                 responseLoginDto.Respuesta = 0;
                 responseLoginDto.Mensaje = "Correo o contraseña incorrecta";
             }
@@ -313,6 +336,6 @@ namespace OtransBackend.Services
             await _userRepository.CambiarEstadoAsync(dto.IdUsuario, "PendienteValidacion");
         }
 
-
+       
     }
 }

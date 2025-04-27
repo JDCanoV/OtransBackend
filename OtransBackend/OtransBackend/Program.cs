@@ -84,9 +84,13 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "OtransBackend API",
-        Version = "v1"
-    });
+        Version = "v1",
+        Description = "Backend: Jhoel Blanco, Oscar Paternina<br/>Frontend: Juliana Riaño, Diego Cano"
 
+
+
+    });
+    options.EnableAnnotations();
     // Configuración para manejar archivos
     options.MapType<IFormFile>(() => new OpenApiSchema
     {

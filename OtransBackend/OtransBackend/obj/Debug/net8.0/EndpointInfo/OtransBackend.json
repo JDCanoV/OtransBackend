@@ -2,6 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "OtransBackend API",
+    "description": "Backend: Jhoel Blanco, Oscar Paternina<br/>Frontend: Juliana Riaño, Diego Cano",
     "version": "v1"
   },
   "paths": {
@@ -22,6 +23,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Autentica un usuario en el sistema.",
+        "description": "Este endpoint permite a los usuarios registrados iniciar sesión utilizando sus credenciales.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -53,6 +56,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Envía un correo de recuperación de contraseña.",
+        "description": "Este endpoint envía un correo electrónico con instrucciones para que el usuario recupere su contraseña.",
         "parameters": [
           {
             "name": "correo",
@@ -74,6 +79,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Registra un nuevo transportista.",
+        "description": "Registra un transportista con sus datos y licencia adjunta.",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -105,6 +112,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Registra una nueva empresa.",
+        "description": "Registra una empresa con sus datos y archivo de NIT.",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -136,6 +145,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Registra un vehículo para un usuario.",
+        "description": "Agrega un vehículo al perfil del usuario con SOAT, Tecnicomecanica y licencia de tránsito.",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -171,6 +182,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Obtiene usuarios pendientes de validación.",
+        "description": "Devuelve la lista de usuarios que aún no han sido validados en el sistema.",
         "responses": {
           "200": {
             "description": "OK",
@@ -209,6 +222,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Obtiene el detalle de un usuario.",
+        "description": "Recupera la información detallada de un usuario por su identificador.",
         "parameters": [
           {
             "name": "idUsuario",
@@ -232,6 +247,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Valida un usuario.",
+        "description": "Procesa la validación de documentos o datos de un usuario.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -263,6 +280,8 @@
         "tags": [
           "User"
         ],
+        "summary": "Re-sube los documentos de un usuario.",
+        "description": "Permite al usuario volver a subir sus documentos para validación.",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -474,5 +493,11 @@
         "additionalProperties": false
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operaciones relacionadas con la gestión de usuarios, incluyendo autenticación, registro y validación."
+    }
+  ]
 }
