@@ -21,8 +21,7 @@ namespace OtransBackend.Services
         Task ReuploadDocumentosAsync(ReuploadDocumentosDto dto);
         Task<Viaje> AddViajeAsync(ViajeDto dto);
         Task<List<ViajeDto>> GetAllViajeAsync();
-        Task<ResponseLoginDto> Login(LoginDto loginDto); 
-        Task<string> recuperarContra(string correo); 
+        
     }
 
     public class UserService : IUserService

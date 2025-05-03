@@ -1,7 +1,5 @@
-
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.json
-C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\GoogleDrive\credentials.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\OtransBackend.staticwebassets.endpoints.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\OtransBackend.exe
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\OtransBackend.deps.json
