@@ -8,7 +8,7 @@ public partial class Usuario
     public int IdUsuario { get; set; }
 
     public int NumIdentificacion { get; set; }
-    public byte[]? ArchiDocu { get; set; }
+    public string? ArchiDocu { get; set; }
     public string Nombre { get; set; } = null!;
 
     public string Apellido { get; set; } = null!;
@@ -27,13 +27,15 @@ public partial class Usuario
 
     public string? Direccion { get; set; }
 
-    public byte[]? Licencia { get; set; }
+    public string? Licencia { get; set; }
 
-    public byte[]? Nit { get; set; }
+    public string? Nit { get; set; }
 
     public int? IdRol { get; set; }
 
     public int? IdEstado { get; set; }
+
+    public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
     public virtual ICollection<Auditoria> Auditoria { get; set; } = new List<Auditoria>();
 

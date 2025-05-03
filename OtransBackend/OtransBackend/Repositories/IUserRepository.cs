@@ -10,12 +10,18 @@ namespace OtransBackend.Repositories
 {
     public interface IUserRepository
     {
-        Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo, IFormFile Soat, IFormFile SoTecnicomecanicaat, IFormFile LicenciaTransito);
-        Task<Usuario> AddTransportistaAsync(Usuario user, IFormFile licenciaFile, IFormFile ArchiDocu); // Método para agregar transportista
-        Task<Usuario> AddEmpresaAsync(Usuario user, IFormFile nitFile, IFormFile ArchiDocu); // Método para agregar empresa
+        Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo);
+        Task<Usuario> AddTransportistaAsync(Usuario user); // Método para agregar transportista
+        Task<Usuario> AddEmpresaAsync(Usuario user); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
         Task<Usuario> Login(LoginDto request);
         Task UpdateUserPasswordAsync(Usuario user);
+        Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
+        Task<Usuario?> ObtenerUsuarioConVehiculoPorIdAsync(int idUsuario);
+        Task ValidarUsuarioAsync(UsuarioValidacionDto dto);
+        Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url);
+        Task CambiarEstadoAsync(int idUsuario, string nombreEstado);
+
     }
 
     public class UserRepository : IUserRepository
@@ -38,19 +44,9 @@ namespace OtransBackend.Repositories
         }
 
         // Método para agregar Transportista
-        public async Task<Usuario> AddTransportistaAsync(Usuario user, IFormFile licenciaFile, IFormFile ArchiDocu)
+        public async Task<Usuario> AddTransportistaAsync(Usuario user)
         {
-            // Verificar si el archivo de licencia no es null y convertirlo
-            if (licenciaFile != null)
-            {
-                byte[] licenciaFileBytes = ConvertFileToBytes(licenciaFile); // Convertimos la licencia a binario
-                user.Licencia = licenciaFileBytes; // Asignamos el binario
-            }
-            if (ArchiDocu != null)
-            {
-                byte[] ArchiDocuBytes = ConvertFileToBytes(ArchiDocu); // Convertimos la licencia a binario
-                user.ArchiDocu = ArchiDocuBytes; // Asignamos el binario
-            }
+            
 
             // Guardamos el usuario (transportista) con el archivo de licencia (si existe)
             _context.Usuario.Add(user);
@@ -59,19 +55,9 @@ namespace OtransBackend.Repositories
         }
 
         // Método para agregar Empresa
-        public async Task<Usuario> AddEmpresaAsync(Usuario user, IFormFile nitFile, IFormFile ArchiDocu)
+        public async Task<Usuario> AddEmpresaAsync(Usuario user)
         {
-            // Verificar si el archivo de NIT no es null y convertirlo
-            if (nitFile != null)
-            {
-                byte[] nitFileBytes = ConvertFileToBytes(nitFile); // Convertimos el NIT a binario
-                user.Nit = nitFileBytes; // Asignamos el binario
-            }
-            if (ArchiDocu != null)
-            {
-                byte[] ArchiDocuBytes = ConvertFileToBytes(ArchiDocu); // Convertimos el NIT a binario
-                user.ArchiDocu = ArchiDocuBytes; // Asignamos el binario
-            }
+           
             // Guardamos el usuario (empresa) con el archivo de NIT (si existe)
             _context.Usuario.Add(user);
             await _context.SaveChangesAsync();
@@ -85,24 +71,9 @@ namespace OtransBackend.Repositories
 
 
 
-        public async Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo, IFormFile Soat, IFormFile Tecnicomecanicaat, IFormFile LicenciaTransito)
+        public async Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo)
         {
-            // Verificar si los archivos son nulos y convertirlos
-            if (Soat != null)
-            {
-                byte[] soatFileBytes = ConvertFileToBytes(Soat); // Convertimos SOAT a binario
-                vehiculo.Soat = soatFileBytes; // Asignamos el binario
-            }
-            if (Tecnicomecanicaat != null)
-            {
-                byte[] TecnicomecanicaatFileBytes = ConvertFileToBytes(Tecnicomecanicaat); // Convertimos Tecnicomecanica a binario
-                vehiculo.Tecnicomecanica = TecnicomecanicaatFileBytes; // Asignamos el binario
-            }
-            if (LicenciaTransito != null)
-            {
-                byte[] LicenciaTransitoFileBytes = ConvertFileToBytes(LicenciaTransito); // Convertimos Licencia de tránsito a binario
-                vehiculo.LicenciaTransito = LicenciaTransitoFileBytes; // Asignamos el binario
-            }
+           
 
             // Guardamos el vehículo en la base de datos
             _context.Vehiculo.Add(vehiculo);
@@ -119,6 +90,145 @@ namespace OtransBackend.Repositories
             _context.Usuario.Update(user);  // Actualiza el usuario con la nueva contraseña
             await _context.SaveChangesAsync();  // Guarda los cambios en la base de datos
         }
+        public async Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync()
+        {
+            return await _context.Usuario
+                .Where(u => u.IdEstadoNavigation != null && u.IdEstadoNavigation.Nombre == "PendienteValidacion")
+                .Select(u => new UsuarioRevisionDto
+                {
+                    Id = u.IdUsuario,
+                    Nombre = u.Nombre,
+                    Correo = u.Correo,
+                    TipoUsuario = u.NombreEmpresa != null ? "Empresa" : "Transportista",
+                    FechaRegistro = u.FechaRegistro,
+                    Estado = u.IdEstadoNavigation!.Nombre
+                })
+                .ToListAsync();
+        }
+        public async Task<Usuario?> ObtenerUsuarioConVehiculoPorIdAsync(int idUsuario)
+        {
+            return await _context.Usuario
+                .Include(u => u.Vehiculos)
+                .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
+        }
+
+        // Implementación ajustada en UserRepository.cs
+        public async Task ValidarUsuarioAsync(UsuarioValidacionDto dto)
+        {
+            // 1) Cargo usuario y sus vehículos
+            var usuario = await _context.Usuario
+                .Include(u => u.Vehiculos)
+                .FirstOrDefaultAsync(u => u.IdUsuario == dto.IdUsuario);
+
+            if (usuario == null)
+                throw new KeyNotFoundException("Usuario no encontrado");
+
+            // 2) ¿Algún documento inválido?
+            bool tieneInvalido = dto.Documentos.Any(d => !d.EsValido);
+
+            // 3) Por cada doc inválido, elimino la URL en la entidad
+            foreach (var doc in dto.Documentos.Where(d => !d.EsValido))
+            {
+                switch (doc.NombreDocumento)
+                {
+                    case "Documento Identidad":
+                        usuario.ArchiDocu = null;
+                        break;
+
+                    case "NIT":
+                        usuario.Nit = null;
+                        break;
+
+                    case "Licencia Conducción":
+                        usuario.Licencia = null;
+                        break;
+
+                    case "Soat":
+                        var vehSoat = usuario.Vehiculos.FirstOrDefault();
+                        if (vehSoat != null) vehSoat.Soat = null;
+                        break;
+
+                    case "Técnico Mecánica":
+                        var vehTecno = usuario.Vehiculos.FirstOrDefault();
+                        if (vehTecno != null) vehTecno.Tecnicomecanica = null;
+                        break;
+
+                    case "Licencia Tránsito":
+                        var vehLicTra = usuario.Vehiculos.FirstOrDefault();
+                        if (vehLicTra != null) vehLicTra.LicenciaTransito = null;
+                        break;
+                }
+            }
+
+            // 4) Actualizo el estado (Validado vs DocumentosRechazados)
+            var estadoNombre = tieneInvalido ? "DocumentosRechazados" : "Validado";
+            var nuevoEstado = await _context.Estado
+                .FirstOrDefaultAsync(e => e.Nombre == estadoNombre)
+                ?? throw new InvalidOperationException($"Estado '{estadoNombre}' no encontrado");
+
+            usuario.IdEstado = nuevoEstado.IdEstado;
+
+            // 5) Guardo cambios (sin observaciones en BD)
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url)
+        {
+            var usuario = await _context.Usuario
+                .Include(u => u.Vehiculos)
+                .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
+            if (usuario == null) throw new KeyNotFoundException();
+
+            switch (nombreDocumento)
+            {
+                case "Documento Identidad":
+                    usuario.ArchiDocu = url;
+                    break;
+                case "NIT":
+                    usuario.Nit = url;
+                    break;
+                case "Licencia Conducción":
+                    usuario.Licencia = url;
+                    break;
+                case "Soat":
+                    {
+                        var veh = usuario.Vehiculos.FirstOrDefault();
+                        if (veh != null) veh.Soat = url;
+                    }
+                    break;
+                case "Técnico Mecánica":
+                    {
+                        var veh = usuario.Vehiculos.FirstOrDefault();
+                        if (veh != null) veh.Tecnicomecanica = url;
+                    }
+                    break;
+                case "Licencia Tránsito":
+                    {
+                        var veh = usuario.Vehiculos.FirstOrDefault();
+                        if (veh != null) veh.LicenciaTransito = url;
+                    }
+                    break;
+                default:
+                    throw new InvalidOperationException("Documento no reconocido");
+            }
+
+            await _context.SaveChangesAsync();
+        }
+        public async Task CambiarEstadoAsync(int idUsuario, string nombreEstado)
+        {
+            var usuario = await _context.Usuario.FindAsync(idUsuario)
+                          ?? throw new KeyNotFoundException();
+            var estado = await _context.Estado
+                          .FirstOrDefaultAsync(e => e.Nombre == nombreEstado)
+                          ?? throw new InvalidOperationException($"Estado '{nombreEstado}' no existe");
+            usuario.IdEstado = estado.IdEstado;
+            await _context.SaveChangesAsync();
+        }
+
+
+
 
     }
+
 }
+
