@@ -19,6 +19,10 @@ namespace OtransBackend.Services
         Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario);
         Task ValidateUsuarioAsync(UsuarioValidacionDto dto);
         Task ReuploadDocumentosAsync(ReuploadDocumentosDto dto);
+        Task<Viaje> AddViajeAsync(ViajeDto dto);
+        Task<List<ViajeDto>> GetAllViajeAsync();
+        Task<ResponseLoginDto> Login(LoginDto loginDto); 
+        Task<string> recuperarContra(string correo); 
     }
 
     public class UserService : IUserService
@@ -65,8 +69,43 @@ namespace OtransBackend.Services
 
             return await _userRepository.AddTransportistaAsync(user);
         }
+        public async Task<Viaje> AddViajeAsync(ViajeDto dto)
+        {
+            var viaje = new Viaje
+            {
+                Destino = dto.Destino,
+                Origen = dto.Origen,
+                Distancia = dto.Distancia = 1,
+                Fecha = dto.Fecha = DateTime.Now,
+                IdEstado = dto.IdEstado ?? 1, // Default estado
+               // IdTransportista = dto.IdTransportista,
+               // IdEmpresa = dto.IdEmpresa,
+                Peso = dto.Peso,
+                TipoCarga = dto.Tipo
+            };
 
         // ---------------------------- REGISTRO EMPRESA ----------------------------
+            return await _userRepository.AddViajeAsync(viaje);
+        }
+        public async Task<List<ViajeDto>> GetAllViajeAsync()
+        {
+            var viajes = await _userRepository.GetAllViajeAsync();
+
+            return viajes.Select(v => new ViajeDto
+            {
+                IdViaje = v.IdViaje,
+                Origen = v.Origen,
+                Destino = v.Destino,
+                Distancia = v.Distancia,
+                Fecha = v.Fecha,
+                IdEstado = v.IdEstado,
+                IdCarga = v.IdCarga,
+                IdTransportista = v.IdTransportista,
+                IdEmpresa = v.IdEmpresa
+            }).ToList();
+        }
+
+        // Registro de empresas
         public async Task<Usuario> RegisterEmpresaAsync(empresaDto dto)
         {
             var existingUser = await _userRepository.GetUserByEmailAsync(dto.Correo);
@@ -170,6 +209,7 @@ namespace OtransBackend.Services
                 responseLoginDto.Respuesta = 1;
                 responseLoginDto.Mensaje = "Exitoso";
                 responseLoginDto.Usuario = usuario;   // ← POPULATE
+                responseLoginDto.idRol = user.IdRol;
             }
             else
             {

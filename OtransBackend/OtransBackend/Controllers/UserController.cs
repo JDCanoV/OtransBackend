@@ -41,11 +41,36 @@ namespace OtransBackend.Controllers
         )]
         public async Task<IActionResult> EnviarContra([FromQuery] string correo)
         {
+            // Verifica que 'correo' no sea null o vacío
+            if (string.IsNullOrEmpty(correo))
+            {
+                return BadRequest(new { message = "Correo es requerido." });
+            }
+
             var result = await _userService.recuperarContra(correo);
             if (result.Contains("Error"))
                 return BadRequest(new { message = result });
 
             return Ok(new { message = result });
+        }
+
+
+
+        [HttpPost("registrarViaje")]
+        public async Task<IActionResult> RegistrarViaje([FromBody] ViajeDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var viaje = await _userService.AddViajeAsync(dto);
+            return Ok(viaje);
+        }
+        [Authorize]
+        [HttpGet("listarViaje")]
+        public async Task<IActionResult> ListarViajes()
+        {
+            var viajes = await _userService.GetAllViajeAsync();
+            return Ok(viajes);
         }
 
         [HttpPost("registerTransportista")]

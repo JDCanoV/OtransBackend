@@ -180,6 +180,7 @@ C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\OtransBackend.genruntimeconfig.cache
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\ref\OtransBackend.dll
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+<<<<<<< HEAD
 C:\Users\Jhoel\Documents\OtransBackend\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\appsettings.json
@@ -198,6 +199,8 @@ C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Google.Apis.Core.dll
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Google.Apis.Drive.v3.dll
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Humanizer.dll
+=======
+>>>>>>> DevOblanc
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Microsoft.Build.Locator.dll

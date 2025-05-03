@@ -64,8 +64,67 @@
             "in": "query",
             "schema": {
               "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/registrarViaje": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/listarViaje": {
+      "get": {
+        "tags": [
+          "User"
         ],
         "responses": {
           "200": {
@@ -463,6 +522,54 @@
             "nullable": true
           },
           "observaciones": {
+      "ViajeDto": {
+        "type": "object",
+        "properties": {
+          "idViaje": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "destino": {
+            "type": "string",
+            "nullable": true
+          },
+          "origen": {
+            "type": "string",
+            "nullable": true
+          },
+          "distancia": {
+            "type": "number",
+            "format": "double"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idEstado": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idCarga": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idTransportista": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idEmpresa": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "peso": {
+            "type": "number",
+            "format": "double"
+          },
+          "tipo": {
             "type": "string",
             "nullable": true
           }

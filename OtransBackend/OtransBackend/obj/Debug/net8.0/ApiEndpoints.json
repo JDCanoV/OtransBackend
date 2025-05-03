@@ -23,6 +23,12 @@
         "IsRequired": true
       }
     ],
+    "Method": "ListarViajes",
+    "RelativePath": "api/User/listarViaje",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -72,7 +78,7 @@
       {
         "Name": "correo",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -325,6 +331,8 @@
     "ContainingType": "OtransBackend.Controllers.UserController",
     "Method": "ValidarUsuario",
     "RelativePath": "api/User/validar",
+    "Method": "RegistrarViaje",
+    "RelativePath": "api/User/registrarViaje",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -332,6 +340,7 @@
       {
         "Name": "dto",
         "Type": "OtransBackend.Dtos.UsuarioValidacionDto",
+        "Type": "OtransBackend.Dtos.ViajeDto",
         "IsRequired": true
       }
     ],
