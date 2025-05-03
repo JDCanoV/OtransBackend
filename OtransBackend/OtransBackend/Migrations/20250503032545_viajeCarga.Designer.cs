@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OtransBackend.Repositories.Models;
 
@@ -11,9 +12,11 @@ using OtransBackend.Repositories.Models;
 namespace OtransBackend.Migrations
 {
     [DbContext(typeof(OtransContext))]
-    partial class OtransContextModelSnapshot : ModelSnapshot
+    [Migration("20250503032545_viajeCarga")]
+    partial class viajeCarga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,8 +258,8 @@ namespace OtransBackend.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(47)");
 
-                    b.Property<string>("ArchiDocu")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ArchiDocu")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Contrasena")
                         .IsRequired()
@@ -275,9 +278,6 @@ namespace OtransBackend.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("IdEstado")
                         .HasColumnType("int")
                         .HasColumnName("IdEstado");
@@ -286,11 +286,11 @@ namespace OtransBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("IdRol");
 
-                    b.Property<string>("Licencia")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Licencia")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Nit")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<byte[]>("Nit")
+                        .HasColumnType("varbinary(max)")
                         .HasColumnName("NIT");
 
                     b.Property<string>("Nombre")
@@ -360,8 +360,8 @@ namespace OtransBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("IdTransportista");
 
-                    b.Property<string>("LicenciaTransito")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("LicenciaTransito")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("NombreDueño")
                         .IsRequired()
@@ -378,12 +378,12 @@ namespace OtransBackend.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("Soat")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<byte[]>("Soat")
+                        .HasColumnType("varbinary(max)")
                         .HasColumnName("SOAT");
 
-                    b.Property<string>("Tecnicomecanica")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Tecnicomecanica")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("TelDueño")
                         .HasColumnType("int");
