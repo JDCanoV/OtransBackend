@@ -11,6 +11,16 @@
   },
   {
     "ContainingType": "OtransBackend.Controllers.UserController",
+    "Method": "ListarViajes",
+    "RelativePath": "api/User/listarViaje",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.UserController",
     "Method": "PostIniciarSesion",
     "RelativePath": "api/User/Login",
     "HttpMethod": "POST",
@@ -36,7 +46,7 @@
       {
         "Name": "correo",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -260,6 +270,22 @@
         "Name": "IdEstado",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.UserController",
+    "Method": "RegistrarViaje",
+    "RelativePath": "api/User/registrarViaje",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "OtransBackend.Dtos.ViajeDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

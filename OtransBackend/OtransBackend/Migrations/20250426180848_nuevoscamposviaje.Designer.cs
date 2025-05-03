@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OtransBackend.Repositories.Models;
 
@@ -11,9 +12,11 @@ using OtransBackend.Repositories.Models;
 namespace OtransBackend.Migrations
 {
     [DbContext(typeof(OtransContext))]
-    partial class OtransContextModelSnapshot : ModelSnapshot
+    [Migration("20250426180848_nuevoscamposviaje")]
+    partial class nuevoscamposviaje
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,35 +97,17 @@ namespace OtransBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("IdEstado");
 
-                    b.Property<byte[]>("Imagen1")
+                    b.Property<byte[]>("Imagen")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<byte[]>("Imagen10")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<double>("Peso")
+                        .HasColumnType("float");
 
-                    b.Property<byte[]>("Imagen2")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen3")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen4")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen5")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen6")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen7")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen8")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("Imagen9")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(47)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(47)");
 
                     b.HasKey("IdCarga")
                         .HasName("PK__Carga__6C9856177E87A551");
@@ -403,10 +388,6 @@ namespace OtransBackend.Migrations
                     b.Property<int>("IdViaje")
                         .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Destino")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -416,8 +397,8 @@ namespace OtransBackend.Migrations
                     b.Property<double>("Distancia")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<int?>("IdCarga")
                         .HasColumnType("int")
@@ -444,15 +425,7 @@ namespace OtransBackend.Migrations
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
-                    b.Property<string>("TamañoVeh")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TipoCarga")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TipoCarroceria")
+                    b.Property<string>("Tipo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

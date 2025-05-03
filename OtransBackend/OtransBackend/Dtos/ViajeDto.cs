@@ -10,7 +10,7 @@
 
         public double Distancia { get; set; }
 
-        public DateOnly Fecha { get; set; }
+        public DateTime Fecha { get; set; }
 
         public int? IdEstado { get; set; }
 
@@ -19,5 +19,7 @@
         public int? IdTransportista { get; set; }
 
         public int? IdEmpresa { get; set; }
+        public double Peso { get; set; }
+        public string Tipo { get; set; }
     }
 }

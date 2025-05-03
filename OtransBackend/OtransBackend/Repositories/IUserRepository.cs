@@ -14,6 +14,8 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddTransportistaAsync(Usuario user, IFormFile licenciaFile, IFormFile ArchiDocu); // Método para agregar transportista
         Task<Usuario> AddEmpresaAsync(Usuario user, IFormFile nitFile, IFormFile ArchiDocu); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
+        Task<Viaje> AddViajeAsync(Viaje viaje);
+        Task<List<Viaje>> GetAllViajeAsync();
         Task<Usuario> Login(LoginDto request);
         Task UpdateUserPasswordAsync(Usuario user);
     }
@@ -56,6 +58,16 @@ namespace OtransBackend.Repositories
             _context.Usuario.Add(user);
             await _context.SaveChangesAsync();
             return user;
+        }
+        public async Task<Viaje> AddViajeAsync(Viaje viaje)
+        {
+            _context.Viaje.Add(viaje);
+            await _context.SaveChangesAsync();
+            return viaje;
+        }
+        public async Task<List<Viaje>> GetAllViajeAsync()
+        {
+            return await _context.Viaje.ToListAsync();
         }
 
         // Método para agregar Empresa
