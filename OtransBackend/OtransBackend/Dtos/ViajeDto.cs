@@ -20,6 +20,9 @@
 
         public int? IdEmpresa { get; set; }
         public double Peso { get; set; }
-        public string Tipo { get; set; }
+        public string TipoCarroceria { get; set; }
+        public string TipoCarga { get; set; }
+        public string TamañoVeh { get; set; }
+        public string Descripcion { get; set; }
     }
 }

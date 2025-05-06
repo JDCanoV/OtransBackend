@@ -77,13 +77,15 @@ namespace OtransBackend.Services
                 Distancia = dto.Distancia = 1,
                 Fecha = dto.Fecha = DateTime.Now,
                 IdEstado = dto.IdEstado ?? 1, // Default estado
-               // IdTransportista = dto.IdTransportista,
-               // IdEmpresa = dto.IdEmpresa,
+                IdEmpresa = dto.IdEmpresa,
                 Peso = dto.Peso,
-                TipoCarga = dto.Tipo
+                TipoCarga = dto.TipoCarga,
+                TipoCarroceria = dto.TipoCarroceria,
+                TamañoVeh = dto.TamañoVeh,
+                Descripcion = dto.Descripcion,
+                IdCarga = dto.IdCarga
             };
 
-        // ---------------------------- REGISTRO EMPRESA ----------------------------
             return await _userRepository.AddViajeAsync(viaje);
         }
         public async Task<List<ViajeDto>> GetAllViajeAsync()
@@ -104,6 +106,7 @@ namespace OtransBackend.Services
             }).ToList();
         }
 
+        // ---------------------------- REGISTRO EMPRESA ----------------------------
         // Registro de empresas
         public async Task<Usuario> RegisterEmpresaAsync(empresaDto dto)
         {
