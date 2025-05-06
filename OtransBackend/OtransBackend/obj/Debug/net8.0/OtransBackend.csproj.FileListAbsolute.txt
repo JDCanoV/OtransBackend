@@ -179,5 +179,6 @@ C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\OtransBackend.pdb
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\OtransBackend.genruntimeconfig.cache
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\ref\OtransBackend.dll
-C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\GoogleDrive\credentials.json

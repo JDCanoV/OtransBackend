@@ -18,7 +18,7 @@ namespace OtransBackend.Services
 
             var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                 GoogleClientSecrets.Load(stream).Secrets,
-                new[] { DriveService.Scope.DriveFile },
+                new[] { DriveService.Scope.Drive },
                 "user",
                 CancellationToken.None,
                 new FileDataStore(credPath, true)).Result;
@@ -30,36 +30,39 @@ namespace OtransBackend.Services
             });
         }
 
-        public async Task<string> UploadFileAsync(IFormFile file, string customName)
+        public async Task<string> UploadFileAsync( IFormFile file,string customName,string? folderId = null   // 📂 carpeta destino opcional
+  )
         {
+            // Extiende el nombre con la extensión original
+            var ext = Path.GetExtension(file.FileName);
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
-                Name = customName
+                Name = $"{customName}{ext}",
+                Parents = string.IsNullOrWhiteSpace(folderId)
+                    ? null
+                    : new List<string> { folderId }
             };
 
             using var stream = file.OpenReadStream();
-
             var request = _driveService.Files.Create(fileMetadata, stream, file.ContentType);
             request.Fields = "id";
             await request.UploadAsync();
 
             var uploadedFile = request.ResponseBody;
-
             if (uploadedFile?.Id == null)
                 throw new Exception("Falló la subida a Google Drive");
 
-            // 🔐 Permiso público de lectura
+            // ⚙️ Permiso público de lectura
             var permission = new Google.Apis.Drive.v3.Data.Permission()
             {
                 Role = "reader",
                 Type = "anyone"
             };
-
             await _driveService.Permissions.Create(permission, uploadedFile.Id).ExecuteAsync();
 
-            // 🌐 Retornar la URL de visualización
             return $"https://drive.google.com/file/d/{uploadedFile.Id}/view";
         }
+
 
     }
 }

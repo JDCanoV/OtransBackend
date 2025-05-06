@@ -251,5 +251,29 @@ namespace OtransBackend.Controllers
             await _userService.ReuploadDocumentosAsync(dto);
             return Ok(new { mensaje = "Documentos subidos correctamente" });
         }
+
+        [HttpPost("subir-imagenes-carga")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] CargaDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var id = await _userService.RegisterAsync(dto);
+
+            // Devuelve 201 con solo el IdCarga
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id },
+                new CargaResponseDto { IdCarga = id }
+            );
+        }
+        [HttpGet("subir-imagenes-carga/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            // Aquí podrías implementar la obtención de una Carga por id
+            // para devolver toda la info si la necesitas.
+            return Ok(new { IdCarga = id });
+        }
     }
 }

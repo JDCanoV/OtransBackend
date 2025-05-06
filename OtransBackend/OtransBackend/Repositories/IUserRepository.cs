@@ -23,6 +23,8 @@ namespace OtransBackend.Repositories
         Task ValidarUsuarioAsync(UsuarioValidacionDto dto);
         Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url);
         Task CambiarEstadoAsync(int idUsuario, string nombreEstado);
+        Task<Carga> AddAsync(Carga carga);
+        Task<Carga?> GetByIdAsync(int id);
 
     }
 
@@ -65,7 +67,6 @@ namespace OtransBackend.Repositories
         {
             return await _context.Viaje.ToListAsync();
         }
-
         // Método para agregar Empresa
         public async Task<Usuario> AddEmpresaAsync(Usuario user)
         {
@@ -75,14 +76,10 @@ namespace OtransBackend.Repositories
             await _context.SaveChangesAsync();
             return user;
         }
-
         public async Task<Usuario> GetUserByEmailAsync(string email)
         {
             return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo == email);
         }
-
-
-
         public async Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo)
         {
            
@@ -236,6 +233,19 @@ namespace OtransBackend.Repositories
             usuario.IdEstado = estado.IdEstado;
             await _context.SaveChangesAsync();
         }
+        // Método para agregar imagenes a carga 
+        public async Task<Carga> AddAsync(Carga carga)
+        {
+            _context.Carga.Add(carga);
+            await _context.SaveChangesAsync();
+            return carga;
+        }
+
+        public async Task<Carga?> GetByIdAsync(int id)
+        {
+            return await _context.Carga.FindAsync(id);
+        }
+
 
 
 
