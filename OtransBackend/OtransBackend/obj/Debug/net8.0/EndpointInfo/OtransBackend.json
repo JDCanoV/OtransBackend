@@ -105,10 +105,21 @@
         }
       }
     },
-    "/api/User/listarViaje": {
+    "/api/User/listarViaje/{idEmpresa}": {
       "get": {
         "tags": [
           "User"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpresa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -698,11 +709,19 @@
             "type": "string",
             "nullable": true
           },
-          "tamañoVeh": {
+          "tamanoVeh": {
             "type": "string",
             "nullable": true
           },
           "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "precio": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreTransportista": {
             "type": "string",
             "nullable": true
           }

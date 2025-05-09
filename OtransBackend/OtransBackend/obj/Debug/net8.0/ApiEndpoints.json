@@ -43,12 +43,18 @@
   },
   {
     "ContainingType": "OtransBackend.Controllers.UserController",
-    "Method": "ListarViajes",
-    "RelativePath": "api/User/listarViaje",
+    "Method": "GetViajesByEmpresa",
+    "RelativePath": "api/User/listarViaje/{idEmpresa}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "idEmpresa",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

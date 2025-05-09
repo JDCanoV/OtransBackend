@@ -65,11 +65,10 @@ namespace OtransBackend.Controllers
             var viaje = await _userService.AddViajeAsync(dto);
             return Ok(viaje);
         }
-        [Authorize]
-        [HttpGet("listarViaje")]
-        public async Task<IActionResult> ListarViajes()
+        [HttpGet("listarViaje/{idEmpresa}")]
+        public async Task<IActionResult> GetViajesByEmpresa(int idEmpresa)
         {
-            var viajes = await _userService.GetAllViajeAsync();
+            var viajes = await _userService.GetViajesByEmpresaAsync(idEmpresa);
             return Ok(viajes);
         }
 

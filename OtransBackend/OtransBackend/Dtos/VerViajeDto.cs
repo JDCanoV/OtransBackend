@@ -14,6 +14,7 @@ namespace OtransBackend.Dtos
         public int? IdTransportista { get; set; }
         public int? IdEmpresa { get; set; }
         public double Peso { get; set; }
+        public string Precio { get; set; } = string.Empty;
         public string TipoCarroceria { get; set; } = string.Empty;
         public string TipoCarga { get; set; } = string.Empty;
         public string TamañoVeh { get; set; } = string.Empty;
@@ -33,6 +34,10 @@ namespace OtransBackend.Dtos
             IdTransportista = viaje.IdTransportista;
             IdEmpresa = viaje.IdEmpresa;
             Peso = viaje.Peso;
+            Precio = viaje.Precio;
+            TipoCarroceria = viaje.TipoCarroceria;
+            TipoCarga = viaje.TipoCarga;
+            TamañoVeh = viaje.TamanoVeh;
             TipoCarroceria = viaje.TipoCarroceria;
             TipoCarga = viaje.TipoCarga;
             TamañoVeh = viaje.TamañoVeh;
