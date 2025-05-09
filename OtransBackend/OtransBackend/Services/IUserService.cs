@@ -21,10 +21,13 @@ namespace OtransBackend.Services
         Task ValidateUsuarioAsync(UsuarioValidacionDto dto);
         Task ReuploadDocumentosAsync(ReuploadDocumentosDto dto);
         Task<Viaje> AddViajeAsync(ViajeDto dto);
-        Task<List<ViajeDto>> GetAllViajeAsync();
+        Task<List<ViajeDto>> GetViajesByEmpresaAsync(int idEmpresa);
         Task<int> RegisterAsync(CargaDto dto);
         Task<Carga> GetByIdAsync(int id);
+        Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
+        Task<Carga> ObtenerCargaPorId(int idCarga);
 
+        Task<IEnumerable<VerViajeDto>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
 
     }
 
@@ -55,7 +58,7 @@ namespace OtransBackend.Services
                 throw new Exception("El correo ya está registrado.");
 
             var hashedPassword = _passwordHasher.HashPassword(dto.Contrasena);
-            String UrlArchiDocu= await _googleDriveService.UploadFileAsync(dto.ArchiDocu, "CC_" + dto.NumIdentificacion);
+            String UrlArchiDocu = await _googleDriveService.UploadFileAsync(dto.ArchiDocu, "CC_" + dto.NumIdentificacion);
             string urlLicencia = await _googleDriveService.UploadFileAsync(dto.Licencia, "NIT_" + dto.NumIdentificacion);
             var user = new Usuario
             {
@@ -87,18 +90,21 @@ namespace OtransBackend.Services
                 Peso = dto.Peso,
                 TipoCarga = dto.TipoCarga,
                 TipoCarroceria = dto.TipoCarroceria,
-                TamañoVeh = dto.TamañoVeh,
+                TamanoVeh = dto.TamanoVeh,
                 Descripcion = dto.Descripcion,
-                IdCarga = dto.IdCarga
+                IdCarga = dto.IdCarga,
+                Precio = dto.Precio
             };
 
             return await _userRepository.AddViajeAsync(viaje);
         }
-        public async Task<List<ViajeDto>> GetAllViajeAsync()
+        public async Task<List<ViajeDto>> GetViajesByEmpresaAsync(int idEmpresa)
         {
-            var viajes = await _userRepository.GetAllViajeAsync();
+            // Obtener los viajes de la empresa, incluyendo el nombre del transportista
+            var viajes = await _userRepository.GetViajesByEmpresaAsync(idEmpresa);
 
-            return viajes.Select(v => new ViajeDto
+            // Mapear los resultados a ViajeDto
+            var viajesDto = viajes.Select(v => new ViajeDto
             {
                 IdViaje = v.IdViaje,
                 Origen = v.Origen,
@@ -107,9 +113,16 @@ namespace OtransBackend.Services
                 Fecha = v.Fecha,
                 IdEstado = v.IdEstado,
                 IdCarga = v.IdCarga,
+                Peso = v.Peso,
+                TipoCarroceria = v.TipoCarroceria,
+                TipoCarga = v.TipoCarga,
+                TamanoVeh = v.TamanoVeh,
+                Descripcion = v.Descripcion,
                 IdTransportista = v.IdTransportista,
-                IdEmpresa = v.IdEmpresa
+                NombreTransportista = v.IdTransportistaNavigation?.Nombre + " " + v.IdTransportistaNavigation?.Apellido ?? "N/A"
+                // Acceder al nombre del transportista
             }).ToList();
+            return viajesDto;
         }
 
         // ---------------------------- REGISTRO EMPRESA ----------------------------
@@ -172,20 +185,20 @@ namespace OtransBackend.Services
         public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
         {
             // ← Desofuscar la contraseña enviada (reverso + Base64)
-            string pwdPlain;
-            try
-            {
-                pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
-            }
-            catch
-            {
-                // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
-                return new ResponseLoginDto
-                {
-                    Respuesta = 0,
-                    Mensaje = "Formato de contraseña inválido"
-                };
-            }
+            //string pwdPlain;
+            //try
+            //{
+            //    pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
+            //}
+            //catch
+            //{
+            //    // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
+            //    return new ResponseLoginDto
+            //    {
+            //        Respuesta = 0,
+            //        Mensaje = "Formato de contraseña inválido"
+            //    };
+            //}
 
             ResponseLoginDto responseLoginDto = new();
             UsuarioDto usuario = new();
@@ -194,7 +207,7 @@ namespace OtransBackend.Services
             var user = await _userRepository.Login(loginDTO);
 
             // ← Verificar hash de bcrypt con la contraseña desofuscada
-            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, pwdPlain))
+            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena))
             {
                 // ← Mapear datos de usuario a DTO
                 usuario = new UsuarioDto
@@ -289,7 +302,7 @@ namespace OtransBackend.Services
                 Telefono = usuario.Telefono,
                 TipoUsuario = usuario.NombreEmpresa != null ? "Empresa" : "Transportista",
                 Observaciones = "Pendiente revisión",
-               
+
             };
 
             // Siempre agregamos ArchiDocu como primer documento
@@ -403,12 +416,12 @@ namespace OtransBackend.Services
                 {
                     // Nombre custom: e.g. “Carga_<GUID>_Img{i+1}”
 
-                   var imgFolder = _config["GoogleDrive:ImgFolderId"];
+                    var imgFolder = _config["GoogleDrive:ImgFolderId"];
                     var customName = $"Carga_{Guid.NewGuid():N}_Img{i + 1}";
                     urls[i] = await _googleDriveService.UploadFileAsync(file, customName, imgFolder);
                 }
             }
-            
+
             // Crear entidad
             var entity = new Carga
             {
@@ -436,6 +449,31 @@ namespace OtransBackend.Services
                 throw new KeyNotFoundException($"Carga con Id {id} no encontrada.");
             return carga;
         }
+
+        public async Task<Viaje> ObtenerViajePorTransportista(int idTransportista)
+        {
+            return await _userRepository.ObtenerViajePorTransportista(idTransportista); // Aquí corregimos el uso del repositorio
+        }
+
+        // Obtener la carga asociada al viaje
+        public async Task<Carga> ObtenerCargaPorId(int idCarga)
+        {
+            return await _userRepository.ObtenerCargaPorId(idCarga); // Correcta llamada al repositorio
+
+        }
+        public async Task<IEnumerable<VerViajeDto>> ObtenerViajesPorCarroceriaAsync(int transportistaId)
+        {
+            var viajes = await _userRepository.ObtenerViajesPorCarroceriaAsync(transportistaId);
+
+            // Convertir los viajes a VerViajeDto
+            var viajeDtos = viajes.Select(v =>
+            {
+                var carga = v.IdCargaNavigation; // Obtener la carga asociada al viaje
+                return new VerViajeDto(v, carga);  // Mapear el viaje y la carga al DTO
+            });
+
+            return viajeDtos;
+        }
+
     }
 }
-

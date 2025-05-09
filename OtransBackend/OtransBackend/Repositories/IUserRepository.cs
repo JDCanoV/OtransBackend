@@ -1,10 +1,11 @@
 ﻿using Google.Apis.Drive.v3.Data;
 using Microsoft.EntityFrameworkCore;
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OtransBackend.Dtos;
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using System.IO;
+using System.Linq;
 
 namespace OtransBackend.Repositories
 {
@@ -15,7 +16,7 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddEmpresaAsync(Usuario user); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
         Task<Viaje> AddViajeAsync(Viaje viaje);
-        Task<List<Viaje>> GetAllViajeAsync();
+        Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa);
         Task<Usuario> Login(LoginDto request);
         Task UpdateUserPasswordAsync(Usuario user);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
@@ -26,6 +27,10 @@ namespace OtransBackend.Repositories
         Task<Carga> AddAsync(Carga carga);
         Task<Carga?> GetByIdAsync(int id);
 
+        Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
+        Task<Carga> ObtenerCargaPorId(int idCarga);
+
+        Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
     }
 
     public class UserRepository : IUserRepository
@@ -50,7 +55,7 @@ namespace OtransBackend.Repositories
         // Método para agregar Transportista
         public async Task<Usuario> AddTransportistaAsync(Usuario user)
         {
-            
+
 
             // Guardamos el usuario (transportista) con el archivo de licencia (si existe)
             _context.Usuario.Add(user);
@@ -63,14 +68,18 @@ namespace OtransBackend.Repositories
             await _context.SaveChangesAsync();
             return viaje;
         }
-        public async Task<List<Viaje>> GetAllViajeAsync()
+        public async Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa)
         {
-            return await _context.Viaje.ToListAsync();
+            // Obtener los viajes de la empresa y asegurarnos de incluir el transportista
+            return await _context.Viaje
+                .Where(v => v.IdEmpresa == idEmpresa)
+                .Include(v => v.IdTransportistaNavigation) // Incluimos la relación con el transportista
+                .ToListAsync();
         }
         // Método para agregar Empresa
         public async Task<Usuario> AddEmpresaAsync(Usuario user)
         {
-           
+
             // Guardamos el usuario (empresa) con el archivo de NIT (si existe)
             _context.Usuario.Add(user);
             await _context.SaveChangesAsync();
@@ -82,7 +91,7 @@ namespace OtransBackend.Repositories
         }
         public async Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo)
         {
-           
+
 
             // Guardamos el vehículo en la base de datos
             _context.Vehiculo.Add(vehiculo);
@@ -246,11 +255,39 @@ namespace OtransBackend.Repositories
             return await _context.Carga.FindAsync(id);
         }
 
+        public async Task<Viaje> ObtenerViajePorTransportista(int idTransportista)
+        {
+            return await _context.Viaje
+                .Where(v => v.IdTransportista == idTransportista && (v.IdEstado == 5 || v.IdEstado == 6 || v.IdEstado == 7)) // Aceptar estados 5, 6 o 7
+                .FirstOrDefaultAsync();
+        }
+        public async Task<Carga> ObtenerCargaPorId(int idCarga)
+        {
+            return await _context.Carga
+                .Where(c => c.IdCarga == idCarga)
+                .FirstOrDefaultAsync();
+        }
 
+        public async Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId)
+        {
+            var vehiculos = await _context.Vehiculo
+                .Where(v => v.IdTransportista == transportistaId)
+                .ToListAsync();
 
+            if (vehiculos == null || !vehiculos.Any())
+                return new List<Viaje>();  // Si no se encuentra el vehículo, retornar lista vacía
 
+            var carroceria = vehiculos.FirstOrDefault()?.Carroceria;
 
+            if (string.IsNullOrEmpty(carroceria))
+                return new List<Viaje>();  // Si no tiene carrocería, retornar lista vacía
+
+            var viajes = await _context.Viaje
+                .Where(v => v.TipoCarroceria == carroceria && v.IdEstado == 4)
+                .Include(v => v.IdCargaNavigation) // Incluir la carga para obtener las imágenes
+                .ToListAsync();
+
+            return viajes;
+        }
     }
-
 }
-

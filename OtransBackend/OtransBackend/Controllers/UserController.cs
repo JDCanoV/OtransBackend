@@ -65,11 +65,10 @@ namespace OtransBackend.Controllers
             var viaje = await _userService.AddViajeAsync(dto);
             return Ok(viaje);
         }
-        [Authorize]
-        [HttpGet("listarViaje")]
-        public async Task<IActionResult> ListarViajes()
+        [HttpGet("listarViaje/{idEmpresa}")]
+        public async Task<IActionResult> GetViajesByEmpresa(int idEmpresa)
         {
-            var viajes = await _userService.GetAllViajeAsync();
+            var viajes = await _userService.GetViajesByEmpresaAsync(idEmpresa);
             return Ok(viajes);
         }
 
@@ -275,5 +274,42 @@ namespace OtransBackend.Controllers
             // para devolver toda la info si la necesitas.
             return Ok(new { IdCarga = id });
         }
+
+        // Obtener el viaje para un transportista (solo si está activo con estado 5)
+        [HttpGet("{idTransportista}/viaje")]
+        public async Task<IActionResult> ObtenerViajeParaTransportista(int idTransportista)
+        {
+            // Obtener el viaje
+            var viaje = await _userService.ObtenerViajePorTransportista(idTransportista);
+
+            if (viaje == null)
+            {
+                // Si no tiene un viaje, devolver un mensaje adecuado
+                return NoContent(); // Retorna 204 sin contenido
+            }
+
+            // Ya no necesitamos verificar el estado aquí, ya que ahora aceptamos 5, 6 o 7
+            // Si el viaje tiene estado 5, 6 o 7, lo devolvemos.
+            // El método ObtenerViajePorTransportista ya se encarga de devolver el viaje si está en uno de esos estados.
+
+            // Obtener la carga y las imágenes asociadas al viaje
+            var carga = await _userService.ObtenerCargaPorId(viaje.IdCarga);
+
+            // Crear el DTO VerViajeDto y devolverlo
+            var viajeDTO = new VerViajeDto(viaje, carga);
+            return Ok(viajeDTO); // Devolver los detalles del viaje con las imágenes
+        }
+
+        [HttpGet("viajes-por-carroceria/{transportistaId}")]
+        public async Task<IActionResult> ObtenerViajesPorCarroceria(int transportistaId)
+        {
+            var viajes = await _userService.ObtenerViajesPorCarroceriaAsync(transportistaId);
+
+            if (viajes == null || !viajes.Any())
+                return NotFound("No se encontraron viajes para esta carrocería con estado 4.");
+
+            return Ok(viajes);
+        }
+
     }
 }

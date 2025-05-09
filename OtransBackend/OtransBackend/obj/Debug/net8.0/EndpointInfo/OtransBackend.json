@@ -105,10 +105,21 @@
         }
       }
     },
-    "/api/User/listarViaje": {
+    "/api/User/listarViaje/{idEmpresa}": {
       "get": {
         "tags": [
           "User"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpresa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -447,6 +458,52 @@
         }
       }
     },
+    "/api/User/{idTransportista}/viaje": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "idTransportista",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/viajes-por-carroceria/{transportistaId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "transportistaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -628,8 +685,7 @@
           },
           "idCarga": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "idTransportista": {
             "type": "integer",
@@ -645,7 +701,27 @@
             "type": "number",
             "format": "double"
           },
-          "tipo": {
+          "tipoCarroceria": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoCarga": {
+            "type": "string",
+            "nullable": true
+          },
+          "tamanoVeh": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "precio": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreTransportista": {
             "type": "string",
             "nullable": true
           }
