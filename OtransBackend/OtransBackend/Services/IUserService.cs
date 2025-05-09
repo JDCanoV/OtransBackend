@@ -24,7 +24,10 @@ namespace OtransBackend.Services
         Task<List<ViajeDto>> GetAllViajeAsync();
         Task<int> RegisterAsync(CargaDto dto);
         Task<Carga> GetByIdAsync(int id);
+        Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
+        Task<Carga> ObtenerCargaPorId(int idCarga);
 
+        Task<IEnumerable<VerViajeDto>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
 
     }
 
@@ -172,20 +175,20 @@ namespace OtransBackend.Services
         public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
         {
             // ← Desofuscar la contraseña enviada (reverso + Base64)
-            string pwdPlain;
-            try
-            {
-                pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
-            }
-            catch
-            {
-                // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
-                return new ResponseLoginDto
-                {
-                    Respuesta = 0,
-                    Mensaje = "Formato de contraseña inválido"
-                };
-            }
+            //string pwdPlain;
+            //try
+            //{
+            //    pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
+            //}
+            //catch
+            //{
+            //    // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
+            //    return new ResponseLoginDto
+            //    {
+            //        Respuesta = 0,
+            //        Mensaje = "Formato de contraseña inválido"
+            //    };
+            //}
 
             ResponseLoginDto responseLoginDto = new();
             UsuarioDto usuario = new();
@@ -194,7 +197,7 @@ namespace OtransBackend.Services
             var user = await _userRepository.Login(loginDTO);
 
             // ← Verificar hash de bcrypt con la contraseña desofuscada
-            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, pwdPlain))
+            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena))
             {
                 // ← Mapear datos de usuario a DTO
                 usuario = new UsuarioDto
@@ -435,6 +438,31 @@ namespace OtransBackend.Services
             if (carga == null)
                 throw new KeyNotFoundException($"Carga con Id {id} no encontrada.");
             return carga;
+        }
+
+        public async Task<Viaje> ObtenerViajePorTransportista(int idTransportista)
+        {
+            return await _userRepository.ObtenerViajePorTransportista(idTransportista); // Aquí corregimos el uso del repositorio
+        }
+
+        // Obtener la carga asociada al viaje
+        public async Task<Carga> ObtenerCargaPorId(int idCarga)
+        {
+            return await _userRepository.ObtenerCargaPorId(idCarga); // Correcta llamada al repositorio
+
+        }
+        public async Task<IEnumerable<VerViajeDto>> ObtenerViajesPorCarroceriaAsync(int transportistaId)
+        {
+            var viajes = await _userRepository.ObtenerViajesPorCarroceriaAsync(transportistaId);
+
+            // Convertir los viajes a VerViajeDto
+            var viajeDtos = viajes.Select(v =>
+            {
+                var carga = v.IdCargaNavigation; // Obtener la carga asociada al viaje
+                return new VerViajeDto(v, carga);  // Mapear el viaje y la carga al DTO
+            });
+
+            return viajeDtos;
         }
     }
 }

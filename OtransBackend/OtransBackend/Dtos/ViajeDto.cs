@@ -14,7 +14,7 @@
 
         public int? IdEstado { get; set; }
 
-        public int? IdCarga { get; set; }
+        public int IdCarga { get; set; }
 
         public int? IdTransportista { get; set; }
 

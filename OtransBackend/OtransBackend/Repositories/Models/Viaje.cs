@@ -23,7 +23,7 @@ public partial class Viaje
 
     public int? IdEstado { get; set; }
 
-    public int? IdCarga { get; set; }
+    public int IdCarga { get; set; }
 
     public int? IdTransportista { get; set; }
 

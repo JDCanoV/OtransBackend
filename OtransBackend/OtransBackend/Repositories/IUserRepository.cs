@@ -5,6 +5,7 @@ using OtransBackend.Dtos;
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
 using System.IO;
+using System.Linq;
 
 namespace OtransBackend.Repositories
 {
@@ -26,6 +27,10 @@ namespace OtransBackend.Repositories
         Task<Carga> AddAsync(Carga carga);
         Task<Carga?> GetByIdAsync(int id);
 
+        Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
+        Task<Carga> ObtenerCargaPorId(int idCarga);
+
+        Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
     }
 
     public class UserRepository : IUserRepository
@@ -246,11 +251,47 @@ namespace OtransBackend.Repositories
             return await _context.Carga.FindAsync(id);
         }
 
+        public async Task<Viaje> ObtenerViajePorTransportista(int idTransportista)
+        {
+            return await _context.Viaje
+                .Where(v => v.IdTransportista == idTransportista && (v.IdEstado == 5 || v.IdEstado == 6 || v.IdEstado == 7)) // Aceptar estados 5, 6 o 7
+                .FirstOrDefaultAsync();
+        }
+        public async Task<Carga> ObtenerCargaPorId(int idCarga)
+        {
+            return await _context.Carga
+                .Where(c => c.IdCarga == idCarga)
+                .FirstOrDefaultAsync();
+        }
 
+        public async Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId)
+        {
+            var vehiculos = await _context.Vehiculo
+                .Where(v => v.IdTransportista == transportistaId)
+                .ToListAsync();
 
+            if (vehiculos == null || !vehiculos.Any())
+                return new List<Viaje>();  // Si no se encuentra el vehículo, retornar lista vacía
 
+            var carroceria = vehiculos.FirstOrDefault()?.Carroceria;
 
+            if (string.IsNullOrEmpty(carroceria))
+                return new List<Viaje>();  // Si no tiene carrocería, retornar lista vacía
+
+            var viajes = await _context.Viaje
+                .Where(v => v.TipoCarroceria == carroceria && v.IdEstado == 4)
+                .Include(v => v.IdCargaNavigation) // Incluir la carga para obtener las imágenes
+                .ToListAsync();
+
+            return viajes;
+        }
     }
 
+
+
+
+
 }
+
+
 
