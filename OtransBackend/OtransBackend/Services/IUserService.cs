@@ -474,6 +474,5 @@ namespace OtransBackend.Services
 
             return viajeDtos;
         }
-
     }
 }

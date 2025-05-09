@@ -38,6 +38,9 @@ namespace OtransBackend.Dtos
             TipoCarroceria = viaje.TipoCarroceria;
             TipoCarga = viaje.TipoCarga;
             TamañoVeh = viaje.TamanoVeh;
+            TipoCarroceria = viaje.TipoCarroceria;
+            TipoCarga = viaje.TipoCarga;
+            TamañoVeh = viaje.TamañoVeh;
             Descripcion = viaje.Descripcion;
 
             // Obtener las imágenes de carga
