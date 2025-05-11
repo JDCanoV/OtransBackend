@@ -17,7 +17,7 @@ namespace OtransBackend.Dtos
         public string Precio { get; set; } = string.Empty;
         public string TipoCarroceria { get; set; } = string.Empty;
         public string TipoCarga { get; set; } = string.Empty;
-        public string TamañoVeh { get; set; } = string.Empty;
+        public string TamanoVeh { get; set; } = string.Empty;
         public string Descripcion { get; set; } = string.Empty;
         public List<string> Imagenes { get; set; } = new List<string>();
 
@@ -35,12 +35,10 @@ namespace OtransBackend.Dtos
             IdEmpresa = viaje.IdEmpresa;
             Peso = viaje.Peso;
             Precio = viaje.Precio;
+            
             TipoCarroceria = viaje.TipoCarroceria;
             TipoCarga = viaje.TipoCarga;
-            TamañoVeh = viaje.TamanoVeh;
-            TipoCarroceria = viaje.TipoCarroceria;
-            TipoCarga = viaje.TipoCarga;
-            TamañoVeh = viaje.TamañoVeh;
+            TamanoVeh = viaje.TamanoVeh;
             Descripcion = viaje.Descripcion;
 
             // Obtener las imágenes de carga
