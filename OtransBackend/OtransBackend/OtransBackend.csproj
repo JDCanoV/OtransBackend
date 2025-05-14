@@ -30,8 +30,4 @@
     
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="GoogleDrive\token.json\" />
-  </ItemGroup>
-
 </Project>

@@ -68,6 +68,8 @@ builder.Services.AddCors(options =>
 
 
 // Inyección de dependencias
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserService, UserService>();

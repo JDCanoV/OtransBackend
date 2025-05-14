@@ -5240,23 +5240,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jdcan\\.nuget\\packages\\": {},
+    "C:\\Users\\Jhoel\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jdcan\\OneDrive\\Escritorio\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend.csproj",
+      "projectUniqueName": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend.csproj",
       "projectName": "OtransBackend",
-      "projectPath": "C:\\Users\\jdcan\\OneDrive\\Escritorio\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend.csproj",
-      "packagesPath": "C:\\Users\\jdcan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jdcan\\OneDrive\\Escritorio\\OtransBackend\\OtransBackend\\OtransBackend\\obj\\",
+      "projectPath": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend.csproj",
+      "packagesPath": "C:\\Users\\Jhoel\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jhoel\\Documents\\OtransBackend\\OtransBackend\\OtransBackend\\OtransBackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\jdcan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jhoel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5345,24 +5345,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.15, 8.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.15, 8.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.15, 8.0.15]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[8.0.15, 8.0.15]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -5371,7 +5353,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
