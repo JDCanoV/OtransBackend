@@ -73,6 +73,8 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<EmailUtility>();
 builder.Services.AddScoped<JWTUtility>();
+builder.Services.AddScoped<CloudinaryService, CloudinaryService>();
+
 
 // GoogleDrive
 builder.Services.AddScoped<GoogleDriveService, GoogleDriveService>();

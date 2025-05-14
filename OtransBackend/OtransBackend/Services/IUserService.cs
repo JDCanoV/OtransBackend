@@ -39,8 +39,9 @@ namespace OtransBackend.Services
         private readonly EmailUtility _emailUtility;
         private readonly GoogleDriveService _googleDriveService;
         private readonly IConfiguration _config;
+        private readonly CloudinaryService _cloudinaryService;
 
-        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config)
+        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, CloudinaryService cloudinaryService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
@@ -48,6 +49,7 @@ namespace OtransBackend.Services
             _emailUtility = emailUtility;
             _googleDriveService = googleDriveService;
             _config = config;
+            _cloudinaryService = cloudinaryService;
         }
 
         // ---------------------------- REGISTRO TRANSPORTISTA ----------------------------
@@ -134,8 +136,9 @@ namespace OtransBackend.Services
                 throw new Exception("El correo ya está registrado.");
             var docsFolder = _config["GoogleDrive:DocsFolderId"];
             var hashedPassword = _passwordHasher.HashPassword(dto.Contrasena);
-            String UrlArchiDocu = await _googleDriveService.UploadFileAsync(dto.ArchiDocu, "CC_" + dto.NumIdentificacion, docsFolder);
-            string urlNit = await _googleDriveService.UploadFileAsync(dto.NitFile, "NIT_" + dto.NumIdentificacion, docsFolder);
+            // Subir archivos a Cloudinary
+            string urlArchiDocu = await _googleDriveService.UploadFileAsync(dto.ArchiDocu, "CC_" + dto.NumIdentificacion);
+            string urlNit = await _googleDriveService.UploadFileAsync(dto.NitFile, "NIT_" + dto.NumIdentificacion);
             var user = new Usuario
             {
                 Nombre = dto.Nombre,
@@ -149,7 +152,7 @@ namespace OtransBackend.Services
                 NumCuenta = dto.NumCuenta,
                 Direccion = dto.Direccion,
                 Nit = urlNit,
-                ArchiDocu = UrlArchiDocu,
+                ArchiDocu = urlArchiDocu,
                 IdRol = dto.IdRol ?? 2,
                 IdEstado = dto.IdEstado ?? 1
             };
@@ -184,21 +187,21 @@ namespace OtransBackend.Services
         // ---------------------------- LOGIN ----------------------------
         public async Task<ResponseLoginDto> Login(LoginDto loginDTO)
         {
-            // ← Desofuscar la contraseña enviada (reverso + Base64)
-            //string pwdPlain;
-            //try
-            //{
-            //    pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
-            //}
-            //catch
-            //{
-            //    // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
-            //    return new ResponseLoginDto
-            //    {
-            //        Respuesta = 0,
-            //        Mensaje = "Formato de contraseña inválido"
-            //    };
-            //}
+             ////← Desofuscar la contraseña enviada(reverso +Base64)
+            string pwdPlain;
+            try
+            {
+                pwdPlain = PasswordMasker.Unmask(loginDTO.Contrasena);
+            }
+            catch
+            {
+                // ← Si falla el Base64 o la estructura, devolvemos error de credenciales
+                return new ResponseLoginDto
+                {
+                    Respuesta = 0,
+                    Mensaje = "Formato de contraseña inválido"
+                };
+            }
 
             ResponseLoginDto responseLoginDto = new();
             UsuarioDto usuario = new();
@@ -207,7 +210,7 @@ namespace OtransBackend.Services
             var user = await _userRepository.Login(loginDTO);
 
             // ← Verificar hash de bcrypt con la contraseña desofuscada
-            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, loginDTO.Contrasena))
+            if (user != null && _passwordHasher.VerifyPassword(user.Contrasena, pwdPlain))
             {
                 // ← Mapear datos de usuario a DTO
                 usuario = new UsuarioDto
@@ -416,9 +419,9 @@ namespace OtransBackend.Services
                 {
                     // Nombre custom: e.g. “Carga_<GUID>_Img{i+1}”
 
-                    var imgFolder = _config["GoogleDrive:ImgFolderId"];
+                    
                     var customName = $"Carga_{Guid.NewGuid():N}_Img{i + 1}";
-                    urls[i] = await _googleDriveService.UploadFileAsync(file, customName, imgFolder);
+                    urls[i] = await _cloudinaryService.UploadFileAsync(file, customName);
                 }
             }
 
