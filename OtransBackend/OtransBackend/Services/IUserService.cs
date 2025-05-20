@@ -47,6 +47,9 @@ using iText.Layout.Properties;
 
 
 
+using Microsoft.AspNetCore.Identity;
+using Google.Apis.Drive.v3.Data;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace OtransBackend.Services
 {
@@ -58,14 +61,11 @@ namespace OtransBackend.Services
         Task<Vehiculo> AddVehiculoAsync(VehiculoDto dto);
         Task<ResponseLoginDto> Login(LoginDto loginDto);
         Task<string> recuperarContra(string correo);
+        Task<bool> CambiarContrasenaAsync(string correo, string nuevaContrasena);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario);
         Task ValidateUsuarioAsync(UsuarioValidacionDto dto);
         Task ReuploadDocumentosAsync(ReuploadDocumentosDto dto);
-        Task<Viaje> AddViajeAsync(ViajeDto dto);
-        Task<List<ViajeDto>> GetViajesByEmpresaAsync(int idEmpresa);
-        Task<int> RegisterAsync(CargaDto dto);
-        Task<Carga> GetByIdAsync(int id);
         Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
         Task<Carga> ObtenerCargaPorId(int idCarga);
 
@@ -87,6 +87,9 @@ namespace OtransBackend.Services
 
 
         public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, CloudinaryService cloudinaryService)
+        private readonly IMemoryCache _cache;
+
+        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, IMemoryCache cache)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
@@ -97,6 +100,7 @@ namespace OtransBackend.Services
             _cloudinaryService = cloudinaryService;
             _hfToken = config["HuggingFace:Token"]
                  ?? throw new InvalidOperationException("Falta HuggingFace:Token en appsettings.json");
+            _cache = cache;
         }
         
 
@@ -127,54 +131,7 @@ namespace OtransBackend.Services
 
             return await _userRepository.AddTransportistaAsync(user);
         }
-        public async Task<Viaje> AddViajeAsync(ViajeDto dto)
-        {
-            var viaje = new Viaje
-            {
-                Destino = dto.Destino,
-                Origen = dto.Origen,
-                Distancia = dto.Distancia = 1,
-                Fecha = dto.Fecha = DateTime.Now,
-                IdEstado = dto.IdEstado ?? 1, // Default estado
-                IdEmpresa = dto.IdEmpresa,
-                Peso = dto.Peso,
-                TipoCarga = dto.TipoCarga,
-                TipoCarroceria = dto.TipoCarroceria,
-                TamanoVeh = dto.TamanoVeh,
-                Descripcion = dto.Descripcion,
-                IdCarga = dto.IdCarga,
-                Precio = dto.Precio
-            };
-
-            return await _userRepository.AddViajeAsync(viaje);
-        }
-        public async Task<List<ViajeDto>> GetViajesByEmpresaAsync(int idEmpresa)
-        {
-            // Obtener los viajes de la empresa, incluyendo el nombre del transportista
-            var viajes = await _userRepository.GetViajesByEmpresaAsync(idEmpresa);
-
-            // Mapear los resultados a ViajeDto
-            var viajesDto = viajes.Select(v => new ViajeDto
-            {
-                IdViaje = v.IdViaje,
-                Origen = v.Origen,
-                Destino = v.Destino,
-                Distancia = v.Distancia,
-                Fecha = v.Fecha,
-                IdEstado = v.IdEstado,
-                IdCarga = v.IdCarga,
-                Peso = v.Peso,
-                TipoCarroceria = v.TipoCarroceria,
-                TipoCarga = v.TipoCarga,
-                TamanoVeh = v.TamanoVeh,
-                Descripcion = v.Descripcion,
-                IdTransportista = v.IdTransportista,
-                NombreTransportista = v.IdTransportistaNavigation?.Nombre + " " + v.IdTransportistaNavigation?.Apellido ?? "N/A"
-                // Acceder al nombre del transportista
-            }).ToList();
-            return viajesDto;
-        }
-
+        
         // ---------------------------- REGISTRO EMPRESA ----------------------------
         // Registro de empresas
         public async Task<Usuario> RegisterEmpresaAsync(empresaDto dto)
@@ -337,6 +294,21 @@ namespace OtransBackend.Services
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             Random random = new();
             return new string(Enumerable.Repeat(validChars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
+        public async Task<bool> CambiarContrasenaAsync(string correo, string nuevaContrasena)
+        {
+            var usuario = await _userRepository.GetUserByEmailAsync(correo);
+            if (usuario == null)
+                return false;
+
+            // Hashear la nueva contraseña
+            usuario.Contrasena = _passwordHasher.HashPassword(nuevaContrasena);
+
+            await _userRepository.SaveChangesAsync();
+
+            return true;
         }
 
         // ---------------------------- USUARIOS PENDIENTES ----------------------------

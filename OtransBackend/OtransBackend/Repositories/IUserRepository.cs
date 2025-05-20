@@ -15,8 +15,7 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddTransportistaAsync(Usuario user); // Método para agregar transportista
         Task<Usuario> AddEmpresaAsync(Usuario user); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
-        Task<Viaje> AddViajeAsync(Viaje viaje);
-        Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa);
+        Task SaveChangesAsync();
         Task<Usuario> Login(LoginDto request);
         Task UpdateUserPasswordAsync(Usuario user);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
@@ -24,8 +23,6 @@ namespace OtransBackend.Repositories
         Task ValidarUsuarioAsync(UsuarioValidacionDto dto);
         Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url);
         Task CambiarEstadoAsync(int idUsuario, string nombreEstado);
-        Task<Carga> AddAsync(Carga carga);
-        Task<Carga?> GetByIdAsync(int id);
 
         Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
         Task<Carga> ObtenerCargaPorId(int idCarga);
@@ -64,20 +61,7 @@ namespace OtransBackend.Repositories
             await _context.SaveChangesAsync();
             return user;
         }
-        public async Task<Viaje> AddViajeAsync(Viaje viaje)
-        {
-            _context.Viaje.Add(viaje);
-            await _context.SaveChangesAsync();
-            return viaje;
-        }
-        public async Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa)
-        {
-            // Obtener los viajes de la empresa y asegurarnos de incluir el transportista
-            return await _context.Viaje
-                .Where(v => v.IdEmpresa == idEmpresa)
-                .Include(v => v.IdTransportistaNavigation) // Incluimos la relación con el transportista
-                .ToListAsync();
-        }
+
         // Método para agregar Empresa
         public async Task<Usuario> AddEmpresaAsync(Usuario user)
         {
@@ -90,6 +74,10 @@ namespace OtransBackend.Repositories
         public async Task<Usuario> GetUserByEmailAsync(string email)
         {
             return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo == email);
+        }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
         public async Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo)
         {

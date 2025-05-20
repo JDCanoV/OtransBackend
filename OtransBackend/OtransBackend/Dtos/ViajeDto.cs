@@ -1,4 +1,6 @@
-﻿namespace OtransBackend.Dtos
+﻿using OtransBackend.Repositories.Models;
+
+namespace OtransBackend.Dtos
 {
     public class ViajeDto
     {
