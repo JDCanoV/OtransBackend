@@ -6,6 +6,146 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Empresa/registrarViaje": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/listarViaje/{idEmpresa}": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpresa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/subir-imagenes-carga": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Imagen1": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen2": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen3": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen4": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen5": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen6": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen7": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen8": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen9": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen10": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/subir-imagenes-carga/{id}": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Test/check-connection": {
       "get": {
         "tags": [
@@ -74,7 +214,7 @@
         }
       }
     },
-    "/api/User/registrarViaje": {
+    "/api/User/CambiarContrasena": {
       "post": {
         "tags": [
           "User"
@@ -83,44 +223,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ViajeDto"
+                "$ref": "#/components/schemas/RecuperarDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ViajeDto"
+                "$ref": "#/components/schemas/RecuperarDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ViajeDto"
+                "$ref": "#/components/schemas/RecuperarDto"
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/User/listarViaje/{idEmpresa}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "idEmpresa",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -372,92 +489,6 @@
         }
       }
     },
-    "/api/User/subir-imagenes-carga": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "Imagen1": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen2": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen3": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen4": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen5": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen6": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen7": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen8": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen9": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen10": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/User/subir-imagenes-carga/{id}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/User/{idTransportista}/viaje": {
       "get": {
         "tags": [
@@ -512,45 +543,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "GetWeatherForecast",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -612,6 +604,20 @@
           "tiempoExpiracion": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecuperarDto": {
+        "type": "object",
+        "properties": {
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "contrasena": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -739,33 +745,14 @@
           }
         },
         "additionalProperties": false
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       }
     }
   },
   "tags": [
+    {
+      "name": "Empresa",
+      "description": "Operaciones relacionadas con la gestión de las Funcionalidades de la Empresa"
+    },
     {
       "name": "User",
       "description": "Operaciones relacionadas con la gestión de usuarios, incluyendo autenticación, registro y validación."

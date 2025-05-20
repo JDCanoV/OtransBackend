@@ -84,12 +84,12 @@ namespace OtransBackend.Services
         private readonly IConfiguration _config;
         private readonly CloudinaryService _cloudinaryService;
         private readonly string _hfToken;    // <<– Aquí
-
-
-        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, CloudinaryService cloudinaryService)
         private readonly IMemoryCache _cache;
 
-        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, IMemoryCache cache)
+
+
+
+        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, CloudinaryService cloudinaryService, IMemoryCache cache)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;

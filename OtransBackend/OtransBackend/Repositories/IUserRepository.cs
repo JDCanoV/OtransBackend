@@ -26,7 +26,8 @@ namespace OtransBackend.Repositories
 
         Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
         Task<Carga> ObtenerCargaPorId(int idCarga);
-
+        Task<Carga> AddAsync(Carga carga);
+        Task<Carga?> GetByIdAsync(int id);
         Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
         Task<List<UserRegistrationReportItem>> GetAllUserRegistrationsAsync();
         Task<List<MonthlyRegistrations>> GetMonthlyRegistrationsAsync();

@@ -365,7 +365,6 @@ C:\Users\jdcan\OneDrive\Escritorio\OtransBackend\OtransBackend\OtransBackend\obj
 C:\Users\jdcan\OneDrive\Escritorio\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\OtransBackend.genruntimeconfig.cache
 C:\Users\jdcan\OneDrive\Escritorio\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\ref\OtransBackend.dll
 C:\Users\jdcan\OneDrive\Escritorio\OtransBackend\OtransBackend\OtransBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\GoogleDrive\credentials.json
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\CloudinaryDotNet.dll
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\itext.barcodes.dll
 C:\Users\hp\Documents\GitHub\OtransBackend\OtransBackend\OtransBackend\bin\Debug\net8.0\itext.bouncy-castle-connector.dll
