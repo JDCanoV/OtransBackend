@@ -182,7 +182,7 @@ public partial class OtransContext : DbContext
 
             entity.HasIndex(e => e.Correo, "UQ__Usuario__60695A191D2A9EE5").IsUnique();
 
-            entity.Property(e => e.IdUsuario).ValueGeneratedNever();
+            entity.Property(e => e.IdUsuario).UseIdentityColumn();
             entity.Property(e => e.Apellido)
                 .HasMaxLength(47)
                 .IsUnicode(false);

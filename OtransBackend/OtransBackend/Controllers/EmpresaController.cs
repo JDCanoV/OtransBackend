@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OtransBackend.Dtos;
+using OtransBackend.Repositories.Models;
 using OtransBackend.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -29,11 +30,15 @@ namespace OtransBackend.Controllers
             var viaje = await _empresaService.AddViajeAsync(dto);
             return Ok(viaje);
         }
-        [Authorize]
+        
         [HttpGet("listarViaje/{idEmpresa}")]
         public async Task<IActionResult> GetViajesByEmpresa(int idEmpresa)
         {
             var viajes = await _empresaService.GetViajesByEmpresaAsync(idEmpresa);
+
+            if (viajes == null || !viajes.Any())
+                return NoContent();
+
             return Ok(viajes);
         }
         [HttpPost("subir-imagenes-carga")]

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Google.Apis.Drive.v3.Data;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace OtransBackend.Services
 {
@@ -16,6 +17,7 @@ namespace OtransBackend.Services
         Task<Vehiculo> AddVehiculoAsync(VehiculoDto dto);
         Task<ResponseLoginDto> Login(LoginDto loginDto);
         Task<string> recuperarContra(string correo);
+        Task<bool> CambiarContrasenaAsync(string correo, string nuevaContrasena);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<UsuarioDetalleDto?> ObtenerDetalleUsuarioAsync(int idUsuario);
         Task ValidateUsuarioAsync(UsuarioValidacionDto dto);
@@ -35,8 +37,9 @@ namespace OtransBackend.Services
         private readonly EmailUtility _emailUtility;
         private readonly GoogleDriveService _googleDriveService;
         private readonly IConfiguration _config;
+        private readonly IMemoryCache _cache;
 
-        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config)
+        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, IMemoryCache cache)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
@@ -44,6 +47,7 @@ namespace OtransBackend.Services
             _emailUtility = emailUtility;
             _googleDriveService = googleDriveService;
             _config = config;
+            _cache = cache;
         }
 
         // ---------------------------- REGISTRO TRANSPORTISTA ----------------------------
@@ -222,6 +226,21 @@ namespace OtransBackend.Services
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             Random random = new();
             return new string(Enumerable.Repeat(validChars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
+        public async Task<bool> CambiarContrasenaAsync(string correo, string nuevaContrasena)
+        {
+            var usuario = await _userRepository.GetUserByEmailAsync(correo);
+            if (usuario == null)
+                return false;
+
+            // Hashear la nueva contraseña
+            usuario.Contrasena = _passwordHasher.HashPassword(nuevaContrasena);
+
+            await _userRepository.SaveChangesAsync();
+
+            return true;
         }
 
         // ---------------------------- USUARIOS PENDIENTES ----------------------------

@@ -15,6 +15,7 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddTransportistaAsync(Usuario user); // Método para agregar transportista
         Task<Usuario> AddEmpresaAsync(Usuario user); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
+        Task SaveChangesAsync();
         Task<Usuario> Login(LoginDto request);
         Task UpdateUserPasswordAsync(Usuario user);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
@@ -71,6 +72,10 @@ namespace OtransBackend.Repositories
         public async Task<Usuario> GetUserByEmailAsync(string email)
         {
             return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo == email);
+        }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
         public async Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo)
         {

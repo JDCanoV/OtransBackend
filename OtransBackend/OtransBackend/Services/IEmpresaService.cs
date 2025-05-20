@@ -7,7 +7,7 @@ namespace OtransBackend.Services
     public interface IEmpresaService
     {
         Task<Viaje> AddViajeAsync(ViajeDto dto);
-        Task<List<ViajeDto>> GetViajesByEmpresaAsync(int idEmpresa);
+        Task<List<VerViajeDto>> GetViajesByEmpresaAsync(int idEmpresa);
         Task<int> AddEvidenciaAsync(CargaDto dto);
         Task<Carga> GetEvidenciaByIdAsync(int id);
     }
@@ -30,7 +30,6 @@ namespace OtransBackend.Services
                 Destino = dto.Destino,
                 Origen = dto.Origen,
                 Distancia = dto.Distancia = 1,
-                Fecha = dto.Fecha = DateTime.Now,
                 IdEstado = dto.IdEstado ?? 1, // Default estado
                 IdEmpresa = dto.IdEmpresa,
                 Peso = dto.Peso,
@@ -43,33 +42,15 @@ namespace OtransBackend.Services
 
             return await _empresaRepository.AddViajeAsync(viaje);
         }
-        public async Task<List<ViajeDto>> GetViajesByEmpresaAsync(int idEmpresa)
+        public async Task<List<VerViajeDto>> GetViajesByEmpresaAsync(int idEmpresa)
         {
-            // Obtener los viajes de la empresa, incluyendo el nombre del transportista
             var viajes = await _empresaRepository.GetViajesByEmpresaAsync(idEmpresa);
 
-            // Mapear los resultados a ViajeDto
-            var viajesDto = viajes.Select(v => new ViajeDto
-            {
-                IdViaje = v.IdViaje,
-                Origen = v.Origen,
-                Destino = v.Destino,
-                Distancia = v.Distancia,
-                Fecha = v.Fecha,
-                IdEstado = v.IdEstado,
-                IdCarga = v.IdCarga,
-                Peso = v.Peso,
-                TipoCarroceria = v.TipoCarroceria,
-                TipoCarga = v.TipoCarga,
-                TamanoVeh = v.TamanoVeh,
-                Descripcion = v.Descripcion,
-                IdTransportista = v.IdTransportista,
-                NombreTransportista = v.IdTransportistaNavigation?.Nombre + " " + v.IdTransportistaNavigation?.Apellido ?? "N/A"
-                // Acceder al nombre del transportista
-            }).ToList();
+            var viajesDto = viajes.Select(v => new VerViajeDto(v, v.IdCargaNavigation)).ToList();
 
             return viajesDto;
         }
+
         public async Task<int> AddEvidenciaAsync(CargaDto dto)
         {
             // Recolectar las IFormFile en array

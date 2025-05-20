@@ -53,6 +53,22 @@ namespace OtransBackend.Controllers
 
             return Ok(new { message = result });
         }
+        [HttpPost("CambiarContrasena")]
+        public async Task<IActionResult> CambiarContrasena([FromBody] RecuperarDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Correo))
+                return BadRequest(new { message = "El correo es obligatorio" });
+
+            if (string.IsNullOrWhiteSpace(dto.Contrasena))
+                return BadRequest(new { message = "La contraseña no puede estar vacía" });
+
+            var resultado = await _userService.CambiarContrasenaAsync(dto.Correo, dto.Contrasena);
+
+            if (!resultado)
+                return NotFound(new { message = "Usuario no encontrado" });
+
+            return Ok(new { message = "Contraseña cambiada con éxito" });
+        }
 
         [HttpPost("registerTransportista")]
         [Consumes("multipart/form-data")]

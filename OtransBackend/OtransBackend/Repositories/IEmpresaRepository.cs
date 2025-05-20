@@ -27,12 +27,13 @@ namespace OtransBackend.Repositories
         }
         public async Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa)
         {
-            // Obtener los viajes de la empresa y asegurarnos de incluir el transportista
             return await _context.Viaje
                 .Where(v => v.IdEmpresa == idEmpresa)
-                .Include(v => v.IdTransportistaNavigation) // Incluimos la relación con el transportista
+                .Include(v => v.IdTransportistaNavigation)
+                .Include(v => v.IdCargaNavigation) // Aquí incluyes la carga relacionada
                 .ToListAsync();
         }
+
         public async Task<Carga> AddEvidenciaAsync(Carga carga)
         {
             _context.Carga.Add(carga);
