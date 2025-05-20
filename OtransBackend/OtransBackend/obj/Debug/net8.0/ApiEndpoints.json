@@ -458,6 +458,16 @@
   },
   {
     "ContainingType": "OtransBackend.Controllers.UserController",
+    "Method": "GetUserReport",
+    "RelativePath": "api/User/users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.UserController",
     "Method": "ValidarUsuario",
     "RelativePath": "api/User/validar",
     "HttpMethod": "POST",

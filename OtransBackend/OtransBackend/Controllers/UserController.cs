@@ -310,6 +310,12 @@ namespace OtransBackend.Controllers
 
             return Ok(viajes);
         }
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUserReport()
+        {
+            var pdfBytes = await _userService.GenerateUserReportAsync();
+            return File(pdfBytes, "application/pdf", "UserReport.pdf");
+        }
 
     }
 }
