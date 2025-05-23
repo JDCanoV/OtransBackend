@@ -30,7 +30,7 @@ namespace OtransBackend.Controllers
             var viaje = await _empresaService.AddViajeAsync(dto);
             return Ok(viaje);
         }
-        
+
         [HttpGet("listarViaje/{idEmpresa}")]
         public async Task<IActionResult> GetViajesByEmpresa(int idEmpresa)
         {
@@ -63,6 +63,16 @@ namespace OtransBackend.Controllers
             // Aquí podrías implementar la obtención de una Carga por id
             // para devolver toda la info si la necesitas.
             return Ok(new { IdCarga = id });
+        }
+        [HttpDelete("{idViaje}")]
+        public async Task<IActionResult> EliminarViaje(int idViaje)
+        {
+            var existe = await _empresaService.ExisteViajeAsync(idViaje);
+            if (!existe)
+                return NotFound(new { message = "Viaje no encontrado" });
+
+            await _empresaService.EliminarViajeAsync(idViaje);
+            return Ok(new { message = "Viaje eliminado correctamente" });
         }
     }
 }

@@ -262,7 +262,7 @@ namespace OtransBackend.Services
             string hashedPassword = _passwordHasher.HashPassword(newPassword);
 
             user.Contrasena = hashedPassword;
-            await _userRepository.UpdateUserPasswordAsync(user);
+            await _userRepository.UpdateUserPasswordAsync(user.IdUsuario, user.Contrasena);
 
             string subject = "Recuperación de contraseña - Otrans";
 
@@ -384,7 +384,7 @@ namespace OtransBackend.Services
             // Hashear la nueva contraseña
             usuario.Contrasena = _passwordHasher.HashPassword(nuevaContrasena);
 
-            await _userRepository.SaveChangesAsync();
+            await _userRepository.UpdateUserPasswordAsync(usuario.IdUsuario, usuario.Contrasena);
 
             return true;
         }

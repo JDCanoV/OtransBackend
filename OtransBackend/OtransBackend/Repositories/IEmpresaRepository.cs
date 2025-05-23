@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using OtransBackend.Dtos;
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
@@ -11,6 +12,8 @@ namespace OtransBackend.Repositories
         Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa);
         Task<Carga> AddEvidenciaAsync(Carga carga);
         Task<Carga?> GetEvidenciaByIdAsync(int id);
+        Task<Viaje> GetByIdAsync(int idViaje);
+        Task DeleteAsync(int idViaje);
     }
     public class EmpresaRepository : IEmpresaRepository
     {
@@ -21,10 +24,29 @@ namespace OtransBackend.Repositories
         }
         public async Task<Viaje> AddViajeAsync(Viaje viaje)
         {
-            _context.Viaje.Add(viaje);
-            await _context.SaveChangesAsync();
-            return viaje;
+            var viajeResult = await _context.Viaje
+    .FromSqlRaw(
+        "EXEC sp_AddViaje @Destino, @Origen, @Distancia, @IdEstado, @IdEmpresa, @Peso, @TipoCarga, @TipoCarroceria, @TamanoVeh, @Descripcion, @IdCarga, @Precio",
+        new SqlParameter("@Destino", viaje.Destino ?? (object)DBNull.Value),
+        new SqlParameter("@Origen", viaje.Origen ?? (object)DBNull.Value),
+        new SqlParameter("@Distancia", viaje.Distancia),
+        new SqlParameter("@IdEstado", viaje.IdEstado),
+        new SqlParameter("@IdEmpresa", viaje.IdEmpresa),
+        new SqlParameter("@Peso", viaje.Peso),
+        new SqlParameter("@TipoCarga", viaje.TipoCarga ?? (object)DBNull.Value),
+        new SqlParameter("@TipoCarroceria", viaje.TipoCarroceria ?? (object)DBNull.Value),
+        new SqlParameter("@TamanoVeh", viaje.TamanoVeh ?? (object)DBNull.Value),
+        new SqlParameter("@Descripcion", viaje.Descripcion ?? (object)DBNull.Value),
+        new SqlParameter("@IdCarga", viaje.IdCarga),
+        new SqlParameter("@Precio", viaje.Precio)
+    )
+    .AsQueryable()
+    .FirstOrDefaultAsync();
+
+
+            return viajeResult;
         }
+
         public async Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa)
         {
             return await _context.Viaje
@@ -45,5 +67,16 @@ namespace OtransBackend.Repositories
         {
             return await _context.Carga.FindAsync(id);
         }
+        public async Task<Viaje> GetByIdAsync(int idViaje)
+        {
+            return await _context.Set<Viaje>().FirstOrDefaultAsync(v => v.IdViaje == idViaje);
+        }
+
+        public async Task DeleteAsync(int idViaje)
+        {
+            // Ejecuta el stored procedure con parámetro
+            await _context.Database.ExecuteSqlRawAsync("EXEC sp_DeleteViaje @p0", idViaje);
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using OtransBackend.Dtos;
 using OtransBackend.Repositories;
 using OtransBackend.Repositories.Models;
-using OtransBackend.Utilities;
+
 namespace OtransBackend.Services
 {
     public interface IEmpresaService
@@ -10,6 +10,8 @@ namespace OtransBackend.Services
         Task<List<VerViajeDto>> GetViajesByEmpresaAsync(int idEmpresa);
         Task<int> AddEvidenciaAsync(CargaDto dto);
         Task<Carga> GetEvidenciaByIdAsync(int id);
+        Task<bool> ExisteViajeAsync(int idViaje);
+        Task EliminarViajeAsync(int idViaje);
     }
     public class EmpresaService : IEmpresaService
     {
@@ -26,6 +28,8 @@ namespace OtransBackend.Services
             _cloudinaryService = cloudinaryService;
 
         }
+
+
         public async Task<Viaje> AddViajeAsync(ViajeDto dto)
         {
             var viaje = new Viaje
@@ -33,7 +37,7 @@ namespace OtransBackend.Services
                 Destino = dto.Destino,
                 Origen = dto.Origen,
                 Distancia = dto.Distancia = 1,
-                IdEstado = dto.IdEstado ?? 4, // Default estado
+                IdEstado = dto.IdEstado ?? 1, // Default estado
                 IdEmpresa = dto.IdEmpresa,
                 Peso = dto.Peso,
                 TipoCarga = dto.TipoCarga,
@@ -41,8 +45,7 @@ namespace OtransBackend.Services
                 TamanoVeh = dto.TamanoVeh,
                 Descripcion = dto.Descripcion,
                 IdCarga = dto.IdCarga,
-                Precio=dto.Precio
-
+                Precio = dto.Precio
             };
 
             return await _empresaRepository.AddViajeAsync(viaje);
@@ -107,6 +110,16 @@ namespace OtransBackend.Services
             if (carga == null)
                 throw new KeyNotFoundException($"Carga con Id {id} no encontrada.");
             return carga;
+        }
+        public async Task<bool> ExisteViajeAsync(int idViaje)
+        {
+            var viaje = await _empresaRepository.GetByIdAsync(idViaje);
+            return viaje != null;
+        }
+
+        public async Task EliminarViajeAsync(int idViaje)
+        {
+            await _empresaRepository.DeleteAsync(idViaje);
         }
     }
 }

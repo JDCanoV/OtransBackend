@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "OtransBackend.Controllers.EmpresaController",
+    "Method": "EliminarViaje",
+    "RelativePath": "api/Empresa/{idViaje}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idViaje",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.EmpresaController",
     "Method": "GetViajesByEmpresa",
     "RelativePath": "api/Empresa/listarViaje/{idEmpresa}",
     "HttpMethod": "GET",

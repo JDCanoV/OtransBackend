@@ -1,46 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\",
+  "WorkspaceRootPath": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\services\\iempresaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\hp\\documents\\github\\otransbackend\\otransbackend\\otransbackend\\services\\iempresaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\services\\iempresaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\dtos\\usuarioreportdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\dtos\\usuarioreportdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\controllers\\empresacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\hp\\documents\\github\\otransbackend\\otransbackend\\otransbackend\\controllers\\empresacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\controllers\\empresacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\repositories\\models\\viaje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\repositories\\models\\viaje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\dtos\\viajedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\dtos\\viajedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\repositories\\models\\otranscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\repositories\\models\\otranscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\julia\\onedrive\\documentos\\github\\otransbackend\\otransbackend\\otransbackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|c:\\users\\hp\\documents\\github\\otransbackend\\otransbackend\\otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3E22FBD-6BE8-4431-AD16-837D6446E2BC}|OtransBackend\\OtransBackend.csproj|solutionrelative:otransbackend\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,137 +22,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UsuarioReportDto.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Dtos\\UsuarioReportDto.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Dtos\\UsuarioReportDto.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Dtos\\UsuarioReportDto.cs",
-              "RelativeToolTip": "OtransBackend\\Dtos\\UsuarioReportDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T02:14:45.508Z"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IEmpresaService.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IEmpresaService.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Services\\IEmpresaService.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IEmpresaService.cs",
-              "RelativeToolTip": "OtransBackend\\Services\\IEmpresaService.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAwE0AAAAAAAAAAAAAAA==",
+              "Title": "EmpresaController.cs",
+              "DocumentMoniker": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\EmpresaController.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Controllers\\EmpresaController.cs",
+              "ToolTip": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\EmpresaController.cs",
+              "RelativeToolTip": "OtransBackend\\Controllers\\EmpresaController.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAAE0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T01:26:29.835Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ViajeDto.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Dtos\\ViajeDto.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Dtos\\ViajeDto.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Dtos\\ViajeDto.cs",
-              "RelativeToolTip": "OtransBackend\\Dtos\\ViajeDto.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAuwBgAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T00:46:26.074Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "OtransContext.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\OtransContext.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Repositories\\Models\\OtransContext.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\OtransContext.cs",
-              "RelativeToolTip": "OtransBackend\\Repositories\\Models\\OtransContext.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAUwCwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T17:11:14.672Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Repositories\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\IUserRepository.cs",
-              "RelativeToolTip": "OtransBackend\\Repositories\\IUserRepository.cs",
-              "ViewState": "AgIAAC8BAAAAAAAAAAAYwDgBAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T16:57:15.338Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Services\\IUserService.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
-              "RelativeToolTip": "OtransBackend\\Services\\IUserService.cs",
-              "ViewState": "AgIAAFIBAAAAAAAAAAAowGMBAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T16:57:15.448Z",
+              "WhenOpened": "2025-05-23T16:38:53.001Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\UserController.cs",
-              "RelativeToolTip": "OtransBackend\\Controllers\\UserController.cs",
-              "ViewState": "AgIAABQBAAAAAAAAAAAgwCMBAAAJAAAAAAAAAA==",
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Services\\IUserService.cs",
+              "ToolTip": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IUserService.cs",
+              "RelativeToolTip": "OtransBackend\\Services\\IUserService.cs",
+              "ViewState": "AgIAAFsDAAAAAAAAAAAAAIADAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T02:19:51.171Z"
+              "WhenOpened": "2025-05-23T16:31:16.623Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Viaje.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\Viaje.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Repositories\\Models\\Viaje.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Repositories\\Models\\Viaje.cs",
-              "RelativeToolTip": "OtransBackend\\Repositories\\Models\\Viaje.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "IEmpresaService.cs",
+              "DocumentMoniker": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IEmpresaService.cs",
+              "RelativeDocumentMoniker": "OtransBackend\\Services\\IEmpresaService.cs",
+              "ToolTip": "C:\\Users\\hp\\Documents\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Services\\IEmpresaService.cs",
+              "RelativeToolTip": "OtransBackend\\Services\\IEmpresaService.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAHEAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T00:54:42.088Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "EmpresaController.cs",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\EmpresaController.cs",
-              "RelativeDocumentMoniker": "OtransBackend\\Controllers\\EmpresaController.cs",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\Controllers\\EmpresaController.cs",
-              "RelativeToolTip": "OtransBackend\\Controllers\\EmpresaController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T01:09:24.812Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\appsettings.json",
-              "RelativeDocumentMoniker": "OtransBackend\\appsettings.json",
-              "ToolTip": "C:\\Users\\Julia\\OneDrive\\Documentos\\GitHub\\OtransBackend\\OtransBackend\\OtransBackend\\appsettings.json",
-              "RelativeToolTip": "OtransBackend\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-21T17:10:52.382Z"
+              "WhenOpened": "2025-05-22T01:26:29.835Z",
+              "EditorCaption": ""
             }
           ]
         }

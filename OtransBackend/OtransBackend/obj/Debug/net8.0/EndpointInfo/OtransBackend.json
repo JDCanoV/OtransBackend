@@ -146,6 +146,29 @@
         }
       }
     },
+    "/api/Empresa/{idViaje}": {
+      "delete": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "idViaje",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Test/check-connection": {
       "get": {
         "tags": [
