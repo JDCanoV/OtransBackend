@@ -50,6 +50,7 @@ using iText.Layout.Properties;
 using Microsoft.AspNetCore.Identity;
 using Google.Apis.Drive.v3.Data;
 using Microsoft.Extensions.Caching.Memory;
+using System.Threading.Tasks;
 
 namespace OtransBackend.Services
 {
@@ -71,6 +72,9 @@ namespace OtransBackend.Services
 
         Task<IEnumerable<VerViajeDto>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
         Task<byte[]> GenerateUserReportAsync();
+       
+        Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync();
+
 
     }
 
@@ -98,9 +102,7 @@ namespace OtransBackend.Services
             _googleDriveService = googleDriveService;
             _config = config;
             _cloudinaryService = cloudinaryService;
-            _hfToken = config["HuggingFace:Token"]
-                 ?? throw new InvalidOperationException("Falta HuggingFace:Token en appsettings.json");
-            _cache = cache;
+            
         }
         
 
@@ -262,20 +264,96 @@ namespace OtransBackend.Services
             user.Contrasena = hashedPassword;
             await _userRepository.UpdateUserPasswordAsync(user);
 
-            string subject = "Recuperación de Contraseña";
+            string subject = "Recuperación de contraseña - Otrans";
+
             string body = $@"
-             <!DOCTYPE html>
-             <html>
-             <head>
-             <meta charset='UTF-8'>
-             <title>Recuperación de contraseña</title>
-             </head>
-             <body>
-             <p>Hola {user.Nombre},</p>
-             <p>Tu nueva contraseña es: <strong>{newPassword}</strong></p>
-             <p>Te recomendamos cambiarla lo antes posible.</p>
-             </body>
-             </html>";
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>Recuperación de contraseña</title>
+<style>
+  body {{
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0; padding: 0;
+    color: #000000; /* Negro para todo el texto */
+  }}
+  .header {{
+    padding: 20px 30px;
+    border-bottom: 1px solid #FF6600;
+    display: flex;
+    align-items: center;
+  }}
+  .header img {{
+    width: 150px;
+  }}
+  .content {{
+    max-width: 600px;
+    margin: 40px auto 60px;
+    padding: 0 30px;
+    color: #000000; /* Asegura negro en el contenido */
+  }}
+  h2 {{
+    color: #FF6600;
+  }}
+  p {{
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000; /* Negro para los párrafos */
+  }}
+  strong {{
+    color: #000000; /* Fuerza negrita negra */
+  }}
+  code {{
+    background-color: #f0f0f0;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    color: #000000; /* También el texto del código */
+  }}
+  a {{
+    color: #000000; /* Enlace negro (puedes cambiar a azul si quieres) */
+  }}
+  .footer {{
+    background-color: #FF6600;
+    color: white;
+    padding: 20px 30px;
+    font-size: 14px;
+    text-align: center;
+  }}
+  .footer a {{
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+  }}
+  .footer .icon {{
+    vertical-align: middle;
+    margin-right: 5px;
+  }}
+</style>
+</head>
+<body>
+  <div class='header'>
+    <img src='https://res.cloudinary.com/dxdkogbrb/image/upload/v1747805261/ff591636-25e0-4c38-a21d-ba2866856119_wy1iep.jpg' alt='Otrans Logo'/>
+  </div>
+  <div class='content'>
+    <h2>Hola {user.Nombre},</h2>
+    <p>Hemos generado una nueva contraseña para tu cuenta en <strong>Otrans</strong>.</p>
+    <p><strong>Tu nueva contraseña es:</strong> <code>{newPassword}</code></p>
+    <p>Por motivos de seguridad, te recomendamos cambiar esta contraseña lo antes posible ingresando a tu perfil en nuestra plataforma.</p>
+    <p>Si tú no solicitaste este cambio, por favor contacta con nuestro soporte inmediatamente en <a href='mailto:soporte@otrans.com'>soporte@otrans.com</a>.</p>
+    <p>Saludos,<br />El equipo de <strong>Otrans</strong></p>
+  </div>
+  <div class='footer'>
+    <span>📧 contacto@otrans.com</span> |
+    <span>🌐 <a href='https://www.otrans.com'>www.otrans.com</a></span> |
+    <span>📞 3XX-XXX-XXXX</span><br/>
+    &copy; {DateTime.Now.Year} Otrans - Todos los derechos reservados
+  </div>
+</body>
+</html>
+";
 
 
             try
@@ -807,6 +885,11 @@ namespace OtransBackend.Services
 
 
         // ----- Clase para la marca de agua -----
+
+        public async Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync()
+        {
+            return await _userRepository.GetAllUsersForReportAsync();
+        }
 
     }
 

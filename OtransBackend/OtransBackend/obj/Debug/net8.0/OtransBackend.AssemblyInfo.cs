@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OtransBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb0078432bd3a26a5e92b9e9e38e950a026a8992")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+144c3bb078d8b5c2f5bb28b9a033739f5002f365")]
 [assembly: System.Reflection.AssemblyProductAttribute("OtransBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OtransBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

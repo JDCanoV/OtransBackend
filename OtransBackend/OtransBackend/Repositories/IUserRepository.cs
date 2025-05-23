@@ -31,6 +31,9 @@ namespace OtransBackend.Repositories
         Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
         Task<List<UserRegistrationReportItem>> GetAllUserRegistrationsAsync();
         Task<List<MonthlyRegistrations>> GetMonthlyRegistrationsAsync();
+   
+        Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync();
+
     }
 
     public class UserRepository : IUserRepository
@@ -307,5 +310,18 @@ namespace OtransBackend.Repositories
                 .OrderBy(m => m.Year).ThenBy(m => m.Month)
                 .ToList();
         }
+       
+        public async Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync()
+        {
+            return await _context.Usuario
+                .Select(u => new UsuarioReportDto
+                {
+                    NombreCompleto = u.Nombre + " " + u.Apellido,
+                    TipoUsuario = u.NombreEmpresa != null ? "Empresa" : "Transportista",
+                    FechaRegistro = u.FechaRegistro
+                })
+                .ToListAsync();
+        }
+
     }
 }

@@ -27,6 +27,6 @@ namespace OtransBackend.Dtos
         public string TamanoVeh { get; set; }
         public string Descripcion { get; set; }
         public string Precio { get; set; }
-        public string NombreTransportista { get; set; }
+        public string? NombreTransportista { get; set; }
     }
 }

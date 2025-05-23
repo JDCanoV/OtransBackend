@@ -453,6 +453,16 @@
   },
   {
     "ContainingType": "OtransBackend.Controllers.UserController",
+    "Method": "GetUserReport",
+    "RelativePath": "api/User/reporte",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.UserController",
     "Method": "ReuploadDocumentos",
     "RelativePath": "api/User/reupload-documentos",
     "HttpMethod": "POST",
@@ -474,8 +484,8 @@
   },
   {
     "ContainingType": "OtransBackend.Controllers.UserController",
-    "Method": "GetUserReport",
-    "RelativePath": "api/User/users",
+    "Method": "GetUsersForReport",
+    "RelativePath": "api/User/usuarios",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

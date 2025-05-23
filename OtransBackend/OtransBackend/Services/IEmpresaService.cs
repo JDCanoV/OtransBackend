@@ -1,7 +1,7 @@
 ﻿using OtransBackend.Dtos;
 using OtransBackend.Repositories;
 using OtransBackend.Repositories.Models;
-
+using OtransBackend.Utilities;
 namespace OtransBackend.Services
 {
     public interface IEmpresaService
@@ -16,12 +16,15 @@ namespace OtransBackend.Services
         private readonly IEmpresaRepository _empresaRepository;
         private readonly GoogleDriveService _googleDriveService;
         private readonly IConfiguration _config;
+        private readonly CloudinaryService _cloudinaryService;
 
-        public EmpresaService(GoogleDriveService googleDriveService, IEmpresaRepository empresaRepository, IConfiguration config)
+        public EmpresaService(GoogleDriveService googleDriveService, IEmpresaRepository empresaRepository, IConfiguration config, CloudinaryService cloudinaryService)
         {
             _empresaRepository = empresaRepository;
             _googleDriveService = googleDriveService;
             _config = config;
+            _cloudinaryService = cloudinaryService;
+
         }
         public async Task<Viaje> AddViajeAsync(ViajeDto dto)
         {
@@ -30,14 +33,16 @@ namespace OtransBackend.Services
                 Destino = dto.Destino,
                 Origen = dto.Origen,
                 Distancia = dto.Distancia = 1,
-                IdEstado = dto.IdEstado ?? 1, // Default estado
+                IdEstado = dto.IdEstado ?? 4, // Default estado
                 IdEmpresa = dto.IdEmpresa,
                 Peso = dto.Peso,
                 TipoCarga = dto.TipoCarga,
                 TipoCarroceria = dto.TipoCarroceria,
                 TamanoVeh = dto.TamanoVeh,
                 Descripcion = dto.Descripcion,
-                IdCarga = dto.IdCarga
+                IdCarga = dto.IdCarga,
+                Precio=dto.Precio
+
             };
 
             return await _empresaRepository.AddViajeAsync(viaje);
@@ -72,7 +77,7 @@ namespace OtransBackend.Services
 
                     var imgFolder = _config["GoogleDrive:ImgFolderId"];
                     var customName = $"Carga_{Guid.NewGuid():N}_Img{i + 1}";
-                    urls[i] = await _googleDriveService.UploadFileAsync(file, customName, imgFolder);
+                    urls[i] = await _cloudinaryService.UploadFileAsync(file, customName);
                 }
             }
 

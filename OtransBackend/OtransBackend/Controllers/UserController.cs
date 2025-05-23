@@ -284,11 +284,20 @@ namespace OtransBackend.Controllers
 
             return Ok(viajes);
         }
-        [HttpGet("users")]
+        [HttpGet("reporte")]
         public async Task<IActionResult> GetUserReport()
         {
             var pdfBytes = await _userService.GenerateUserReportAsync();
             return File(pdfBytes, "application/pdf", "UserReport.pdf");
+        }
+
+       
+        [HttpGet("usuarios")]
+        [SwaggerOperation(Summary = "Lista todos los usuarios para el reporte")]
+        public async Task<IActionResult> GetUsersForReport()
+        {
+            var list = await _userService.GetAllUsersForReportAsync();
+            return Ok(list);
         }
 
     }

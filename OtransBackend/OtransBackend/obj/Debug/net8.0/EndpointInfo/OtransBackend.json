@@ -535,11 +535,24 @@
         }
       }
     },
-    "/api/User/users": {
+    "/api/User/reporte": {
       "get": {
         "tags": [
           "User"
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/usuarios": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Lista todos los usuarios para el reporte",
         "responses": {
           "200": {
             "description": "OK"
