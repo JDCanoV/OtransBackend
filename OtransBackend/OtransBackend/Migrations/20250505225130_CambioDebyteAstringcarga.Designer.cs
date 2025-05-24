@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OtransBackend.Repositories.Models;
 
@@ -11,9 +12,11 @@ using OtransBackend.Repositories.Models;
 namespace OtransBackend.Migrations
 {
     [DbContext(typeof(OtransContext))]
-    partial class OtransContextModelSnapshot : ModelSnapshot
+    [Migration("20250505225130_CambioDebyteAstringcarga")]
+    partial class CambioDebyteAstringcarga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,35 +97,35 @@ namespace OtransBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("IdEstado");
 
-                    b.Property<string>("Imagen1")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen1")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen10")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen10")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen2")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen2")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen3")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen3")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen4")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen4")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen5")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen5")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen6")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen6")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen7")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen7")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen8")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen8")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Imagen9")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Imagen9")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("IdCarga")
                         .HasName("PK__Carga__6C9856177E87A551");
@@ -247,10 +250,7 @@ namespace OtransBackend.Migrations
             modelBuilder.Entity("OtransBackend.Repositories.Models.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Apellido")
                         .IsRequired()
@@ -425,7 +425,7 @@ namespace OtransBackend.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCarga")
+                    b.Property<int?>("IdCarga")
                         .HasColumnType("int")
                         .HasColumnName("IdCarga");
 
@@ -450,11 +450,7 @@ namespace OtransBackend.Migrations
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
-                    b.Property<string>("Precio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TamanoVeh")
+                    b.Property<string>("TamañoVeh")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -597,8 +593,6 @@ namespace OtransBackend.Migrations
                     b.HasOne("OtransBackend.Repositories.Models.Carga", "IdCargaNavigation")
                         .WithMany("Viajes")
                         .HasForeignKey("IdCarga")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK__Viaje__IdCarga__35BCFE0A");
 
                     b.HasOne("OtransBackend.Repositories.Models.Usuario", "IdEmpresaNavigation")

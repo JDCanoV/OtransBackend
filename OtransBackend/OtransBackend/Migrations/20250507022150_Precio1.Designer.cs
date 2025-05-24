@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OtransBackend.Repositories.Models;
 
@@ -11,9 +12,11 @@ using OtransBackend.Repositories.Models;
 namespace OtransBackend.Migrations
 {
     [DbContext(typeof(OtransContext))]
-    partial class OtransContextModelSnapshot : ModelSnapshot
+    [Migration("20250507022150_Precio1")]
+    partial class Precio1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,10 +250,7 @@ namespace OtransBackend.Migrations
             modelBuilder.Entity("OtransBackend.Repositories.Models.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Apellido")
                         .IsRequired()
