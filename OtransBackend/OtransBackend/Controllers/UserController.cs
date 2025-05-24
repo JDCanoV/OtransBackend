@@ -53,23 +53,21 @@ namespace OtransBackend.Controllers
 
             return Ok(new { message = result });
         }
-
-
-
-        [HttpPost("registrarViaje")]
-        public async Task<IActionResult> RegistrarViaje([FromBody] ViajeDto dto)
+        [HttpPost("CambiarContrasena")]
+        public async Task<IActionResult> CambiarContrasena([FromBody] RecuperarDto dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (string.IsNullOrWhiteSpace(dto.Correo))
+                return BadRequest(new { message = "El correo es obligatorio" });
 
-            var viaje = await _userService.AddViajeAsync(dto);
-            return Ok(viaje);
-        }
-        [HttpGet("listarViaje/{idEmpresa}")]
-        public async Task<IActionResult> GetViajesByEmpresa(int idEmpresa)
-        {
-            var viajes = await _userService.GetViajesByEmpresaAsync(idEmpresa);
-            return Ok(viajes);
+            if (string.IsNullOrWhiteSpace(dto.Contrasena))
+                return BadRequest(new { message = "La contraseña no puede estar vacía" });
+
+            var resultado = await _userService.CambiarContrasenaAsync(dto.Correo, dto.Contrasena);
+
+            if (!resultado)
+                return NotFound(new { message = "Usuario no encontrado" });
+
+            return Ok(new { message = "Contraseña cambiada con éxito" });
         }
 
         [HttpPost("registerTransportista")]
@@ -251,30 +249,6 @@ namespace OtransBackend.Controllers
             return Ok(new { mensaje = "Documentos subidos correctamente" });
         }
 
-        [HttpPost("subir-imagenes-carga")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Create([FromForm] CargaDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var id = await _userService.RegisterAsync(dto);
-
-            // Devuelve 201 con solo el IdCarga
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id },
-                new CargaResponseDto { IdCarga = id }
-            );
-        }
-        [HttpGet("subir-imagenes-carga/{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            // Aquí podrías implementar la obtención de una Carga por id
-            // para devolver toda la info si la necesitas.
-            return Ok(new { IdCarga = id });
-        }
-
         // Obtener el viaje para un transportista (solo si está activo con estado 5)
         [HttpGet("{idTransportista}/viaje")]
         public async Task<IActionResult> ObtenerViajeParaTransportista(int idTransportista)
@@ -310,11 +284,20 @@ namespace OtransBackend.Controllers
 
             return Ok(viajes);
         }
-        [HttpGet("users")]
+        [HttpGet("reporte")]
         public async Task<IActionResult> GetUserReport()
         {
             var pdfBytes = await _userService.GenerateUserReportAsync();
             return File(pdfBytes, "application/pdf", "UserReport.pdf");
+        }
+
+       
+        [HttpGet("usuarios")]
+        [SwaggerOperation(Summary = "Lista todos los usuarios para el reporte")]
+        public async Task<IActionResult> GetUsersForReport()
+        {
+            var list = await _userService.GetAllUsersForReportAsync();
+            return Ok(list);
         }
 
     }

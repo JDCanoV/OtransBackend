@@ -1,9 +1,11 @@
 using Google.Apis.Drive.v3.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OtransBackend.Dtos;
 using OtransBackend.Repositories.Models;
 using OtransBackend.Utilities;
+using System.Data;
 using System.IO;
 using System.Linq;
 
@@ -15,24 +17,22 @@ namespace OtransBackend.Repositories
         Task<Usuario> AddTransportistaAsync(Usuario user); // Método para agregar transportista
         Task<Usuario> AddEmpresaAsync(Usuario user); // Método para agregar empresa
         Task<Usuario> GetUserByEmailAsync(string email);
-        Task<Viaje> AddViajeAsync(Viaje viaje);
-        Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa);
         Task<Usuario> Login(LoginDto request);
-        Task UpdateUserPasswordAsync(Usuario user);
+        Task UpdateUserPasswordAsync(int idUsuario, string nuevaContrasena);
         Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync();
         Task<Usuario?> ObtenerUsuarioConVehiculoPorIdAsync(int idUsuario);
         Task ValidarUsuarioAsync(UsuarioValidacionDto dto);
         Task ActualizarDocumentoAsync(int idUsuario, string nombreDocumento, string url);
         Task CambiarEstadoAsync(int idUsuario, string nombreEstado);
-        Task<Carga> AddAsync(Carga carga);
-        Task<Carga?> GetByIdAsync(int id);
 
         Task<Viaje> ObtenerViajePorTransportista(int idTransportista);
         Task<Carga> ObtenerCargaPorId(int idCarga);
-
+        Task<Carga> AddAsync(Carga carga);
+        Task<Carga?> GetByIdAsync(int id);
         Task<IEnumerable<Viaje>> ObtenerViajesPorCarroceriaAsync(int transportistaId);
         Task<List<UserRegistrationReportItem>> GetAllUserRegistrationsAsync();
         Task<List<MonthlyRegistrations>> GetMonthlyRegistrationsAsync();
+        Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync();
     }
 
     public class UserRepository : IUserRepository
@@ -57,27 +57,38 @@ namespace OtransBackend.Repositories
         // Método para agregar Transportista
         public async Task<Usuario> AddTransportistaAsync(Usuario user)
         {
+            var nuevoIdParam = new SqlParameter
+            {
+                ParameterName = "@NuevoId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
 
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC sp_AddTransportista @Nombre, @Apellido, @Correo, @Contrasena, @Telefono, @TelefonoSos, @NumIdentificacion, @IdRol, @IdEstado, @Licencia, @ArchiDocu, @NuevoId OUTPUT",
+                new SqlParameter("@Nombre", user.Nombre ?? (object)DBNull.Value),
+                new SqlParameter("@Apellido", user.Apellido ?? (object)DBNull.Value),
+                new SqlParameter("@Correo", user.Correo ?? (object)DBNull.Value),
+                new SqlParameter("@Contrasena", user.Contrasena ?? (object)DBNull.Value),
+                new SqlParameter("@Telefono", user.Telefono ?? (object)DBNull.Value),
+                new SqlParameter("@TelefonoSos", user.TelefonoSos ?? (object)DBNull.Value),
+                new SqlParameter("@NumIdentificacion", user.NumIdentificacion),
+                new SqlParameter("@IdRol", user.IdRol),
+                new SqlParameter("@IdEstado", user.IdEstado),
+                new SqlParameter("@Licencia", user.Licencia ?? (object)DBNull.Value),
+                new SqlParameter("@ArchiDocu", user.ArchiDocu ?? (object)DBNull.Value),
+                nuevoIdParam
+            );
 
-            // Guardamos el usuario (transportista) con el archivo de licencia (si existe)
-            _context.Usuario.Add(user);
-            await _context.SaveChangesAsync();
+            user.IdUsuario = (int)nuevoIdParam.Value;
+
             return user;
         }
-        public async Task<Viaje> AddViajeAsync(Viaje viaje)
-        {
-            _context.Viaje.Add(viaje);
-            await _context.SaveChangesAsync();
-            return viaje;
-        }
-        public async Task<List<Viaje>> GetViajesByEmpresaAsync(int idEmpresa)
-        {
-            // Obtener los viajes de la empresa y asegurarnos de incluir el transportista
-            return await _context.Viaje
-                .Where(v => v.IdEmpresa == idEmpresa)
-                .Include(v => v.IdTransportistaNavigation) // Incluimos la relación con el transportista
-                .ToListAsync();
-        }
+
+
+
+
+
         // Método para agregar Empresa
         public async Task<Usuario> AddEmpresaAsync(Usuario user)
         {
@@ -105,10 +116,12 @@ namespace OtransBackend.Repositories
         {
             return await _context.Usuario.FirstOrDefaultAsync(u => u.Correo.Equals(request.Correo));
         }
-        public async Task UpdateUserPasswordAsync(Usuario user)
+        public async Task UpdateUserPasswordAsync(int idUsuario, string nuevaContrasena)
         {
-            _context.Usuario.Update(user);  // Actualiza el usuario con la nueva contraseña
-            await _context.SaveChangesAsync();  // Guarda los cambios en la base de datos
+            var sql = "EXEC ActualizarEstadoOContrasena @IdUsuario, @NuevaContrasena, @IdEstado = NULL";
+            await _context.Database.ExecuteSqlRawAsync(sql,
+                new SqlParameter("@IdUsuario", idUsuario),
+                new SqlParameter("@NuevaContrasena", nuevaContrasena));
         }
         public async Task<IEnumerable<UsuarioRevisionDto>> ObtenerUsuariosPendientesValidacionAsync()
         {
@@ -236,13 +249,14 @@ namespace OtransBackend.Repositories
         }
         public async Task CambiarEstadoAsync(int idUsuario, string nombreEstado)
         {
-            var usuario = await _context.Usuario.FindAsync(idUsuario)
-                          ?? throw new KeyNotFoundException();
             var estado = await _context.Estado
                           .FirstOrDefaultAsync(e => e.Nombre == nombreEstado)
                           ?? throw new InvalidOperationException($"Estado '{nombreEstado}' no existe");
-            usuario.IdEstado = estado.IdEstado;
-            await _context.SaveChangesAsync();
+
+            var sql = "EXEC ActualizarEstadoOContrasena @IdUsuario, @NuevaContrasena = NULL, @IdEstado";
+            await _context.Database.ExecuteSqlRawAsync(sql,
+                new SqlParameter("@IdUsuario", idUsuario),
+                new SqlParameter("@IdEstado", estado.IdEstado));
         }
         // Método para agregar imagenes a carga 
         public async Task<Carga> AddAsync(Carga carga)
@@ -317,6 +331,17 @@ namespace OtransBackend.Repositories
                 })
                 .OrderBy(m => m.Year).ThenBy(m => m.Month)
                 .ToList();
+        }
+        public async Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync()
+        {
+            return await _context.Usuario
+                .Select(u => new UsuarioReportDto
+                {
+                    NombreCompleto = u.Nombre + " " + u.Apellido,
+                    TipoUsuario = u.NombreEmpresa != null ? "Empresa" : "Transportista",
+                    FechaRegistro = u.FechaRegistro
+                })
+                .ToListAsync();
         }
     }
 }

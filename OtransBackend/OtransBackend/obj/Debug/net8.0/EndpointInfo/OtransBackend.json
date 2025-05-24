@@ -6,11 +6,374 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Administrador/reporte": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Administrador/usuarios": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Lista todos los usuarios para el reporte",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Administrador/pendientes-validacion": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Obtiene usuarios pendientes de validación.",
+        "description": "Devuelve la lista de usuarios que aún no han sido validados en el sistema.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioRevisionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioRevisionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioRevisionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Administrador/detalle/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Obtiene el detalle de un usuario.",
+        "description": "Recupera la información detallada de un usuario por su identificador.",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Administrador/validar": {
+      "post": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Valida un usuario.",
+        "description": "Procesa la validación de documentos o datos de un usuario.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/registrarViaje": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViajeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/listarViaje/{idEmpresa}": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpresa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/subir-imagenes-carga": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Imagen1": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen2": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen3": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen4": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen5": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen6": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen7": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen8": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen9": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Imagen10": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/subir-imagenes-carga/{id}": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa/{idViaje}": {
+      "delete": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "idViaje",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Test/check-connection": {
       "get": {
         "tags": [
           "Test"
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Transportista/{idTransportista}/viaje": {
+      "get": {
+        "tags": [
+          "Transportista"
+        ],
+        "parameters": [
+          {
+            "name": "idTransportista",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Transportista/viajes-por-carroceria/{transportistaId}": {
+      "get": {
+        "tags": [
+          "Transportista"
+        ],
+        "parameters": [
+          {
+            "name": "transportistaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Transportista/asignar-transportista": {
+      "post": {
+        "tags": [
+          "Transportista"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignarTransportistaDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignarTransportistaDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignarTransportistaDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -74,7 +437,7 @@
         }
       }
     },
-    "/api/User/registrarViaje": {
+    "/api/User/CambiarContrasena": {
       "post": {
         "tags": [
           "User"
@@ -83,44 +446,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ViajeDto"
+                "$ref": "#/components/schemas/RecuperarDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ViajeDto"
+                "$ref": "#/components/schemas/RecuperarDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ViajeDto"
+                "$ref": "#/components/schemas/RecuperarDto"
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/User/listarViaje/{idEmpresa}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "idEmpresa",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -372,92 +712,6 @@
         }
       }
     },
-    "/api/User/subir-imagenes-carga": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "Imagen1": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen2": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen3": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen4": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen5": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen6": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen7": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen8": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen9": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Imagen10": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/User/subir-imagenes-carga/{id}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/User/{idTransportista}/viaje": {
       "get": {
         "tags": [
@@ -504,7 +758,7 @@
         }
       }
     },
-    "/api/User/users": {
+    "/api/User/reporte": {
       "get": {
         "tags": [
           "User"
@@ -516,41 +770,15 @@
         }
       }
     },
-    "/WeatherForecast": {
+    "/api/User/usuarios": {
       "get": {
         "tags": [
-          "WeatherForecast"
+          "User"
         ],
-        "operationId": "GetWeatherForecast",
+        "summary": "Lista todos los usuarios para el reporte",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -558,6 +786,20 @@
   },
   "components": {
     "schemas": {
+      "AsignarTransportistaDto": {
+        "type": "object",
+        "properties": {
+          "idViaje": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTransportista": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "DocumentoReuploadDto": {
         "type": "object",
         "properties": {
@@ -612,6 +854,20 @@
           "tiempoExpiracion": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecuperarDto": {
+        "type": "object",
+        "properties": {
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "contrasena": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -739,33 +995,22 @@
           }
         },
         "additionalProperties": false
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       }
     }
   },
   "tags": [
+    {
+      "name": "Administrador",
+      "description": "Operaciones relacionadas con administrador."
+    },
+    {
+      "name": "Empresa",
+      "description": "Operaciones relacionadas con la gestión de las Funcionalidades de la Empresa"
+    },
+    {
+      "name": "Transportista",
+      "description": "Operaciones relacionadas con la gestión de usuarios, incluyendo autenticación, registro y validación."
+    },
     {
       "name": "User",
       "description": "Operaciones relacionadas con la gestión de usuarios, incluyendo autenticación, registro y validación."
