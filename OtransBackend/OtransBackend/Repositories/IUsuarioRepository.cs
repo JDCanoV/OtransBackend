@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace OtransBackend.Repositories
 {
-    public interface IUserRepository
+    public interface IUsuarioRepository
     {
         Task<Vehiculo> AddVehiculoAsync(Vehiculo vehiculo);
         Task<Usuario> AddTransportistaAsync(Usuario user); // Método para agregar transportista
@@ -35,7 +35,7 @@ namespace OtransBackend.Repositories
         Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync();
     }
 
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUsuarioRepository
     {
         private readonly Otrans _context;
 

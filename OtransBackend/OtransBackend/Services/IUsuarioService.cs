@@ -55,7 +55,7 @@ using System.Threading.Tasks;
 namespace OtransBackend.Services
 {
 
-    public interface IUserService
+    public interface IUsuarioService
     {
         Task<Usuario> RegisterTransportistaAsync(TransportistaDto dto);
         Task<Usuario> RegisterEmpresaAsync(empresaDto dto);
@@ -78,9 +78,9 @@ namespace OtransBackend.Services
 
     }
 
-    public class UserService : IUserService
+    public class UserService : IUsuarioService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUsuarioRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly JwtSettingsDto _jwtSettings;
         private readonly EmailUtility _emailUtility;
@@ -93,7 +93,7 @@ namespace OtransBackend.Services
 
 
 
-        public UserService(GoogleDriveService googleDriveService, IUserRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, CloudinaryService cloudinaryService, IMemoryCache cache)
+        public UserService(GoogleDriveService googleDriveService, IUsuarioRepository userRepository, IPasswordHasher passwordHasher, JwtSettingsDto jwtSettings, EmailUtility emailUtility, IConfiguration config, CloudinaryService cloudinaryService, IMemoryCache cache)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;

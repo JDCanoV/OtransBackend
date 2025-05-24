@@ -11,11 +11,11 @@ namespace OtransBackend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [SwaggerTag("Operaciones relacionadas con la gestión de usuarios, incluyendo autenticación, registro y validación.")]
-    public class UserController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUsuarioService _userService;
 
-        public UserController(IUserService userService)
+        public UsuarioController(IUsuarioService userService)
         {
             _userService = userService;
         }
@@ -284,21 +284,7 @@ namespace OtransBackend.Controllers
 
             return Ok(viajes);
         }
-        [HttpGet("reporte")]
-        public async Task<IActionResult> GetUserReport()
-        {
-            var pdfBytes = await _userService.GenerateUserReportAsync();
-            return File(pdfBytes, "application/pdf", "UserReport.pdf");
-        }
-
        
-        [HttpGet("usuarios")]
-        [SwaggerOperation(Summary = "Lista todos los usuarios para el reporte")]
-        public async Task<IActionResult> GetUsersForReport()
-        {
-            var list = await _userService.GetAllUsersForReportAsync();
-            return Ok(list);
-        }
 
     }
 }

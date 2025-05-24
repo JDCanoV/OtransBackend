@@ -73,13 +73,13 @@ builder.Services.AddCors(options =>
 });
 
 // Inyección de dependencias
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UserRepository>();
 builder.Services.AddScoped<ITransportistaRepository,TransportistaRepository>();
 builder.Services.AddScoped<IAdministradorRepository,AdministradorRepository>();
 builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
 builder.Services.AddScoped<ITransportistaService, TransportistaService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUsuarioService, UserService>();
 builder.Services.AddScoped<IAdministradorService, AdministradorService>();
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
