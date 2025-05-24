@@ -6,6 +6,129 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Administrador/reporte": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Administrador/usuarios": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Lista todos los usuarios para el reporte",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Administrador/pendientes-validacion": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Obtiene usuarios pendientes de validación.",
+        "description": "Devuelve la lista de usuarios que aún no han sido validados en el sistema.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioRevisionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioRevisionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioRevisionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Administrador/detalle/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Obtiene el detalle de un usuario.",
+        "description": "Recupera la información detallada de un usuario por su identificador.",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Administrador/validar": {
+      "post": {
+        "tags": [
+          "Administrador"
+        ],
+        "summary": "Valida un usuario.",
+        "description": "Procesa la validación de documentos o datos de un usuario.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioValidacionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Empresa/registrarViaje": {
       "post": {
         "tags": [
@@ -174,6 +297,83 @@
         "tags": [
           "Test"
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Transportista/{idTransportista}/viaje": {
+      "get": {
+        "tags": [
+          "Transportista"
+        ],
+        "parameters": [
+          {
+            "name": "idTransportista",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Transportista/viajes-por-carroceria/{transportistaId}": {
+      "get": {
+        "tags": [
+          "Transportista"
+        ],
+        "parameters": [
+          {
+            "name": "transportistaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Transportista/asignar-transportista": {
+      "post": {
+        "tags": [
+          "Transportista"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignarTransportistaDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignarTransportistaDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignarTransportistaDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -586,6 +786,20 @@
   },
   "components": {
     "schemas": {
+      "AsignarTransportistaDto": {
+        "type": "object",
+        "properties": {
+          "idViaje": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTransportista": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "DocumentoReuploadDto": {
         "type": "object",
         "properties": {
@@ -786,8 +1000,16 @@
   },
   "tags": [
     {
+      "name": "Administrador",
+      "description": "Operaciones relacionadas con administrador."
+    },
+    {
       "name": "Empresa",
       "description": "Operaciones relacionadas con la gestión de las Funcionalidades de la Empresa"
+    },
+    {
+      "name": "Transportista",
+      "description": "Operaciones relacionadas con la gestión de usuarios, incluyendo autenticación, registro y validación."
     },
     {
       "name": "User",

@@ -20,7 +20,7 @@ public partial class Viaje
     public string TipoCarga { get; set; }
     public string TamanoVeh { get; set; }
     public string Descripcion { get; set; }
-    public string Precio { get; set; }
+    public string? Precio { get; set; }
 
     public int? IdEstado { get; set; }
 

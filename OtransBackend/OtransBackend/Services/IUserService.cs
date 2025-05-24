@@ -475,9 +475,89 @@ namespace OtransBackend.Services
             // 2) Prepara asunto y cuerpo
             bool fueRechazado = dto.Documentos.Any(d => !d.EsValido);
             string asunto = fueRechazado ? "Documentos Rechazados" : "Cuenta Validada";
-            string cuerpo = fueRechazado
-                ? $"Hola,<br/>Tus documentos fueron rechazados:<br/>{dto.Observaciones}"
-                : "¡Tu cuenta ha sido validada correctamente!";
+
+            string cuerpo = $@"
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>{asunto}</title>
+<style>
+  body {{
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0; padding: 0;
+    color: #000000;
+  }}
+  .header {{
+    padding: 20px 30px;
+    border-bottom: 1px solid #FF6600;
+    display: flex;
+    align-items: center;
+  }}
+  .header img {{
+    width: 150px;
+  }}
+  .content {{
+    max-width: 600px;
+    margin: 40px auto 60px;
+    padding: 0 30px;
+    color: #000000;
+  }}
+  h2 {{
+    color: #FF6600;
+  }}
+  p {{
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+  }}
+  strong {{
+    color: #000000;
+  }}
+  a {{
+    color: #000000;
+  }}
+  .footer {{
+    background-color: #FF6600;
+    color: white;
+    padding: 20px 30px;
+    font-size: 14px;
+    text-align: center;
+  }}
+  .footer a {{
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+  }}
+  .footer .icon {{
+    vertical-align: middle;
+    margin-right: 5px;
+  }}
+</style>
+</head>
+<body>
+  <div class='header'>
+    <img src='https://res.cloudinary.com/dxdkogbrb/image/upload/v1747805261/ff591636-25e0-4c38-a21d-ba2866856119_wy1iep.jpg' alt='Otrans Logo'/>
+  </div>
+  <div class='content'>
+    <h2>{asunto}</h2>
+    {(fueRechazado
+                    ? $"<p>Hola,</p><p>Tus documentos fueron rechazados:</p><p><strong>{dto.Observaciones}</strong></p><p>Por favor, verifica y vuelve a enviarlos.</p>"
+                    : "<p>¡Tu cuenta ha sido validada correctamente!</p>")}
+    <p>Si tienes dudas, contacta con nuestro soporte en <a href='mailto:soporte@otrans.com'>soporte@otrans.com</a>.</p>
+    <p>Saludos,<br/>El equipo de <strong>Otrans</strong></p>
+  </div>
+  <div class='footer'>
+    <span>📧 contacto@otrans.com</span> |
+    <span>🌐 <a href='https://www.otrans.com'>www.otrans.com</a></span> |
+    <span>📞 3XX-XXX-XXXX</span><br/>
+    &copy; {DateTime.Now.Year} Otrans - Todos los derechos reservados
+  </div>
+</body>
+</html>
+";
+
 
             // 3) Obtén el usuario completo por Id para leer el correo
             var usuario = await _userRepository.ObtenerUsuarioConVehiculoPorIdAsync(dto.IdUsuario);
@@ -848,43 +928,7 @@ namespace OtransBackend.Services
             doc.Close();
             return ms.ToArray();
         }
-        //private async Task<string> GetMonthlyAnalysisAsync(IEnumerable<MonthlyRegistrations> monthly)
-        //{
-        //    // Construye el prompt con tus datos
-        //    var sb = new StringBuilder();
-        //    sb.AppendLine("Datos de registros mensuales:");
-        //    foreach (var m in monthly)
-        //    {
-        //        sb.AppendLine($"{new DateTime(m.Year, m.Month, 1):MMM yyyy}: {m.Count}");
-        //    }
-        //    sb.AppendLine();
-        //    sb.AppendLine("Genera un breve análisis indicando tendencias y recomendaciones:");
-
-        //    // Llama a Hugging Face Inference
-        //    using var client = new HttpClient();
-        //    client.DefaultRequestHeaders.Authorization =
-        //        new AuthenticationHeaderValue("Bearer", _hfToken);
-
-        //    var payload = new { inputs = sb.ToString() };
-        //    var jsonBody = JsonSerializer.Serialize(payload);
-        //    using var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        //    var resp = await client.PostAsync(
-        //        "https://api-inference.huggingface.co/models/bigscience/bloomz-1b7",
-        //        content
-        //    );
-        //    resp.EnsureSuccessStatusCode();
-
-        //    // La respuesta suele ser un array de strings
-        //    var resultJson = await resp.Content.ReadAsStringAsync();
-        //    var results = JsonSerializer.Deserialize<string[]>(resultJson);
-        //    return results?.FirstOrDefault()?.Trim()
-        //           ?? "No se generó análisis.";
-        //}
-
-
-
-        // ----- Clase para la marca de agua -----
+       
 
         public async Task<IEnumerable<UsuarioReportDto>> GetAllUsersForReportAsync()
         {

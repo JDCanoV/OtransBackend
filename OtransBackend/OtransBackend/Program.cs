@@ -9,6 +9,7 @@ using OtransBackend.Dtos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 var bindJwtSettings = new JwtSettingsDto();
@@ -72,11 +73,17 @@ builder.Services.AddCors(options =>
 });
 
 // Inyección de dependencias
-builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
-builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<ITransportistaRepository,TransportistaRepository>();
+builder.Services.AddScoped<IAdministradorRepository,AdministradorRepository>();
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddScoped<ITransportistaService, TransportistaService>();
+builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAdministradorService, AdministradorService>();
+
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 builder.Services.AddScoped<EmailUtility>();
 builder.Services.AddScoped<JWTUtility>();
 builder.Services.AddScoped<CloudinaryService, CloudinaryService>();

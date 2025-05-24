@@ -1,5 +1,77 @@
 [
   {
+    "ContainingType": "OtransBackend.Controllers.AdministradorController",
+    "Method": "ObtenerDetalleUsuario",
+    "RelativePath": "api/Administrador/detalle/{idUsuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.AdministradorController",
+    "Method": "GetUsuariosPendientesValidacion",
+    "RelativePath": "api/Administrador/pendientes-validacion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[OtransBackend.Dtos.UsuarioRevisionDto, OtransBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.AdministradorController",
+    "Method": "GetUserReport",
+    "RelativePath": "api/Administrador/reporte",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.AdministradorController",
+    "Method": "GetUsersForReport",
+    "RelativePath": "api/Administrador/usuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.AdministradorController",
+    "Method": "ValidarUsuario",
+    "RelativePath": "api/Administrador/validar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "OtransBackend.Dtos.UsuarioValidacionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "OtransBackend.Controllers.EmpresaController",
     "Method": "EliminarViaje",
     "RelativePath": "api/Empresa/{idViaje}",
@@ -142,6 +214,54 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.TransportistaController",
+    "Method": "ObtenerViajeParaTransportista",
+    "RelativePath": "api/Transportista/{idTransportista}/viaje",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTransportista",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.TransportistaController",
+    "Method": "AsignarTransportista",
+    "RelativePath": "api/Transportista/asignar-transportista",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "OtransBackend.Dtos.AsignarTransportistaDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OtransBackend.Controllers.TransportistaController",
+    "Method": "ObtenerViajesPorCarroceria",
+    "RelativePath": "api/Transportista/viajes-por-carroceria/{transportistaId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transportistaId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
