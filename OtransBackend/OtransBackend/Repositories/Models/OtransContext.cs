@@ -89,9 +89,7 @@ public partial class OtransContext : DbContext
             entity.ToTable("Carga");
 
             entity.Property(e => e.IdCarga).ValueGeneratedNever();
-            entity.Property(e => e.Tipo)
-                .HasMaxLength(47)
-                .IsUnicode(false);
+
 
             entity.Property(e => e.IdEstado).HasColumnName("IdEstado");
             entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Cargas)
@@ -184,7 +182,7 @@ public partial class OtransContext : DbContext
 
             entity.HasIndex(e => e.Correo, "UQ__Usuario__60695A191D2A9EE5").IsUnique();
 
-            entity.Property(e => e.IdUsuario).ValueGeneratedNever();
+            entity.Property(e => e.IdUsuario).UseIdentityColumn();
             entity.Property(e => e.Apellido)
                 .HasMaxLength(47)
                 .IsUnicode(false);

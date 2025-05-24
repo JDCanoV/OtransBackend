@@ -11,9 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
 var bindJwtSettings = new JwtSettingsDto();
 builder.Configuration.Bind("JsonWebTokenKeys", bindJwtSettings);
 builder.Services.AddSingleton(bindJwtSettings);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,9 +48,13 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+
 // Base de datos
 builder.Services.AddDbContext<Otrans>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Cache en memoria
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
@@ -66,21 +72,25 @@ builder.Services.AddCors(options =>
     });
 });
 
-
 // Inyección de dependencias
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<ITransportistaRepository,TransportistaRepository>();
+builder.Services.AddScoped<IAdministradorRepository,AdministradorRepository>();
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddScoped<ITransportistaService, TransportistaService>();
+builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAdministradorService, AdministradorService>();
+
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 builder.Services.AddScoped<EmailUtility>();
 builder.Services.AddScoped<JWTUtility>();
+builder.Services.AddScoped<CloudinaryService, CloudinaryService>();
+
 
 // GoogleDrive
-builder.Services.AddScoped<GoogleDriveService>(provider =>
-{
-    var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "Utilities", "client_secret_741082527421-1e8jasp95vkv6b20sqo8i2pfh7kio26v.apps.googleusercontent.com");
-    return new GoogleDriveService(credentialPath);
-});
-builder.Services.AddScoped<GoogleDriveRepository>();
+builder.Services.AddScoped<GoogleDriveService, GoogleDriveService>();
 
 // Swagger mejorado
 builder.Services.AddSwaggerGen(options =>
@@ -88,16 +98,16 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "OtransBackend API",
-        Version = "v1"
+        Version = "v1",
+        Description = "Backend: Jhoel Blanco, Oscar Paternina<br/>Frontend: Juliana Riaño, Diego Cano"
     });
-
+    options.EnableAnnotations();
     // Configuración para manejar archivos
     options.MapType<IFormFile>(() => new OpenApiSchema
     {
         Type = "string",
         Format = "binary"
     });
-
     // Filtro personalizado para documentación de archivos
     options.OperationFilter<SwaggerFileUploadFilter>();
 });
@@ -105,7 +115,6 @@ builder.Services.AddSwaggerGen(options =>
 // Controladores
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
 
 var app = builder.Build();
 
@@ -122,7 +131,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication(); // <--- Muy importante que esté antes de Authorization
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
