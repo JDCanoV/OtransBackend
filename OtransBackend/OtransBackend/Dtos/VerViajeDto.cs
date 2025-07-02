@@ -4,6 +4,7 @@ namespace OtransBackend.Dtos
 {
     public class VerViajeDto
     {
+        public string NombreEmpresa { get; set; } = string.Empty;
         public int IdViaje { get; set; }
         public string Destino { get; set; } = string.Empty;
         public string Origen { get; set; } = string.Empty;
@@ -35,6 +36,8 @@ namespace OtransBackend.Dtos
             IdEmpresa = viaje.IdEmpresa;
             Peso = viaje.Peso;
             Precio = viaje.Precio;
+            NombreEmpresa = viaje.IdEmpresaNavigation?.Nombre ?? string.Empty;
+
             
             TipoCarroceria = viaje.TipoCarroceria;
             TipoCarga = viaje.TipoCarga;

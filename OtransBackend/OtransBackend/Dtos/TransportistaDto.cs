@@ -23,7 +23,7 @@ namespace OtransBackend.Dtos
     public string Contrasena { get; set; }
 
     [Required(ErrorMessage = "El número de identificación es requerido")]
-    [Range(10000000, 9999999999, ErrorMessage = "Número de identificación inválido")]
+    [Range(100000, 9999999999, ErrorMessage = "Número de identificación inválido")]
     public int NumIdentificacion { get; set; }
 
     [Required]

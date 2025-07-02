@@ -36,8 +36,8 @@ namespace OtransBackend.Services
             {
                 Destino = dto.Destino,
                 Origen = dto.Origen,
-                Distancia = dto.Distancia = 1,
-                IdEstado = dto.IdEstado ?? 1, // Default estado
+                Distancia = dto.Distancia,
+                IdEstado = dto.IdEstado ?? 4, // Default estado
                 IdEmpresa = dto.IdEmpresa,
                 Peso = dto.Peso,
                 TipoCarga = dto.TipoCarga,
